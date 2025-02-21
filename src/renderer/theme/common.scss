@@ -1,0 +1,138 @@
+* {
+    box-sizing: border-box;
+    outline: none;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #bbb;
+        border-radius: 2em;
+        border: 4px solid transparent;
+        background-clip: padding-box;
+        transition-duration: 0.3s;
+
+        &:hover {
+            border: 0;
+            border-radius: 0;
+            background: #bbb;
+        }
+
+        &:active {
+            background: #999;
+        }
+    }
+
+    &::-webkit-scrollbar-button {
+        height: 20px;
+        background: transparent;
+    }
+}
+
+::selection {
+    background: var(--primary-color);
+    color: var(--primary-color-contrast);
+}
+
+html,
+body {
+    margin: 0;
+    height: 100vh;
+    max-height: 100vh;
+    width: 100vw;
+    max-width: 100vw;
+    font-family: var(--default-font-family);
+    font-size: var(--font-size);
+    color: var(--text-color);
+    background: var(--dark-color-shade);
+    overflow: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    user-select: none;
+    font-family: var(--default-font-family);
+    color: var(--dark-color-shade);
+    font-weight: 500;
+}
+
+h1 {
+    font-size: 3.125rem;
+    line-height: 100%;
+    letter-spacing: 0.01em;
+    margin: 0;
+}
+
+figure {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+    color: var(--gray-700);
+}
+
+a[href], .link-like {
+    color: var(--primary-color-shade);
+    transition-duration: .2s;
+    text-decoration: none;
+    position: relative;
+    isolation: isolate;
+    margin: 0 5px;
+    user-select: none;
+    cursor: pointer;
+
+    &::after {
+        content: '';
+        z-index: -1;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: var(--primary-color-shade);
+        transition-duration: .2s;
+    }
+
+    &:hover {
+        color: var(--primary-color-contrast);
+
+        &::after {
+            height: 100%;
+            left: -5px;
+            width: calc(100% + 10px);
+            border-radius: 4px;
+        }
+    }
+}
+
+.page-content {
+    background: var(--light-color-tint);
+    border-radius: var(--border-radius);
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    padding: 10px;
+}
+
+
+.app-logo {
+    height: var(--logo-height, 300px);
+    aspect-ratio: 0.895;
+    background: 0 center/contain no-repeat url('/logo-CherryCommerceV2.svg');
+}
+
+#registration-modal {
+    --modal-width: 350px;
+    --modal-height: 400px;
+    --modal-background: transparent;
+}
+
+
+
+@import './components/button.scss';
+@import './components/form.scss';

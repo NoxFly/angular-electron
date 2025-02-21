@@ -1,0 +1,149 @@
+// @ts-nocheck
+const eslint = require("@eslint/js");
+const tseslint = require("typescript-eslint");
+const angular = require("angular-eslint");
+const stylistic = require("@stylistic/eslint-plugin");
+
+module.exports = tseslint.config(
+    {
+        files: [ "src/app/**/*.ts", "src/renderer/**/*.ts" ],
+        extends: [
+            eslint.configs.recommended,
+            ...tseslint.configs.recommended,
+            ...tseslint.configs.stylistic,
+            ...angular.configs.tsRecommended,
+        ],
+        languageOptions: {
+            parserOptions: {
+                ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
+                sourceType: "module",
+                project: ["./tsconfig.json", "./tsconfig.app.json"],
+                tsconfigRootDir: __dirname,
+            }
+        },
+        processor: angular.processInlineTemplates,
+        plugins: {
+            "@stylistic": stylistic,
+        },
+        rules: {
+            "@angular-eslint/component-class-suffix": [
+                "error",
+                {
+                    "suffixes": [
+                        "Page",
+                        "Component"
+                    ]
+                }
+            ],
+            "@angular-eslint/directive-selector": [
+                "error",
+                {
+                    type: "attribute",
+                    prefix: "app",
+                    style: "camelCase",
+                },
+            ],
+            "@angular-eslint/component-selector": [
+                "error",
+                {
+                    type: "element",
+                    prefix: "app",
+                    style: "kebab-case",
+                },
+            ],
+            "@angular-eslint/no-empty-lifecycle-method": "off",
+            "@typescript-eslint/no-empty-object-type": "off",
+
+            "@typescript-eslint/no-require-imports": "off",
+
+            "@typescript-eslint/explicit-member-accessibility": [
+                "error",
+                {
+                    "overrides": {
+                        "constructors": "no-public",
+                    }
+                }
+            ],
+            "@typescript-eslint/explicit-function-return-type": [
+                "error",
+                {
+                    "allowExpressions": true,
+                    "allowHigherOrderFunctions": true,
+                    "allowIIFEs": true,
+                }
+            ],
+            "@typescript-eslint/consistent-type-definitions": "off",
+            "@typescript-eslint/no-explicit-any": "off",
+            "@typescript-eslint/no-inferrable-types": "off",
+            "@typescript-eslint/no-empty-function": "off",
+            "@typescript-eslint/no-unused-vars": "off",
+            "@typescript-eslint/no-namespace": "off",
+            "@typescript-eslint/prefer-readonly": "warn",
+
+            "@stylistic/object-curly-spacing": ["warn", "always"],
+            "@stylistic/no-whitespace-before-property": "error",
+            "@stylistic/space-before-blocks": ["warn", "always"],
+            "@stylistic/comma-spacing": [
+                "warn",
+                {
+                    "before": false,
+                    "after": true
+                }
+            ],
+            "@stylistic/block-spacing": ["warn", "always"],
+            "@stylistic/brace-style": [
+                "error",
+                "stroustrup",
+                {
+                    "allowSingleLine": true
+                }
+            ],
+            "@stylistic/function-call-spacing": ["error", "never"],
+            "@stylistic/arrow-spacing": "error",
+            "@stylistic/computed-property-spacing": "warn",
+            "@stylistic/generator-star-spacing": "error",
+            "@stylistic/indent": ["error", 4, { "SwitchCase": 1 }],
+            "@stylistic/semi": [2, "always"],
+            "@stylistic/no-extra-semi": "warn",
+            "@stylistic/semi-spacing": "warn",
+            "@stylistic/quotes": "off",
+            "@stylistic/keyword-spacing": [
+                "warn",
+                {
+                    "overrides": {
+                        "if": { "after": false },
+                        "for": { "after": false },
+                        "catch": { "after": false },
+                        "while": { "after": false },
+                        "as": { "after": false },
+                        "switch": { "after": false }
+                    }
+                }
+            ],
+
+            "eqeqeq": "error",
+            "no-duplicate-imports": "error",
+            "no-empty": "off",
+            "no-empty-function": "off",
+            "no-extra-boolean-cast": "off",
+            "no-inner-declarations": "off",
+            "no-unsafe-finally": "off",
+            "no-unsafe-optional-chaining": "error",
+            "no-unused-vars": "off",
+            "no-var": "error",
+            "no-useless-catch": "off",
+        },
+    },
+    {
+        files: [ "src/renderer/**/*.html" ],
+        extends: [
+            ...angular.configs.templateRecommended,
+            ...angular.configs.templateAccessibility,
+        ],
+        rules: {
+            "@angular-eslint/template/elements-content": "off",
+            "@angular-eslint/template/click-events-have-key-events": "off",
+            "@angular-eslint/template/interactive-supports-focus": "off",
+        },
+    }
+);

@@ -1,0 +1,9 @@
+<div class="titlebar" *ngIf="globalState.current.showTitlebar">
+    <div class="app-name">{{ applicationName }}</div>
+    <div class="dragzone" [class]="{ draggable: globalState.current.movable }"></div>
+    <div class="actions">
+        <span class="action reduce" (click)="reduceApp()" *ngIf="globalState.current.minimizable"></span>
+        <span class="action fullscreen" (click)="toggleFullscreen()" *ngIf="globalState.current.maximizable"></span>
+        <span class="action close" (click)="closeApp()" *ngIf="globalState.current.closable"></span>
+    </div>
+</div>

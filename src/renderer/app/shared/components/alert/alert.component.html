@@ -1,0 +1,12 @@
+<div class="alert-backdrop"></div>
+
+<div class="alert-content">
+    <h4 *ngIf="title">{{ title }}</h4>
+    <p *ngIf="message">{{ message }}</p>
+
+    <div class="actions" *ngIf="hasActions">
+        <button [class]="'btn-' + getButtonRoleClass(action)" *ngFor="let action of actions" (click)="onActionClicked(action)">
+            {{ action.text }}
+        </button>
+    </div>
+</div>

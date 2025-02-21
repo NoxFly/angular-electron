@@ -1,0 +1,84 @@
+@use '../../../../theme/mixins.scss' as *;
+@use '../../../../theme/animations.scss' as *;
+
+:host {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    transition: opacity .2s ease-out;
+    display: block;
+
+    &.disappearing {
+        animation: fadeOut .2s forwards;
+
+        .alert-content {
+            animation: alertContentDisappear .2s forwards;
+        }
+    }
+
+    @starting-style {
+        opacity: 0;
+    }
+}
+
+.alert-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.alert-content {
+    @include absolute;
+
+    width: var(--alert-width, 400px);
+    height: var(--alert-height, auto);
+    background: var(--light-color-tint);
+    border-radius: 10px;
+    z-index: 3;
+    box-shadow: var(--alert-box-shadow, 0 3px 10px rgba(0, 0, 0, 0.5));
+    padding: 10px;
+    transition: transform .2s .05s ease;
+
+    h4, p {
+        width: 100%;
+        text-align: center;
+    }
+
+    h4 {
+        font-size: 1.5em;
+        margin: 10px 0;
+    }
+
+    .actions {
+        @include flex($gap: 10px);
+
+        height: 50px;
+        margin-top: 20px;
+
+        button {
+            min-width: auto;
+        }
+    }
+
+    @starting-style {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+
+@keyframes alertContentDisappear {
+    0% {
+
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+}

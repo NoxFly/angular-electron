@@ -1,0 +1,26 @@
+input {
+    min-width: 150px;
+    padding: 6px 10px;
+    border: 1px solid transparent;
+    border-bottom-color: rgba(127, 127, 127, 0.2);
+    background: var(--light-color-shade);
+    color: var(--text-color);
+    border-radius: 3px 3px 0 0;
+    transition: border-color 0.3s ease;
+    font-size: 1em;
+    height: 32px;
+    cursor: default;
+
+    &:not(:disabled):not(:read-only) {
+        cursor: initial;
+
+        &:hover {
+            border-color: rgba(127, 127, 127, 0.2);
+            border-bottom-color: var(--primary-color-tint);
+        }
+
+        &:focus {
+            border-bottom-color: var(--primary-color-shade);
+        }
+    }
+}

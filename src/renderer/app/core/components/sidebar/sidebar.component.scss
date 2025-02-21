@@ -1,0 +1,75 @@
+@use '../../../../theme/mixins.scss' as *;
+
+nav {
+    @include flex($dir: column, $hor: stretch, $ver: space-between);
+
+    width: 80px;
+    height: 100%;
+    border-radius: 10px;
+    user-select: none;
+}
+
+.nav-date {
+    margin-bottom: 20px;
+
+    span {
+        font-weight: 700;
+        font-size: 2em;
+        color: var(--dark-color-contrast);
+        display: block;
+        letter-spacing: .15em;
+        text-align: center;
+        line-height: .9em;
+    }
+}
+
+.items {
+    @include flex($dir: column, $hor: stretch, $ver: space-between, $gap: 10px);
+
+    flex: 1;
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        color: var(--dark-color-contrast);
+
+        li {
+            display: block;
+            filter: brightness(.7);
+            text-align: center;
+            margin: 15px 0;
+            transition-duration: .1s;
+
+            &.disabled {
+                filter: brightness(.4);
+            }
+
+            &.active {
+                filter: brightness(1);
+            }
+
+            &:not(.disabled) {
+                cursor: pointer;
+
+                &:hover {
+                    filter: brightness(1);
+                    color: var(--primary-color);
+                }
+            }
+
+            span {
+                font-size: .7em;
+                font-weight: 300;
+                display: block;
+            }
+
+            i {
+                font-family: 'Cherry Commerce';
+                font-size: 3.4em;
+                display: block;
+                font-style: normal;
+            }
+        }
+    }
+}

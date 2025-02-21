@@ -1,0 +1,27 @@
+<nav>
+    <div class="nav-date">
+        <span>{{ today | date: 'dd' }}</span>
+        <span>{{ today | date: 'MM' }}</span>
+    </div>
+
+    <div class="items">
+        <ul *ngFor="let group of sidebarItems">
+            <ng-container *ngFor="let item of group">
+                <li
+                    *ngIf="item.visible?.() !== false"
+                    [title]="item.title"
+                    [routerLink]="item.disabled?.() === true || item.handler ? null : item.path"
+                    [class]="{
+                        disabled: item.disabled?.() === true,
+                        active: item.path === currentPath
+                    }"
+                    (click)="item.disabled?.() !== true && item.handler?.(item)">
+
+                    <i class="icon">{{ item.icon }}</i>
+                    <span *ngIf="item.caption">{{ item.caption }}</span>
+
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,61 @@
+:root {
+    --primary-color: hsl(172, 100%, 36%);
+    --primary-color-tint: hsl(172, 46%, 68%);
+    --primary-color-tint-2: hsl(172, 46%, 61%);
+    --primary-color-shade: hsl(173, 81%, 34%);
+    --primary-color-contrast: hsl(0, 0%, 100%);
+
+    --secondary-color: hsl(185, 20%, 22%);
+    --secondary-color-tint: hsl(185, 20%, 30%);
+    --secondary-color-shade: hsl(185, 20%, 15%);
+    --secondary-color-contrast: hsl(0, 0%, 100%);
+
+    --success-color: hsl(117, 60%, 48%);
+    --success-color-tint: hsl(117, 65%, 53%);
+    --success-color-shade: hsl(117, 100%, 35%);
+    --success-color-contrast: hsl(0, 0%, 100%);
+
+    --danger-color: hsl(0, 90%, 50%);
+    --danger-color-tint: hsl(0, 100%, 60%);
+    --danger-color-shade: hsl(0, 73%, 42%);
+    --danger-color-contrast: hsl(0, 0%, 100%);
+
+    --warning-color: hsl(31, 69%, 54%);
+    --warning-color-tint: hsl(31, 100%, 63%);
+    --warning-color-shade: hsl(31, 63%, 44%);
+    --warning-color-contrast: hsl(0, 0%, 100%);
+
+    --light-color: hsl(0, 0%, 97%);
+    --light-color-tint: hsl(0, 0%, 100%);
+    --light-color-tint-2: hsl(0, 0%, 92%);
+    --light-color-shade: hsl(0, 0%, 95%);
+    --light-color-contrast: hsl(0, 0%, 20%);
+
+    --dark-color: hsl(0, 0%, 8%);
+    --dark-color-tint: hsl(0, 0%, 14%);
+    --dark-color-shade: hsl(0, 0%, 0%);
+    --dark-color-contrast: hsl(0, 0%, 90%);
+
+    --medium-color: hsl(0, 0%, 36%);
+    --medium-color-tint: hsl(0, 0%, 45%);
+    --medium-color-shade: hsl(0, 0%, 25%);
+    --medium-color-contrast: hsl(0, 0%, 90%);
+
+    --window-background-color: var(--dark-color-shade);
+
+    --background-color: var(--light-color-tint);
+    --background-color-tint: var(--light-color);
+    --background-color-shade: var(--light-color-shade);
+
+    --text-color: var(--light-color-contrast);
+    --text-color-tint: hsl(0, 0%, 19.37%);
+
+    --titlebar-height: 25px;
+
+    --default-font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+        "Segoe UI Symbol";
+    --font-size: 16px;
+
+
+}

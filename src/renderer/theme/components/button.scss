@@ -1,0 +1,76 @@
+button {
+    background: var(--light-color-shade);
+    border: 2px solid transparent;
+    padding: 5px 25px;
+    display: inline-block;
+    border-radius: 5px;
+    color: var(--medium-color);
+    font-size: 1em;
+    font-weight: 500;
+    min-width: 200px;
+    cursor: pointer;
+    transition-duration: .1s;
+    user-select: none;
+
+    &:not(:disabled):hover {
+        border-color: rgba(255, 255, 255, 0.1);
+        background: var(--primary-color);
+        color: var(--primary-color-contrast);
+    }
+
+    &:active {
+        background: var(--primary-color-shade);
+    }
+
+    &:disabled {
+        cursor: default;
+        opacity: .2;
+    }
+
+    &.btn-cancel {
+        background: var(--light-color-shade);
+        color: var(--medium-color);
+
+        &:hover {
+            filter: brightness(.9);
+            background: var(--light-color-shade);
+            color: var(--medium-color);
+        }
+    }
+
+    &.btn-primary {
+        background: var(--primary-color);
+        color: var(--primary-color-contrast);
+
+        &:hover {
+            background: var(--primary-color-shade);
+        }
+    }
+
+    &.btn-danger {
+        background: var(--danger-color-shade);
+        color: var(--danger-color-contrast);
+
+        &:hover {
+            background: var(--danger-color);
+        }
+    }
+
+    &.btn-success {
+        background: var(--success-color);
+        color: var(--success-color-contrast);
+
+        &:hover {
+            background: var(--success-color-shade);
+        }
+    }
+
+    &.btn-warning {
+        background: var(--warning-color);
+        color: var(--warning-color-contrast);
+
+        &:hover {
+            background: var(--warning-color-shade);
+        }
+    }
+}

@@ -1,0 +1,23 @@
+<div class="numpad-container" [class]="{
+    decimal: acceptDecimals(),
+    negative: acceptNegative(),
+}">
+
+    <div class="display" [class]="{ negative: isNegative() }">
+
+        <input [type]="type" [(ngModel)]="value" readonly>
+
+    </div>
+
+    <div class="actions" #actionsContainer>
+
+        <button
+            [attr.data-value]="entry.value.value"
+            (click)="onAction(entry.value)"
+            *ngFor="let entry of actions | keyvalue">
+            {{ entry.value.caption ?? entry.value.value }}
+        </button>
+
+    </div>
+
+</div>

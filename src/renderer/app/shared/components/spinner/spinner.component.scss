@@ -1,0 +1,35 @@
+@use '../../../../theme/mixins.scss' as *;
+
+.spinner-container {
+    @include flex;
+
+    width: var(--spinner-size, 50px);
+    height: var(--spinner-size, 50px);
+    border-radius: 100%;
+    color: var(--spinner-color, currentcolor);
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+    animation: 1s linear infinite spinner-rotate;
+    transform-origin: center center 0px;
+
+    circle {
+        fill: transparent;
+        stroke-width: 4px;
+        stroke-dasharray: 128px;
+        stroke-dashoffset: 82px;
+        stroke: currentcolor;
+    }
+}
+
+@keyframes spinner-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

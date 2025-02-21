@@ -1,0 +1,14 @@
+<div class="content">
+    <ng-container *ngIf="globalState.connected(); else guestView">
+        Hello world
+    </ng-container>
+
+    <ng-template #guestView>
+        <div class="inner">
+            <div class="left-side">
+                <figure class="app-logo"></figure>
+                <h1>Bienvenue sur {{ title }}</h1>
+            </div>
+        </div>
+    </ng-template>
+</div>

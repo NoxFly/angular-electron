@@ -1,0 +1,23 @@
+@use '../../../../theme/mixins.scss' as *;
+
+.app-logo {
+    --logo-height: 60px;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+h1 {
+    display: inline-block;
+    font-size: 1.5em;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    @include flex($hor: flex-start);
+}
+
+app-numpad {
+    margin-top: 100px;
+    display: block;
+}
