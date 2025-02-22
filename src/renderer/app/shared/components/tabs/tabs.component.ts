@@ -34,6 +34,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
     protected selectTab(index: number): void {
         const newActiveTab = this.tabs.get(index);
         const oldActiveTab = this.tabs.get(this.activeTabIndex);
+        const vec = Math.sign(index- this.activeTabIndex);
 
         if(!newActiveTab || newActiveTab.disabled || index === this.activeTabIndex) {
             return;
@@ -45,6 +46,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
             const oldElement = this.content.nativeElement.querySelector(`[data-tab-id="${oldActiveTab.getId()}"]:not(.old)`);
             console.log(oldActiveTab, oldElement);
             oldElement?.classList.add('old');
+            oldElement?.classList.add(vec < 0 ? 'right-to-left' : 'left-to-right');
             oldElement?.setAttribute('tabindex', '-1');
             oldElement?.addEventListener('animationend', () => {
                 console.log('removing', oldElement);
@@ -58,6 +60,8 @@ export class TabsComponent implements OnInit, AfterViewInit {
         const newElementWrapper = this.renderer.createElement('div');
         
         this.renderer.addClass(newElementWrapper, 'tab-content');
+        this.renderer.addClass(newElementWrapper, vec < 0 ? 'left-to-right' : 'right-to-left');
+
         this.renderer.setAttribute(newElementWrapper, 'tabindex', '0');
         this.renderer.setAttribute(newElementWrapper, 'data-tab-id', newActiveTab.getId());
         this.renderer.appendChild(newElementWrapper, newElement);

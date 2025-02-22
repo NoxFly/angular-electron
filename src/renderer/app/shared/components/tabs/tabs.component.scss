@@ -79,19 +79,27 @@
     position: relative;
 
     .tab-content {
-        transition-duration: .2s;
+        transition-duration: .3s;
         display: block;
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
 
+        &.right-to-left {
+            --leave-x: 50px;
+        }
+
+        &.left-to-right {
+            --leave-x: -50px;
+        }
+
         &.old {
-            animation: tabLeave .2s ease;
+            animation: tabLeave .3s ease;
         }
 
         @starting-style {
-            transform: translate(50px, 0);
+            transform: translate(var(--leave-x), 0);
             opacity: 0;
         }
     }
@@ -104,7 +112,7 @@
     }
 
     100% {
-        transform: translate(-50px, 0);
+        transform: translate(var(--leave-x), 0);
         opacity: 0;
     }
 }
