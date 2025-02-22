@@ -29,8 +29,6 @@ export class AppComponent {
         private readonly cdr: ChangeDetectorRef,
     ) {
         if(!this.electron.isElectronApp) {
-            this.globalState.default.showTitlebar = false;
-            this.globalState.resetSettings();
             this.isReady = true;
             this.router.navigateByUrl('/not-desktop');
             return;

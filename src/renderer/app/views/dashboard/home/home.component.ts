@@ -2,7 +2,6 @@ import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GlobalStateService } from '../../../core/services/globalState.service';
-import { AlertController } from '../../../shared/components/alert/alert.controller';
 
 @Component({
     selector: 'app-home',
@@ -17,6 +16,5 @@ export class HomeComponent {
 
     constructor(
         protected readonly globalState: GlobalStateService,
-        private readonly alertCtrl: AlertController,
     ) {}
 }

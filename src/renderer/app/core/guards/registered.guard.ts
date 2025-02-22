@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { CanActivate, GuardResult, MaybeAsync, Router } from "@angular/router";
-import { GlobalStateService } from "../services/globalState.service";
 import { of } from "rxjs";
+import { GlobalStateService } from "../services/globalState.service";
 
 @Injectable({
     providedIn: 'root'
@@ -13,11 +13,15 @@ export class RegisteredGuard implements CanActivate {
     ) {}
 
     public canActivate(): MaybeAsync<GuardResult> {
-        if(!this.globalState.known()) {
+        const isKnown = this.globalState.known();
+        this.globalState.current.minimizable = isKnown;
+        this.globalState.current.maximizable = isKnown;
+        this.globalState.current.closable = true;
+
+        if(!isKnown) {
             this.router.navigateByUrl('/register');
-            return of(false);
         }
 
-        return of(true);
+        return of(isKnown);
     }
 }

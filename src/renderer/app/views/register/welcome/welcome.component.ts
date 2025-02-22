@@ -2,8 +2,8 @@ import { NgFor, NgIf } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Output, QueryList, signal, ViewChild, ViewChildren } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GlobalStateService } from '../../../core/services/globalState.service';
-import { readJsonFileAsync } from '../../../shared/helpers/global.helper';
 import { ToastController } from '../../../shared/components/toast/toast.controller';
+import { readJsonFileAsync } from '../../../shared/helpers/global.helper';
 import { ToastConfig } from '../../../shared/types/ui.types';
 
 @Component({
@@ -37,10 +37,7 @@ export class WelcomeComponent implements AfterViewInit {
     constructor(
         private readonly globalState: GlobalStateService,
         private readonly toastCtrl: ToastController,
-    ) {
-        this.globalState.current.maximizable = false;
-        this.globalState.current.minimizable = false;
-    }
+    ) {}
 
     protected clickOnInput(): void {
         this.configInput.nativeElement.click();
