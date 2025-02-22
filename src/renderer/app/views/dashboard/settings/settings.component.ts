@@ -1,7 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { GlobalStateService } from '../../../core/services/globalState.service';
-import { ElectronService } from '../../../core/services/electron.service';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { TabComponent } from '../../../shared/components/tabs/tab/tab.component';
+import { TabsComponent } from '../../../shared/components/tabs/tabs.component';
+import { AboutSettingsComponent } from './about-settings/about-settings.component';
+import { CashSettingsComponent } from './cash-settings/cash-settings.component';
+import { DataSettingsComponent } from './data-settings/data-settings.component';
+import { PreferencesSettingsComponent } from './preferences-settings/preferences-settings.component';
 
 @Component({
     selector: 'app-settings',
@@ -9,22 +12,14 @@ import { ElectronService } from '../../../core/services/electron.service';
     templateUrl: './settings.component.html',
     styleUrl: './settings.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [RouterLink],
+    imports: [TabComponent, TabsComponent],
 })
 export class SettingsComponent {
-    constructor(
-        private readonly globalState: GlobalStateService,
-        private readonly electron: ElectronService,
-        private readonly router: Router,
-    ) {
+    protected aboutComponent = AboutSettingsComponent;
+    protected cashComponent = CashSettingsComponent;
+    protected dataComponent = DataSettingsComponent;
+    protected prefComponent = PreferencesSettingsComponent;
 
-    }
-
-    public disconnectFromServer(): void {
-        this.globalState.connected.set(false);
-        this.globalState.known.set(false);
-        this.electron.ipcRenderer.logout();
-        this.electron.ipcRenderer.unregister();
-        this.router.navigateByUrl('/');
-    }
+    constructor() {}
+    
 }

@@ -1,3 +1,5 @@
+import { Type } from "@angular/core";
+
 /* UI - Global */
 
 export type UIButtonRole =
@@ -51,7 +53,7 @@ export type AlertConfig = UIConfig & {
 /* Modal */
 
 export type ModalConfig = UIConfig & {
-    component: new (...args: any[]) => any;
+    component: Type<any>;
     componentProps?: Record<string, any>;
     showBackdrop?: boolean;
     showDots?: boolean;

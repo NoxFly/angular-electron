@@ -115,7 +115,8 @@ a[href], .link-like {
     border-radius: var(--border-radius);
     height: 100%;
     width: 100%;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding: 10px;
 }
 
