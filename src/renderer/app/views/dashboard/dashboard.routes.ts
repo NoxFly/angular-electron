@@ -15,6 +15,6 @@ export const routes: Routes = [
     },
     {
         path: 'settings',
-        loadComponent: () => import('./settings/settings.component').then(c => c.SettingsComponent),
+        loadChildren: () => import('./settings/settings.routes').then(c => c.routes),
     },
 ];

@@ -41,9 +41,4 @@ main {
     height: 100%;
     flex: 1;
     isolation: isolate;
-    // opacity: 0;
-
-    &.ready {
-        opacity: 1;
-    }
 }

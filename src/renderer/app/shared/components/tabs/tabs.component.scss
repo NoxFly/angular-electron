@@ -1,0 +1,110 @@
+@use '../../../../theme/mixins.scss' as *;
+
+:host {
+    display: block;
+
+    &.tabs {
+        @extend .tabs-style;
+    }
+
+    &:not(.tabs) {
+        @extend .pivot-style;
+    }
+}
+
+.tabs-button-list {
+    user-select: none;
+    margin-bottom: 20px;
+
+    ul {
+        @include flex($hor: flex-start);
+
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        cursor: pointer;
+    }
+}
+
+.tabs-style {
+    // plus du style mobile avec les onglets qui prennent toute la largeur
+    // souvent des icones
+}
+
+.pivot-style {
+    // style desktop avec des onglets type liste de textes
+
+    ul {
+        gap: 10px;
+    }
+
+    li {
+        font-weight: 500;
+        font-size: 1.3em;
+        color: var(--medium-color-tint);
+        position: relative;
+        padding: 6px;
+
+        &:not(.active):hover {
+            color: var(--dark-color-tint);
+        }
+
+        &.active {
+            color: var(--dark-color-shade);
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: calc(100% + 0px);
+                left: 50%;
+                width: 100%;
+                height: 2px;
+                background: var(--primary-color);
+                transition: width .2s ease;
+                transform: translateX(-50%);
+
+                @starting-style {
+                    width: 0%;
+                }
+            }
+        }
+    }
+}
+
+.tab-content-container {
+    width: 100%;
+    position: relative;
+
+    .tab-content {
+        transition-duration: .2s;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+
+        &.old {
+            animation: tabLeave .2s ease;
+        }
+
+        @starting-style {
+            transform: translate(50px, 0);
+            opacity: 0;
+        }
+    }
+}
+
+@keyframes tabLeave {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50px, 0);
+        opacity: 0;
+    }
+}

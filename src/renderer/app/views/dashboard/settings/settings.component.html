@@ -1,3 +1,10 @@
 <article class="page-content">
-    <button (click)="disconnectFromServer()">Se déconnecter du serveur</button>
+    <h1>Paramètres</h1>
+
+    <app-tabs>
+        <app-tab [component]="cashComponent" label="Caisse"></app-tab>
+        <app-tab [component]="prefComponent" label="Préférences"></app-tab>
+        <app-tab [component]="dataComponent" label="Données"></app-tab>
+        <app-tab [component]="aboutComponent" label="À propos"></app-tab>
+    </app-tabs>
 </article>

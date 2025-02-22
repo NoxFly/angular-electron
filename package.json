@@ -34,6 +34,7 @@
         "@angular/cli": "^18.1.1",
         "@angular/compiler-cli": "^18.1.0",
         "@stylistic/eslint-plugin": "^3.0.1",
+        "@types/uuid": "^10.0.0",
         "@typescript-eslint/eslint-plugin": "^8.23.0",
         "@typescript-eslint/parser": "^8.23.0",
         "angular-eslint": "^19.0.2",

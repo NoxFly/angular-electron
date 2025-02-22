@@ -1,5 +1,5 @@
 import { DOCUMENT, NgIf } from '@angular/common';
-import { ApplicationRef, Component, createComponent, ElementRef, HostBinding, Inject, Input, OnDestroy, OnInit, Type, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { ApplicationRef, Component, ElementRef, Inject, Input, OnDestroy, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { UIComponent } from '../../directives/UIComponent.directive';
 
 @Component({
@@ -7,7 +7,6 @@ import { UIComponent } from '../../directives/UIComponent.directive';
     standalone: true,
     templateUrl: './modal.component.html',
     styleUrl: './modal.component.scss',
-    encapsulation: ViewEncapsulation.Emulated,
     imports: [NgIf],
 })
 export class ModalComponent extends UIComponent implements OnInit, OnDestroy {

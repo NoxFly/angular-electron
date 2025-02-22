@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { UIComponent } from '../../directives/UIComponent.directive';
 import { UIAction } from '../../types/ui.types';
 
@@ -11,7 +11,6 @@ import { UIAction } from '../../types/ui.types';
     templateUrl: './alert.component.html',
     styleUrls: ['./alert.component.scss'],
     imports: [NgFor, NgIf],
-    encapsulation: ViewEncapsulation.Emulated,
 })
 export class AlertComponent extends UIComponent implements OnInit {
     @Input()

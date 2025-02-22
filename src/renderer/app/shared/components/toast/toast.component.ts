@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, ElementRef, HostBinding, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { UIComponent } from '../../directives/UIComponent.directive';
 import { ToastPosition, UIAction, UIColor } from '../../types/ui.types';
 
@@ -11,7 +11,6 @@ import { ToastPosition, UIAction, UIColor } from '../../types/ui.types';
     templateUrl: './toast.component.html',
     styleUrls: ['./toast.component.scss'],
     imports: [NgFor, NgIf],
-    encapsulation: ViewEncapsulation.Emulated,
 })
 export class ToastComponent extends UIComponent implements OnInit {
     @Input({ required: true })

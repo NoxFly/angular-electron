@@ -1,0 +1,14 @@
+<div class="tabs-button-list">
+    <ul>
+        <li
+            [class]="{ active: isActive(i) }"
+            (click)="selectTab(i)"
+            *ngFor="let tab of tabs; let i=index">
+            
+            <span>{{ tab.label }}</span>
+        
+        </li>
+    </ul>
+</div>
+
+<div class="tab-content-container" #content></div>
