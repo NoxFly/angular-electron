@@ -1,7 +1,7 @@
 @use '../../../../theme/mixins.scss' as *;
 
 .titlebar {
-    @include flex($hor: stretch, $ver: stretch);
+    @include flex($dir: row-reverse, $hor: flex-start, $ver: stretch);
 
     width: 100vw;
     height: var(--titlebar-height);
@@ -13,7 +13,12 @@
     transition: background-color .15s ease-in-out;
     user-select: none;
 
+    &.draggable {
+        -webkit-app-region: drag;
+    }
+
     .app-name {
+        @include absolute($left: 0, $tx: 0);
         @include flex;
 
         margin-left: 10px;
@@ -21,14 +26,6 @@
         font-weight: 700;
         color: rgb(127, 127, 127);
         height: 100%;
-    }
-
-    .dragzone {
-        flex: 1;
-
-        &.draggable {
-            -webkit-app-region: drag;
-        }
     }
 
     .actions {
@@ -47,9 +44,20 @@
         position: relative;
         cursor: pointer;
         z-index: 2;
+        -webkit-app-region: no-drag;
+        pointer-events: auto;
+        color: #999;
+        
+        &:hover {
+            color: #bbb;
+        }
+
+        &.close:hover {
+            color: #f00;
+        }
     }
 
-    .action.reduce {
+    /* .action.reduce {
         &::after {
             @include absolute($top: 65%);
 
@@ -106,5 +114,5 @@
                 background: #f00;
             }
         }
-    }
+    } */
 }
