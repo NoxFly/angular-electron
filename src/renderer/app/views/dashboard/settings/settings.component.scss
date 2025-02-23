@@ -3,3 +3,23 @@ h1 {
     font-weight: 800;
     margin-bottom: 20px;
 }
+
+section {
+    margin-inline: 20px;
+
+    &:not(:last-child) {
+        margin-bottom: 50px;
+    }
+}
+
+button[type="button"] {
+    width: 350px;
+    display: block;
+    margin: 20px 0;
+}
+
+.paragraph {
+    max-width: 350px;
+    line-height: 1.5;
+    text-align: justify;
+}

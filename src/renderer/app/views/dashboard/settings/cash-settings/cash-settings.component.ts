@@ -7,7 +7,7 @@ import { GlobalStateService } from '../../../../core/services/globalState.servic
     selector: 'app-cash-settings',
     standalone: true,
     templateUrl: './cash-settings.component.html',
-    styleUrl: './cash-settings.component.scss',
+    styleUrls: ['./cash-settings.component.scss', '../settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [RouterLink],
 })

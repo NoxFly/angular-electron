@@ -1,1 +1,49 @@
-<p>Preferences Settings component</p>
+<section>
+
+    <h2>Affichage</h2>
+
+    <p>Ouverture de l'écran déporté</p>
+    <select>
+        <option value="never" default>Jamais</option>
+        <option value="always">Toujours</option>
+    </select>
+
+    <button type="button" disabled="disabled">Forcer ouverture écran déporté</button>
+
+    <p>Méthode de comptage pour l'ouverture/clôture de caisse :</p>
+    <select>
+        <option value="numpad">Pavé numérique</option>
+    </select>
+
+</section>
+
+<section>
+
+    <h2>Documents PDF</h2>
+
+    <p>Action à réaliser :</p>
+    <select>
+        <option value="open">Ouvrir le document</option>
+        <option value="print">Imprimer le document</option>
+        <option value="open-print">Ouvrir et imprimer le document</option>
+    </select>
+
+</section>
+
+<section>
+
+    <h2>Impression des tickets</h2>
+
+    <div>
+        <label for="ticket-print-mode-rad-pos">
+            <input type="radio" name="ticket-print-mode" id="ticket-print-mode-rad-pos" value="pos">
+            POS Bluetooth/Réseau
+        </label>
+
+        <label for="ticket-print-mode-rad-classic">
+            <input type="radio" name="ticket-print-mode" id="ticket-print-mode-rad-classic" value="classic">
+            Imprimante classique
+        </label>
+    </div>
+
+</section>

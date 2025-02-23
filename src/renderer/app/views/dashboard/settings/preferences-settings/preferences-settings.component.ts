@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     selector: 'app-preferences-settings',
     standalone: true,
     templateUrl: './preferences-settings.component.html',
-    styleUrl: './preferences-settings.component.scss',
+    styleUrls: ['./preferences-settings.component.scss', '../settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [],
 })
