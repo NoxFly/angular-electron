@@ -86,11 +86,11 @@
         left: 0;
         width: 100%;
 
-        &.right-to-left {
+        &[data-vec="right-to-left"] {
             --leave-x: 50px;
         }
 
-        &.left-to-right {
+        &[data-vec="left-to-right"] {
             --leave-x: -50px;
         }
 
@@ -98,10 +98,21 @@
             animation: tabLeave .3s ease;
         }
 
-        @starting-style {
-            transform: translate(var(--leave-x), 0);
-            opacity: 0;
+        &.new {
+            animation: tabEnter .3s ease;
         }
+    }
+}
+
+@keyframes tabEnter {
+    0% {
+        transform: translate(var(--leave-x), 0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(0, 0);
+        opacity: 1;
     }
 }
 
