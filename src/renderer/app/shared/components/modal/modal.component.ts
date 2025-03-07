@@ -17,7 +17,7 @@ export class ModalComponent extends UIComponent implements OnInit, OnDestroy {
     public backdropClose    = input<boolean>(true);
     public keyboardClose    = input<boolean>(true);
 
-    public injectedComponent = viewChild<ViewContainerRef>('injectedComponent');
+    public injectedComponent = viewChild('injectedComponent', { read: ViewContainerRef });
 
 
     public ngOnDestroy(): void {
@@ -32,6 +32,7 @@ export class ModalComponent extends UIComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
+        console.log(this.injectedComponent());
         const component = this.injectedComponent()?.createComponent(this.component(), {
             environmentInjector: this.appRef.injector,
         });

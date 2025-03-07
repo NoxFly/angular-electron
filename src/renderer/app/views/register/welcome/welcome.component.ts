@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, output, Output, QueryList, signal, viewChild, ViewChild, viewChildren, ViewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, output, signal, viewChild, viewChildren } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GlobalStateService } from '../../../core/services/globalState.service';
 import { ToastController } from '../../../shared/components/toast/toast.controller';

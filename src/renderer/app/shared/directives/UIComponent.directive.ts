@@ -13,6 +13,8 @@ export abstract class UIComponent {
     public willDismiss = output<UIDismissData>();
     public didDismiss = output<UIDismissData>();
 
+    public componentRef!: ComponentRef<UIComponent>;
+
     @HostBinding('class.disappearing')
     protected disappearing: boolean = false;
 
@@ -31,7 +33,6 @@ export abstract class UIComponent {
         protected readonly document: Document,
         protected readonly appRef: ApplicationRef,
         protected readonly ref: ElementRef<HTMLElement>,
-        protected readonly componentRef: ComponentRef<UIComponent>,
     ) {}
 
     public dismiss(e?: Partial<UIDismissData>): void {
@@ -96,6 +97,8 @@ export abstract class UIController<T extends UIComponent, C extends UIConfig> {
         this.document.body.appendChild(uiEl);
         uiEl.dataset.uiName = this.constructor.name.replace(/Controller|_/g, '').toLowerCase();
         uiEl.dismiss = componentRef.instance.dismiss.bind(componentRef.instance);
+
+        (componentRef.instance as UIComponent).componentRef = componentRef;
 
         return componentRef.instance;
     }

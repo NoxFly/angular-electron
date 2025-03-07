@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { GlobalStateService } from '../../../core/services/globalState.service';
 import { ElectronService } from '../../../core/services/electron.service';
+import { GlobalStateService } from '../../../core/services/globalState.service';
 
 @Component({
     selector: 'app-logout',

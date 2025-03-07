@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SelectComponent } from '../../../../shared/components/select/select.component';
 import { SelectOptionComponent } from '../../../../shared/components/select/select-option/select-option.component';
+import { SelectComponent } from '../../../../shared/components/select/select.component';
 
 @Component({
     selector: 'app-preferences-settings',

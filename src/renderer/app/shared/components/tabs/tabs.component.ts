@@ -1,5 +1,5 @@
 import { NgFor } from '@angular/common';
-import { AfterViewInit, ApplicationRef, ChangeDetectorRef, Component, ComponentRef, contentChildren, ContentChildren, createComponent, ElementRef, HostBinding, input, Input, OnInit, QueryList, Renderer2, Type, viewChild, ViewChild } from '@angular/core';
+import { AfterViewInit, ApplicationRef, ChangeDetectorRef, Component, ComponentRef, contentChildren, createComponent, ElementRef, HostBinding, input, OnInit, Renderer2, viewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TabComponent } from './tab/tab.component';
 
@@ -15,7 +15,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
 
     protected tabs = contentChildren<TabComponent>(TabComponent);
 
-    protected content = viewChild<HTMLElement>('content');
+    protected content = viewChild<ElementRef<HTMLElement>>('content');
 
     @HostBinding('class.tabs')
     public get typeClass(): boolean {
@@ -114,7 +114,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
             this.renderer.removeClass(newElementWrapper, 'new');
         }, { once: true });
 
-        this.renderer.appendChild(this.content(), newElementWrapper);
+        this.renderer.appendChild(this.content()?.nativeElement, newElementWrapper);
         this.appRef.attachView(newComponent.hostView);
 
         this.activeTabIndex = index;

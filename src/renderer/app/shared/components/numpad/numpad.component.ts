@@ -1,5 +1,5 @@
 import { KeyValuePipe, NgFor } from '@angular/common';
-import { ChangeDetectorRef, Component, input, Input, OnDestroy, OnInit, output, signal, viewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, input, Input, OnDestroy, OnInit, output, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 type NumpadAction = {
@@ -51,7 +51,7 @@ export class NumpadComponent implements OnInit, OnDestroy {
 
     public confirm = output<string>();
 
-    protected actionsContainer = viewChild<HTMLElement>('actionsContainer');
+    protected actionsContainer = viewChild<ElementRef<HTMLElement>>('actionsContainer');
 
 
     protected value: string = '';
@@ -169,7 +169,7 @@ export class NumpadComponent implements OnInit, OnDestroy {
     /*  */
 
     private getActionElement(actionValue: string): HTMLElement | undefined | null {
-        return this.actionsContainer()?.querySelector(`button[data-value="${actionValue}"]`);
+        return this.actionsContainer()?.nativeElement.querySelector(`button[data-value="${actionValue}"]`);
     }
 
     private getParsedValue(): string {

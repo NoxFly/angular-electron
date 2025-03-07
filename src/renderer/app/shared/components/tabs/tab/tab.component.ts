@@ -1,4 +1,4 @@
-import { Component, input, Input, OnInit, Type } from '@angular/core';
+import { Component, input, OnInit, Type } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
