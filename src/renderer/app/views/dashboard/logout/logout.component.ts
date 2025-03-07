@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ElectronService } from '../../../core/services/electron.service';
 import { GlobalStateService } from '../../../core/services/globalState.service';
 
@@ -9,7 +9,7 @@ import { GlobalStateService } from '../../../core/services/globalState.service';
     templateUrl: './logout.component.html',
     styleUrl: './logout.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [RouterLink],
+    imports: [],
 })
 export class LogoutComponent implements OnInit {
     constructor(

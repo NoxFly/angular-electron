@@ -14,8 +14,7 @@
             "ES2022",
             "dom"
         ],
-        "types": [
-        ],
+        "types": [],
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,
@@ -31,5 +30,10 @@
         "src/renderer/**/*.ts",
         "src/renderer/**/*.d.ts",
         "node_modules/electron/electron.d.ts",
+    ],
+    "exclude": [
+        "node_modules",
+        "src/main",
+        "dist",
     ],
 }

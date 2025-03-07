@@ -1,6 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, output, signal, viewChild, viewChildren } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { GlobalStateService } from '../../../core/services/globalState.service';
 import { ToastController } from '../../../shared/components/toast/toast.controller';
 import { readJsonFileAsync } from '../../../shared/helpers/global.helper';
@@ -9,7 +8,7 @@ import { ToastConfig } from '../../../shared/types/ui.types';
 @Component({
     selector: 'app-welcome',
     standalone: true,
-    imports: [NgIf, NgFor, RouterLink],
+    imports: [NgIf, NgFor],
     templateUrl: './welcome.component.html',
     styleUrl: './welcome.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,

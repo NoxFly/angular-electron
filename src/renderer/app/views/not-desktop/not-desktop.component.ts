@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-not-desktop',
@@ -7,7 +6,7 @@ import { RouterLink } from '@angular/router';
     templateUrl: './not-desktop.component.html',
     styleUrl: './not-desktop.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [RouterLink],
+    imports: [],
 })
 export class NotDesktopComponent {
     constructor() {

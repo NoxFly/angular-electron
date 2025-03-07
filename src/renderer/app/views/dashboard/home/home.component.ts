@@ -1,6 +1,5 @@
 import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { GlobalStateService } from '../../../core/services/globalState.service';
 
 @Component({
@@ -9,7 +8,7 @@ import { GlobalStateService } from '../../../core/services/globalState.service';
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [RouterLink, NgIf],
+    imports: [NgIf],
 })
 export class HomeComponent {
     protected title = 'Electron Angular';

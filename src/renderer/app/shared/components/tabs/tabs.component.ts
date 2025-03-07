@@ -1,6 +1,5 @@
 import { NgFor } from '@angular/common';
 import { AfterViewInit, ApplicationRef, ChangeDetectorRef, Component, ComponentRef, contentChildren, createComponent, ElementRef, HostBinding, input, OnInit, Renderer2, viewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { TabComponent } from './tab/tab.component';
 
 @Component({
@@ -8,7 +7,7 @@ import { TabComponent } from './tab/tab.component';
     templateUrl: './tabs.component.html',
     styleUrl: './tabs.component.scss',
     standalone: true,
-    imports: [NgFor, RouterOutlet],
+    imports: [NgFor],
 })
 export class TabsComponent implements OnInit, AfterViewInit {
     public type = input<'tabs' | 'pivot'>('pivot');
@@ -98,7 +97,6 @@ export class TabsComponent implements OnInit, AfterViewInit {
             newElementWrapper = this.renderer.createElement('div');
 
             this.renderer.addClass(newElementWrapper, 'tab-content');
-            this.renderer.setAttribute(newElementWrapper, 'data-tab-id', newActiveTab.getId());
             this.instances.set(index, { ref: newComponent, container: newElementWrapper });
         }
 

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ElectronService } from '../../../../core/services/electron.service';
 import { GlobalStateService } from '../../../../core/services/globalState.service';
 
@@ -9,7 +9,7 @@ import { GlobalStateService } from '../../../../core/services/globalState.servic
     templateUrl: './cash-settings.component.html',
     styleUrls: ['./cash-settings.component.scss', '../settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [RouterLink],
+    imports: [],
 })
 export class CashSettingsComponent {
     constructor(

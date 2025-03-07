@@ -1,5 +1,4 @@
-import { Component, input, OnInit, Type } from '@angular/core';
-import { v4 as uuidv4 } from 'uuid';
+import { Component, input, Type } from '@angular/core';
 
 @Component({
     selector: 'app-tab',
@@ -8,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
     standalone: true,
     imports: [],
 })
-export class TabComponent implements OnInit {
+export class TabComponent {
     public component    = input.required<Type<any>>();
     public disabled     = input<boolean>(false);
     public label        = input<string>('');
@@ -16,15 +15,4 @@ export class TabComponent implements OnInit {
     public badge        = input<string>('');
     public badgeColor   = input<string>('');
     public default      = input<boolean>(false);
-
-    public getId(): string {
-        return this.id;
-    }
-
-    private id: string = '';
-
-    public ngOnInit(): void {
-        this.id = uuidv4();
-    }
-
 }

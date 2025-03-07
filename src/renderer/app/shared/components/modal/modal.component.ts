@@ -32,7 +32,6 @@ export class ModalComponent extends UIComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
-        console.log(this.injectedComponent());
         const component = this.injectedComponent()?.createComponent(this.component(), {
             environmentInjector: this.appRef.injector,
         });

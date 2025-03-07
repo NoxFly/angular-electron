@@ -1,4 +1,3 @@
-import { NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, input } from '@angular/core';
 
 
@@ -8,7 +7,7 @@ import { ChangeDetectionStrategy, Component, OnInit, input } from '@angular/core
     standalone: true,
     templateUrl: './select-option.component.html',
     styleUrls: ['./select-option.component.scss'],
-    imports: [NgFor, NgIf],
+    imports: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectOptionComponent implements OnInit {
