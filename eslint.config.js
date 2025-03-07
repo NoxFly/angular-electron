@@ -15,7 +15,7 @@ module.exports = tseslint.config(
         ],
         languageOptions: {
             parserOptions: {
-                ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
+                ecmaVersion: 2020,
                 sourceType: "module",
                 project: ["./tsconfig.json", "./tsconfig.app.json"],
                 tsconfigRootDir: __dirname,
