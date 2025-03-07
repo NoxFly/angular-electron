@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, input, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'app-spinner',
@@ -8,8 +8,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class SpinnerComponent {
-    @Input()
-    public color?: string = '';
+    public color = input<string>('');
 
     constructor() {}
 }

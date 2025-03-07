@@ -9,10 +9,6 @@ import { AlertComponent } from "./alert.component";
 })
 export class AlertController extends UIController<AlertComponent, AlertConfig> {
     public override create(config: AlertConfig): AlertComponent {
-        return this.instanciate(AlertComponent, config, (instance) => {
-            instance.title      = config.title;
-            instance.message    = config.message;
-            instance.actions    = config.actions;
-        });
+        return this.instanciate(AlertComponent, config);
     }
 }

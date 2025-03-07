@@ -1,6 +1,6 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgIf } from '@angular/common';
+import { Component, input, ViewEncapsulation } from '@angular/core';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
     selector: 'app-loading-screen',
@@ -12,7 +12,7 @@ import { NgIf } from '@angular/common';
 
 })
 export class LoadingScreenComponent {
-    @Input() public message?: string;
+    public message = input<string>();
 
     protected applicationName: string = 'Electron Angular';
 

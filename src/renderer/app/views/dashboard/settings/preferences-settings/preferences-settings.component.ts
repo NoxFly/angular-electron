@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { SelectOptionComponent } from '../../../../shared/components/select/select-option/select-option.component';
+import { SelectComponent } from '../../../../shared/components/select/select.component';
 
 @Component({
     selector: 'app-preferences-settings',
@@ -6,7 +8,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     templateUrl: './preferences-settings.component.html',
     styleUrls: ['./preferences-settings.component.scss', '../settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [],
+    imports: [SelectComponent, SelectOptionComponent],
 })
 export class PreferencesSettingsComponent {
     constructor() {}

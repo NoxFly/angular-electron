@@ -1,4 +1,3 @@
-
 export function readFileAsync(file: File): Promise<string> {
     const reader = new FileReader();
     reader.readAsText(file);

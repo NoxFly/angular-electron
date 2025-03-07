@@ -9,13 +9,6 @@ import { ToastComponent } from "./toast.component";
 })
 export class ToastController extends UIController<ToastComponent, ToastConfig> {
     public override create(config: ToastConfig): ToastComponent {
-        return this.instanciate(ToastComponent, config, (instance) => {
-            instance.message    = config.message;
-            instance.closable   = config.closable   || false;
-            instance.color      = config.color      || 'default';
-            instance.duration   = config.duration;
-            instance.position   = config.position   || 'top-center';
-            instance.actions    = config.actions;
-        });
+        return this.instanciate(ToastComponent, config);
     }
 }

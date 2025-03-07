@@ -1,5 +1,5 @@
 import { KeyValuePipe, NgFor } from '@angular/common';
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, signal, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, input, Input, OnDestroy, OnInit, output, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 type NumpadAction = {
@@ -17,16 +17,12 @@ type NumpadAction = {
     standalone: true,
     templateUrl: './numpad.component.html',
     styleUrl: './numpad.component.scss',
-    encapsulation: ViewEncapsulation.None,
     imports: [FormsModule, NgFor, KeyValuePipe],
 
 })
 export class NumpadComponent implements OnInit, OnDestroy {
-    @Input()
-    public disabled: boolean = false;
-
-    @Input()
-    public type: 'text' | 'password' = 'text';
+    public disabled = input<boolean>(false);
+    public type = input<'text' | 'password'>('text');
 
     @Input()
     public set decimal(value: boolean | '') {
@@ -52,11 +48,10 @@ export class NumpadComponent implements OnInit, OnDestroy {
         this.acceptNegative.set(value !== undefined);
     }
 
-    @Output()
-    public confirm: EventEmitter<string> = new EventEmitter<string>();
 
-    @ViewChild('actionsContainer')
-    public actionsContainer!: ElementRef<HTMLElement>;
+    public confirm = output<string>();
+
+    protected actionsContainer = viewChild<ElementRef<HTMLElement>>('actionsContainer');
 
 
     protected value: string = '';
@@ -74,7 +69,7 @@ export class NumpadComponent implements OnInit, OnDestroy {
     /* Code-Behind Events */
 
     protected onKeydown(event: KeyboardEvent): void {
-        if(this.disabled) {
+        if(this.disabled()) {
             return;
         }
 
@@ -96,7 +91,7 @@ export class NumpadComponent implements OnInit, OnDestroy {
     }
 
     protected onKeyUp(event: KeyboardEvent): void {
-        if(this.disabled) {
+        if(this.disabled()) {
             return;
         }
 
@@ -116,7 +111,7 @@ export class NumpadComponent implements OnInit, OnDestroy {
     }
 
     protected onAction(action: NumpadAction): void {
-        if(this.disabled) {
+        if(this.disabled()) {
             return;
         }
 
@@ -132,7 +127,7 @@ export class NumpadComponent implements OnInit, OnDestroy {
     /* Custom Actions */
 
     private onConfirm(): void {
-        if(this.disabled || this.value.length === 0) {
+        if(this.disabled() || this.value.length === 0) {
             return;
         }
 
@@ -140,7 +135,7 @@ export class NumpadComponent implements OnInit, OnDestroy {
     }
 
     private clear(): void {
-        if(this.disabled) {
+        if(this.disabled()) {
             return;
         }
 
@@ -148,7 +143,7 @@ export class NumpadComponent implements OnInit, OnDestroy {
     }
 
     private deleteCharacter(): void {
-        if(this.disabled) {
+        if(this.disabled()) {
             return;
         }
 
@@ -158,7 +153,7 @@ export class NumpadComponent implements OnInit, OnDestroy {
     private placeDot(): void {
         // check if a dot is not already placed in the value
         // or if the value is empty
-        if(this.disabled || !this.acceptDecimals() || this.value.length === 0 || this.value.indexOf(',') !== -1) {
+        if(this.disabled() || !this.acceptDecimals() || this.value.length === 0 || this.value.indexOf(',') !== -1) {
             return;
         }
 
@@ -173,8 +168,8 @@ export class NumpadComponent implements OnInit, OnDestroy {
 
     /*  */
 
-    private getActionElement(actionValue: string): HTMLElement | null {
-        return this.actionsContainer.nativeElement.querySelector(`button[data-value="${actionValue}"]`);
+    private getActionElement(actionValue: string): HTMLElement | undefined | null {
+        return this.actionsContainer()?.nativeElement.querySelector(`button[data-value="${actionValue}"]`);
     }
 
     private getParsedValue(): string {

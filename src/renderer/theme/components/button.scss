@@ -20,11 +20,13 @@ button {
 
     &:active {
         background: var(--primary-color-shade);
+        color: var(--primary-color-contrast);
+        transform: scale(.96);
     }
 
     &:disabled {
         cursor: default;
-        opacity: .2;
+        opacity: .5;
     }
 
     &.btn-cancel {

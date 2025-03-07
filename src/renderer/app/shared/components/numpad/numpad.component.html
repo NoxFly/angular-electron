@@ -5,7 +5,7 @@
 
     <div class="display" [class]="{ negative: isNegative() }">
 
-        <input [type]="type" [(ngModel)]="value" readonly>
+        <input [type]="type()" [(ngModel)]="value" readonly>
 
     </div>
 

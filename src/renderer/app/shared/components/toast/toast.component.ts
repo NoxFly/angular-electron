@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, input, OnInit } from '@angular/core';
 import { UIComponent } from '../../directives/UIComponent.directive';
 import { ToastPosition, UIAction, UIColor } from '../../types/ui.types';
 
@@ -13,42 +13,31 @@ import { ToastPosition, UIAction, UIColor } from '../../types/ui.types';
     imports: [NgFor, NgIf],
 })
 export class ToastComponent extends UIComponent implements OnInit {
-    @Input({ required: true })
-    public message!: string;
-
-    @Input()
-    public duration?: number;
-
-    @Input()
-    public color?: UIColor;
-
-    @Input()
-    public closable?: boolean;
-
-    @Input()
-    public position?: ToastPosition;
-
-    @Input()
-    public actions?: UIAction[];
+    public message  = input.required<string>();
+    public duration = input<number>();
+    public color    = input<UIColor>();
+    public closable = input<boolean>();
+    public position = input<ToastPosition>();
+    public actions  = input<UIAction[]>([]);
 
 
     @HostBinding('attr.data-toast-type')
     public get colorClass(): string {
-        return this.color || 'medium';
+        return this.color() || 'medium';
     }
 
     @HostBinding('attr.data-toast-position')
     public get positionClass(): string {
-        return this.position || 'top-center';
+        return this.position() || 'top-center';
     }
 
 
     protected get hasActions(): boolean {
-        return this.actions !== undefined && this.actions.length > 0;
+        return this.actions().length > 0;
     }
 
     protected get hasDuration(): boolean {
-        return this.duration !== undefined;
+        return this.duration() !== undefined;
     }
 
     public ngOnInit(): void {

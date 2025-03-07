@@ -1,6 +1,5 @@
 import { Injectable, signal, WritableSignal } from "@angular/core";
 import { NavigationStart, Router } from "@angular/router";
-import { BehaviorSubject } from "rxjs";
 
 type UISettings = {
     showTitlebar: boolean;
