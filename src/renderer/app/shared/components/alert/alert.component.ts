@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { UIComponent } from '../../directives/UIComponent.directive';
 import { UIAction } from '../../types/ui.types';
 
@@ -12,29 +12,20 @@ import { UIAction } from '../../types/ui.types';
     styleUrls: ['./alert.component.scss'],
     imports: [NgFor, NgIf],
 })
-export class AlertComponent extends UIComponent implements OnInit {
-    @Input()
-    public title?: string;
+export class AlertComponent extends UIComponent {
+    protected readonly defaultActions: UIAction[] = [
+        {
+            text: 'Ok',
+            role: 'cancel',
+            handler: (self) => this.dismiss({ role: self.role })
+        }
+    ];
 
-    @Input()
-    public message?: string;
-
-    @Input()
-    public actions?: UIAction[];
+    public title    = input<string>();
+    public message  = input<string>();
+    public actions  = input<UIAction[]>(this.defaultActions);
 
     protected get hasActions(): boolean {
         return this.actions !== undefined && this.actions.length > 0;
-    }
-
-    public ngOnInit(): void {
-        if(this.actions === undefined) {
-            this.actions = [
-                {
-                    text: 'Ok',
-                    role: 'cancel',
-                    handler: (self) => this.dismiss({ role: self.role })
-                }
-            ];
-        }
     }
 }

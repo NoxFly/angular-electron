@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { ApplicationRef, ComponentRef, createComponent, Directive, ElementRef, EventEmitter, HostBinding, Inject, Injectable, Input, Output, Type } from '@angular/core';
+import { ApplicationRef, ComponentRef, createComponent, Directive, ElementRef, HostBinding, Inject, Injectable, input, output, Type } from '@angular/core';
 import { UIAction, UIConfig, UIDismissData } from '../types/ui.types';
 
 
@@ -7,17 +7,11 @@ import { UIAction, UIConfig, UIDismissData } from '../types/ui.types';
     standalone: true,
 })
 export abstract class UIComponent {
-    @Input()
-    public classes: string = '';
+    public classes = input<string>('');
+    public id = input<string>('');
 
-    @Input()
-    public id: string = '';
-
-    @Output()
-    public willDismiss = new EventEmitter<UIDismissData>();
-
-    @Output()
-    public didDismiss = new EventEmitter<UIDismissData>();
+    public willDismiss = output<UIDismissData>();
+    public didDismiss = output<UIDismissData>();
 
     @HostBinding('class.disappearing')
     protected disappearing: boolean = false;
@@ -29,13 +23,15 @@ export abstract class UIComponent {
 
     @HostBinding('attr.id')
     protected get hostId(): string {
-        return this.id;
+        return this.id();
     }
 
     constructor(
         @Inject(DOCUMENT)
         protected readonly document: Document,
+        protected readonly appRef: ApplicationRef,
         protected readonly ref: ElementRef<HTMLElement>,
+        protected readonly componentRef: ComponentRef<UIComponent>,
     ) {}
 
     public dismiss(e?: Partial<UIDismissData>): void {
@@ -46,6 +42,7 @@ export abstract class UIComponent {
 
         const onAnimationEnd = (): void => {
             this.document.body.removeChild(this.ref.nativeElement);
+            this.appRef.detachView(this.componentRef.hostView);
             this.didDismiss.emit(d);
         };
 
@@ -81,15 +78,17 @@ export abstract class UIController<T extends UIComponent, C extends UIConfig> {
         private readonly appRef: ApplicationRef,
     ) {}
 
-    protected instanciate(component: Type<T>, config: UIConfig, instanceFeedFn: (instance: T) => void): T {
+    protected instanciate(component: Type<T>, config: C): T {
         const componentRef: ComponentRef<T> = createComponent(component, {
             environmentInjector: this.appRef.injector,
         });
 
-        componentRef.instance.id = config.id || '';
-        componentRef.instance.classes = config.classes || '';
+        for(const key in config) {
+            if(config[key] !== undefined) {
+                componentRef.setInput(key, config[key]);
+            }
+        }
 
-        instanceFeedFn(componentRef.instance);
         this.appRef.attachView(componentRef.hostView);
 
         const uiEl = (componentRef.hostView as any).rootNodes[0];

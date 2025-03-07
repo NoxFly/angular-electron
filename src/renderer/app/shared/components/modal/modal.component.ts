@@ -1,5 +1,5 @@
-import { DOCUMENT, NgIf } from '@angular/common';
-import { ApplicationRef, Component, ElementRef, Inject, Input, OnDestroy, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { Component, input, OnDestroy, OnInit, Type, viewChild, ViewContainerRef } from '@angular/core';
 import { UIComponent } from '../../directives/UIComponent.directive';
 
 @Component({
@@ -10,48 +10,33 @@ import { UIComponent } from '../../directives/UIComponent.directive';
     imports: [NgIf],
 })
 export class ModalComponent extends UIComponent implements OnInit, OnDestroy {
-    @Input({ required: true })
-    public component!: Type<(new () => any)>;
+    public component        = input.required<Type<(new () => any)>>();
+    public componentProps   = input<Record<string, any>>({});
+    public showBackdrop     = input<boolean>(true);
+    public showDots         = input<boolean>(true);
+    public backdropClose    = input<boolean>(true);
+    public keyboardClose    = input<boolean>(true);
 
-    @Input()
-    public componentProps: Record<string, any> = {};
+    public injectedComponent = viewChild<ViewContainerRef>('injectedComponent');
 
-    @Input()
-    public showBackdrop: boolean = true;
-
-    @Input()
-    public showDots: boolean = true;
-
-    @Input()
-    public backdropClose: boolean = true;
-
-    @Input()
-    public keyboardClose: boolean = true;
-
-
-    @ViewChild("injectedComponent", { read: ViewContainerRef, static: true })
-    public injectedComponent!: ViewContainerRef;
-
-    constructor(
-        @Inject(DOCUMENT)
-        document: Document,
-        ref: ElementRef<HTMLElement>,
-
-        protected readonly appRef: ApplicationRef,
-    ) {
-        super(document, ref);
-    }
 
     public ngOnDestroy(): void {
+        const c = this.injectedComponent();
 
+        if(!c) {
+            return;
+        }
+
+        c.clear();
+        this.appRef.detachView(c.get(0)!);
     }
 
     public ngOnInit(): void {
-        const component = this.injectedComponent.createComponent(this.component, {
+        const component = this.injectedComponent()?.createComponent(this.component(), {
             environmentInjector: this.appRef.injector,
         });
 
-        if(component.instance) {
+        if(component?.instance) {
             Object.assign(component.instance, this.componentProps);
         }
     }

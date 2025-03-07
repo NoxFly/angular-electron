@@ -1,5 +1,5 @@
 import { NgFor } from '@angular/common';
-import { AfterViewInit, ApplicationRef, ChangeDetectorRef, Component, ComponentRef, ContentChildren, createComponent, ElementRef, HostBinding, Input, OnInit, QueryList, Renderer2, Type, ViewChild } from '@angular/core';
+import { AfterViewInit, ApplicationRef, ChangeDetectorRef, Component, ComponentRef, contentChildren, ContentChildren, createComponent, ElementRef, HostBinding, input, Input, OnInit, QueryList, Renderer2, Type, viewChild, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TabComponent } from './tab/tab.component';
 
@@ -11,18 +11,15 @@ import { TabComponent } from './tab/tab.component';
     imports: [NgFor, RouterOutlet],
 })
 export class TabsComponent implements OnInit, AfterViewInit {
-    @Input()
-    public type: 'tabs' | 'pivot' = 'pivot';
+    public type = input<'tabs' | 'pivot'>('pivot');
 
-    @ContentChildren(TabComponent)
-    protected tabs!: QueryList<TabComponent>;
+    protected tabs = contentChildren<TabComponent>(TabComponent);
 
-    @ViewChild('content', { static: true, read: ElementRef })
-    protected content!: ElementRef<HTMLElement>;
+    protected content = viewChild<HTMLElement>('content');
 
     @HostBinding('class.tabs')
     public get typeClass(): boolean {
-        return this.type === 'tabs';
+        return this.type() === 'tabs';
     }
 
     protected isActive(index: number): boolean {
@@ -36,10 +33,10 @@ export class TabsComponent implements OnInit, AfterViewInit {
 
     protected selectTab(index: number): void {
         const oldIndex = this.activeTabIndex;
-        const newActiveTab = this.tabs.get(index);
+        const newActiveTab = this.tabs()[index];
         const vec = Math.sign(index - oldIndex);
 
-        if(!newActiveTab || newActiveTab.disabled || index === oldIndex) {
+        if(!newActiveTab || newActiveTab.disabled() || index === oldIndex) {
             return;
         }
 
@@ -57,10 +54,10 @@ export class TabsComponent implements OnInit, AfterViewInit {
 
 
     /**
-     * 
+     *
      */
     private leaveTab(index: number, vec: number): void {
-        const oldActiveTab = this.tabs.get(index);
+        const oldActiveTab = this.tabs()[index];
 
         if(!oldActiveTab || !this.instances.has(index)) {
             return;
@@ -81,10 +78,10 @@ export class TabsComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * 
+     *
      */
     private enterTab(index: number, vec: number): void {
-        const newActiveTab = this.tabs.get(index)!;
+        const newActiveTab = this.tabs()[index]!;
 
         let newComponent: ComponentRef<any>;
         let newElementWrapper: HTMLElement;
@@ -97,7 +94,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
         }
         // création d'une nouvelle instance car 1ère fois visite de cet onglet
         else {
-            newComponent = createComponent(newActiveTab.component, { environmentInjector: this.appRef.injector });
+            newComponent = createComponent(newActiveTab.component(), { environmentInjector: this.appRef.injector });
             newElementWrapper = this.renderer.createElement('div');
 
             this.renderer.addClass(newElementWrapper, 'tab-content');
@@ -107,7 +104,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
 
         const newElement = newComponent.location.nativeElement as HTMLElement;
         this.renderer.appendChild(newElementWrapper, newElement);
-        
+
         this.renderer.setAttribute(newElementWrapper, 'data-vec', vec < 0 ? 'left-to-right' : 'right-to-left');
         this.renderer.setAttribute(newElementWrapper, 'tabindex', '0');
 
@@ -117,7 +114,7 @@ export class TabsComponent implements OnInit, AfterViewInit {
             this.renderer.removeClass(newElementWrapper, 'new');
         }, { once: true });
 
-        this.renderer.appendChild(this.content.nativeElement, newElementWrapper);
+        this.renderer.appendChild(this.content(), newElementWrapper);
         this.appRef.attachView(newComponent.hostView);
 
         this.activeTabIndex = index;
@@ -125,11 +122,11 @@ export class TabsComponent implements OnInit, AfterViewInit {
 
 
     public ngAfterViewInit(): void {
-        const defaultTabIndex = this.tabs.toArray().findIndex((tab) => tab.default);
+        const defaultTabIndex = this.tabs().findIndex((tab) => tab.default);
         const index = defaultTabIndex > -1 ? defaultTabIndex : 0;
         this.selectTab(index);
     }
-    
+
     public ngOnInit(): void {
     }
 

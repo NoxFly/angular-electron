@@ -1,12 +1,8 @@
-import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs';
 import { ElectronService } from '../../core/services/electron.service';
 import { GlobalStateService } from '../../core/services/globalState.service';
-import { ModalComponent } from '../../shared/components/modal/modal.component';
 import { ModalController } from '../../shared/components/modal/modal.controller';
-import { SubscriptionManager } from '../../shared/directives/SubscriptionManager.directive';
 import { OnpremiseRegistrationComponent } from './onpremise/onpremise.component';
 import { SaasRegistrationComponent } from './saas/saas.component';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -22,9 +18,9 @@ type Credentials = {
     templateUrl: './register.component.html',
     styleUrl: './register.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgSwitch, NgSwitchCase, NgIf, WelcomeComponent, OnpremiseRegistrationComponent, SaasRegistrationComponent, ModalComponent],
+    imports: [WelcomeComponent],
 })
-export class RegisterComponent extends SubscriptionManager {
+export class RegisterComponent {
     protected configType = signal<'onpremise' | 'saas' | undefined>(undefined);
     protected config?: any;
 
@@ -33,9 +29,7 @@ export class RegisterComponent extends SubscriptionManager {
         private readonly electron: ElectronService,
         private readonly router: Router,
         private readonly modalCtrl: ModalController,
-    ) {
-        super();
-    }
+    ) {}
 
     protected onConfigImported(e: { isSaas: boolean; config: any; }): void {
         this.config = e.config;
@@ -51,16 +45,14 @@ export class RegisterComponent extends SubscriptionManager {
             id: 'registration-modal',
         });
 
-        this.watch$ = modal.willDismiss.pipe(
-            tap(({ role, data }) => {
-                if(role === 'cancel') {
-                    this.onImportCancel();
-                }
-                else {
-                    this.onPremConfirmed(data as Credentials);
-                }
-            })
-        );
+        modal.willDismiss.subscribe(({ role, data }) => {
+            if(role === 'cancel') {
+                this.onImportCancel();
+            }
+            else {
+                this.onPremConfirmed(data as Credentials);
+            }
+        });
     }
 
     protected onImportCancel(): void {
