@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, computed, input, OnInit } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { UIComponent } from '../../directives/UIComponent.directive';
 import { UIAction } from '../../types/ui.types';
 
@@ -10,7 +10,7 @@ import { UIAction } from '../../types/ui.types';
     styleUrls: ['./alert.component.scss'],
     imports: [NgFor, NgIf],
 })
-export class AlertComponent extends UIComponent implements OnInit {
+export class AlertComponent extends UIComponent {
     protected readonly defaultActions: UIAction[] = [
         {
             text: 'Ok',
@@ -24,8 +24,4 @@ export class AlertComponent extends UIComponent implements OnInit {
     public actions  = input<UIAction[]>(this.defaultActions);
 
     protected hasActions = computed(() => this.actions().length > 0);
-
-    public ngOnInit(): void {
-        console.log(this.actions());
-    }
 }

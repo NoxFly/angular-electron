@@ -2,5 +2,15 @@
 @use '../../../../../theme/animations.scss' as *;
 
 :host {
+    display: block;
+    padding: 10px 15px;
+    cursor: pointer;
 
+    &:hover {
+        background: var(--light-color-tint-2);
+    }
+
+    &.selected {
+        background: var(--light-color-tint-2);
+    }
 }

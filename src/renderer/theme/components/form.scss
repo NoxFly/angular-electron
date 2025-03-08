@@ -1,3 +1,5 @@
+@use '../mixins.scss' as *;
+
 input:not(:where([type="checkbox"], [type="radio"])) {
     min-width: 150px;
     padding: 6px 10px;
@@ -23,4 +25,47 @@ input:not(:where([type="checkbox"], [type="radio"])) {
             border-bottom-color: var(--primary-color-shade);
         }
     }
+}
+
+
+label[for] {
+    cursor: pointer;
+    user-select: none;
+}
+
+input[type="radio"] {
+    aspect-ratio: 1/1;
+    height: 16px;
+    position: relative;
+    border: 1px solid var(--medium-color);
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(.5);
+        width: 50%;
+        aspect-ratio: 1/1;
+        border-radius: 100%;
+        background: linear-gradient(0deg, var(--primary-color), var(--primary-color-tint));
+        opacity: 0;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    &:checked {
+        border-color: var(--primary-color);
+
+        &::after {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+    }
+}
+
+.radio-item {
+    @include flex($disp: inline-flex);
+
+    margin: 10px;
+    gap: 10px;
 }
