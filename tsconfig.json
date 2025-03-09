@@ -11,13 +11,11 @@
         "outDir": "./dist",
         "forceConsistentCasingInFileNames": true,
         "strict": true,
-        "allowSyntheticDefaultImports": true,
         "noImplicitOverride": true,
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
         "sourceMap": true,
         "declaration": false,
-        "downlevelIteration": true,
         "experimentalDecorators": true,
         "importHelpers": true,
         "esModuleInterop": true,
@@ -39,6 +37,8 @@
         "node_modules/electron/electron.d.ts",
     ],
     "exclude": [
-        "dist"
+        "dist",
+        "src/renderer/**/*.ts",
+        "src/renderer/**/*.d.ts",
     ]
 }

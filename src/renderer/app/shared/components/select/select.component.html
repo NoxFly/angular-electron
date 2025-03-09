@@ -1,0 +1,6 @@
+<div class="selected" (click)="toggleOptions()">
+    <span>{{ getSelected().text }}</span>
+</div>
+<div class="options">
+    <ng-content select="app-select-option"></ng-content>
+</div>

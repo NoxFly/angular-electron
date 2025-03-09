@@ -1,6 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Output, QueryList, signal, ViewChild, ViewChildren } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, output, signal, viewChild, viewChildren } from '@angular/core';
 import { GlobalStateService } from '../../../core/services/globalState.service';
 import { ToastController } from '../../../shared/components/toast/toast.controller';
 import { readJsonFileAsync } from '../../../shared/helpers/global.helper';
@@ -9,30 +8,24 @@ import { ToastConfig } from '../../../shared/types/ui.types';
 @Component({
     selector: 'app-welcome',
     standalone: true,
-    imports: [NgIf, NgFor, RouterLink],
+    imports: [NgIf, NgFor],
     templateUrl: './welcome.component.html',
     styleUrl: './welcome.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WelcomeComponent implements AfterViewInit {
+    public readonly configImported = output<{ isSaas: boolean; config: any; }>();
+
+    protected steps = viewChildren<ElementRef<HTMLElement>>('step');
+    protected slider = viewChild<ElementRef<HTMLElement>>('slider');
+    protected configInput = viewChild<ElementRef<HTMLElement>>('configInput');
+
     protected helpLinkSaas = "https://businesscentral.dynamics.com/?page=70344953";
     protected helpLinkDoc = "https://docs.capvision-cloud.fr/fr-FR/cherrycommerce/user-guide-bc-cash-registers.html";
     protected currentStep: number = 0;
     protected draggingOver = signal(false);
     protected showPart = signal(0);
-
-    @Output()
-    private readonly configImported = new EventEmitter<{ isSaas: boolean; config: any; }>();
-
-    @ViewChildren('step')
-    protected steps!: QueryList<ElementRef<HTMLElement>>;
     protected viewLoaded = signal(false);
-
-    @ViewChild('slider')
-    protected slider!: ElementRef<HTMLElement>;
-
-    @ViewChild('configInput')
-    protected configInput!: ElementRef<HTMLInputElement>;
 
     constructor(
         private readonly globalState: GlobalStateService,
@@ -40,7 +33,7 @@ export class WelcomeComponent implements AfterViewInit {
     ) {}
 
     protected clickOnInput(): void {
-        this.configInput.nativeElement.click();
+        this.configInput()?.nativeElement.click();
     }
 
     protected onFileSelected(event: Event): void {
@@ -90,10 +83,10 @@ export class WelcomeComponent implements AfterViewInit {
     }
 
     private scrollToCurrentStep(v: -1 | 1): void {
-        this.steps.get(this.currentStep)?.nativeElement.classList.remove('active');
+        this.steps()[this.currentStep]?.nativeElement.classList.remove('active');
         this.currentStep += v;
-        this.steps.get(this.currentStep)?.nativeElement.classList.add('active');
-        this.slider.nativeElement.style.transform = `translateX(calc(-${this.currentStep}00% - ${this.currentStep * 10}px))`;
+        this.steps()[this.currentStep]?.nativeElement.classList.add('active');
+        this.slider()!.nativeElement.style.transform = `translateX(calc(-${this.currentStep}00% - ${this.currentStep * 10}px))`;
     }
 
     private async readImportedConfig(file?: File): Promise<void> {
@@ -145,6 +138,6 @@ export class WelcomeComponent implements AfterViewInit {
 
     public ngAfterViewInit(): void {
         this.viewLoaded.set(true);
-        this.steps.get(this.currentStep)?.nativeElement.classList.add('active');
+        this.steps()[this.currentStep]?.nativeElement.classList.add('active');
     }
 }

@@ -80,3 +80,10 @@ export type ToastConfig = UIConfig & {
     closable?: boolean;
     position?: ToastPosition;
 };
+
+
+/* Select */
+
+export type SelectOption<T> = UIIconAction & {
+    value: T;
+};

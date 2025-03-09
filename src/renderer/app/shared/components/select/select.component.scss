@@ -1,0 +1,76 @@
+@use '../../../../theme/mixins.scss' as *;
+@use '../../../../theme/animations.scss' as *;
+
+:host {
+    --border-color: color-mix(in srgb, var(--light-color-shade), var(--medium-color-tint) 10%);
+    --selected-border-color: var(--border-color);
+    --arrow-color: var(--medium-color);
+    --selected-background-color: transparent;
+
+    position: relative;
+    display: inline-block;
+    user-select: none;
+    margin: 10px 0;
+    width: var(--select-width, 250px);
+
+    &.opened {
+        --arrow-color: var(--primary-color);
+        --selected-border-color: var(--primary-color);
+        --selected-background-color: color-mix(in srgb, var(--primary-color) 10%, var(--light-color-tint) 90%);
+
+        .options {
+            display: block;
+        }
+    }
+
+    &:not(.opened) {
+        .selected:hover {
+            background: var(--light-color-tint-2);
+        }
+    }
+
+    .selected {
+        padding: 7px 35px 6px 12px;
+        border-radius: 4px;
+        border: 1px solid var(--selected-border-color);
+        background: var(--selected-background-color);
+        cursor: pointer;
+        position: relative;
+        transition-duration: .1s;
+        height: 38px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: .9em;
+    
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            width: 6px;
+            height: 6px;
+            border-left: 1px solid var(--arrow-color);
+            border-bottom: 1px solid var(--arrow-color);
+            transform: translateY(-55%) rotate(-45deg);
+            transform-origin: center;
+        }
+    }
+    
+    .options {
+        display: none;
+        position: absolute;
+        top: calc(100% + 5px);
+        left: 0;
+        z-index: 1000;
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        color: var(--light-color-contrast);
+        background: var(--light-color-tint);
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        font-size: .9em;
+    }
+}

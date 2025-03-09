@@ -3,10 +3,10 @@
         <li
             [class]="{ active: isActive(i) }"
             (click)="selectTab(i)"
-            *ngFor="let tab of tabs; let i=index">
-            
-            <span>{{ tab.label }}</span>
-        
+            *ngFor="let tab of tabs(); let i=index">
+
+            <span>{{ tab.label() }}</span>
+
         </li>
     </ul>
 </div>

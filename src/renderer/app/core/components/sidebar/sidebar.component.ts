@@ -1,6 +1,6 @@
 import { DatePipe, Location, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { GlobalStateService } from 'src/renderer/app/core/services/globalState.service';
 import { AlertController } from '../../../shared/components/alert/alert.controller';
 
@@ -20,7 +20,7 @@ type NavItem = {
     standalone: true,
     templateUrl: './sidebar.component.html',
     styleUrl: './sidebar.component.scss',
-    imports: [NgIf, NgFor, RouterLink, RouterLinkActive, DatePipe],
+    imports: [NgIf, NgFor, RouterLink, DatePipe],
 })
 export class SidebarComponent implements OnInit {
     protected sidebarItems: NavItem[][] = [];

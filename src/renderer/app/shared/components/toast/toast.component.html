@@ -1,8 +1,8 @@
 <div class="toast-container">
     <div class="toast-content">
-        <p class="message">{{ message }}</p>
+        <p class="message">{{ message() }}</p>
         <div class="actions" *ngIf="hasActions">
-            <button (click)="onActionClicked(action)" *ngFor="let action of actions">
+            <button (click)="onActionClicked(action)" *ngFor="let action of actions()">
                 {{ action.text }}
             </button>
         </div>

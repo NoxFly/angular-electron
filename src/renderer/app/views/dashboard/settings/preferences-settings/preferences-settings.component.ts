@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { SelectOptionComponent } from '../../../../shared/components/select/select-option/select-option.component';
+import { SelectComponent } from '../../../../shared/components/select/select.component';
 
 @Component({
     selector: 'app-preferences-settings',
     standalone: true,
     templateUrl: './preferences-settings.component.html',
-    styleUrl: './preferences-settings.component.scss',
+    styleUrls: ['./preferences-settings.component.scss', '../settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [],
+    imports: [SelectComponent, SelectOptionComponent],
 })
 export class PreferencesSettingsComponent {
     constructor() {}

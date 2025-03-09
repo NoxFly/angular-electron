@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AfterViewInit, Component, ElementRef, input, OnInit, output, viewChild } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalController } from '../../../shared/components/modal/modal.controller';
 
 @Component({
@@ -10,17 +10,12 @@ import { ModalController } from '../../../shared/components/modal/modal.controll
     styleUrl: './onpremise.component.scss'
 })
 export class OnpremiseRegistrationComponent implements OnInit, AfterViewInit {
-    @Input({ required: true })
-    public config: any;
+    public config = input.required<any>();
 
-    @Output()
-    public readonly registrationCanceled = new EventEmitter<void>();
+    public readonly registrationCanceled = output<void>();
+    public readonly registrationConfirmed = output<any>();
 
-    @Output()
-    public readonly registrationConfirmed = new EventEmitter<any>();
-
-    @ViewChild('username')
-    protected username!: ElementRef<HTMLInputElement>;
+    protected username = viewChild<ElementRef<HTMLInputElement>>('username');
 
     protected form!: FormGroup;
 
@@ -43,7 +38,7 @@ export class OnpremiseRegistrationComponent implements OnInit, AfterViewInit {
     }
 
     public ngAfterViewInit(): void {
-        this.username?.nativeElement?.focus();
+        this.username()?.nativeElement.focus();
     }
 
     public ngOnInit(): void {

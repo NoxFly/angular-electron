@@ -1,7 +1,7 @@
-import { CanActivate, GuardResult, MaybeAsync, Router } from "@angular/router";
-import { ElectronService } from "../services/electron.service";
 import { Injectable } from "@angular/core";
+import { CanActivate, GuardResult, MaybeAsync, Router } from "@angular/router";
 import { of } from "rxjs";
+import { ElectronService } from "../services/electron.service";
 import { GlobalStateService } from "../services/globalState.service";
 
 @Injectable({

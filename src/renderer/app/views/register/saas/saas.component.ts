@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
     selector: 'app-saas-registration',
@@ -8,6 +8,5 @@ import { Component, Input } from '@angular/core';
     styleUrl: './saas.component.scss'
 })
 export class SaasRegistrationComponent {
-    @Input({ required: true })
-    public config: any;
+    public config = input.required<any>();
 }
