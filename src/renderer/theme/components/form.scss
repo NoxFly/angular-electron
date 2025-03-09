@@ -33,13 +33,13 @@ label[for] {
     user-select: none;
 }
 
-input[type="radio"] {
+input[type="radio"],
+input[type="checkbox"] {
     appearance: none;
     aspect-ratio: 1/1;
     height: 18px;
     position: relative;
     border: 1px solid var(--medium-color);
-    border-radius: 100%;
     background: none;
     transition-duration: .2s;
 
@@ -51,10 +51,10 @@ input[type="radio"] {
         transform: translate(-50%, -50%) scale(.5);
         width: 50%;
         aspect-ratio: 1/1;
-        border-radius: 100%;
         background: linear-gradient(0deg, var(--primary-color), var(--primary-color-tint));
         opacity: 0;
         transition: opacity 0.3s ease, transform 0.3s ease;
+        border-radius: inherit;
     }
 
     &:active {
@@ -71,7 +71,12 @@ input[type="radio"] {
     }
 }
 
-.radio-item {
+input[type="radio"] {
+    border-radius: 100%;
+}
+
+.radio-item,
+.checkbox-item {
     @include flex($disp: inline-flex);
 
     margin: 10px;
