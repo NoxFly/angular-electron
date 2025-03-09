@@ -67,6 +67,6 @@ export class RegisterComponent {
     private register(): void {
         this.globalState.known.set(true);
         this.electron.ipcRenderer.register();
-        this.router.navigate(['/dashboard/login']).then(console.log).catch(console.error);
+        this.router.navigate(['/dashboard/login']);
     }
 }

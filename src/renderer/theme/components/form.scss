@@ -34,10 +34,14 @@ label[for] {
 }
 
 input[type="radio"] {
+    appearance: none;
     aspect-ratio: 1/1;
-    height: 16px;
+    height: 18px;
     position: relative;
     border: 1px solid var(--medium-color);
+    border-radius: 100%;
+    background: none;
+    transition-duration: .2s;
 
     &::after {
         content: '';
@@ -51,6 +55,10 @@ input[type="radio"] {
         background: linear-gradient(0deg, var(--primary-color), var(--primary-color-tint));
         opacity: 0;
         transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    &:active {
+        transform: scale(.8);
     }
     
     &:checked {

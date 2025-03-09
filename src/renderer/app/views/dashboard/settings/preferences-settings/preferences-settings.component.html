@@ -12,7 +12,7 @@
 
     <p>Méthode de comptage pour l'ouverture/clôture de caisse :</p>
     <app-select>
-        <app-select-option value="numpad">Pavé numérique</app-select-option>
+        <app-select-option value="numpad" default>Pavé numérique</app-select-option>
     </app-select>
 
 </section>
@@ -22,8 +22,8 @@
     <h2>Documents PDF</h2>
 
     <p>Action à réaliser :</p>
-    <app-select>
-        <app-select-option value="open">Ouvrir le document</app-select-option>
+    <app-select multiple>
+        <app-select-option value="open" default>Ouvrir le document</app-select-option>
         <app-select-option value="print">Imprimer le document</app-select-option>
         <app-select-option value="open-print">Ouvrir et imprimer le document</app-select-option>
     </app-select>
@@ -41,7 +41,7 @@
         </div>
 
         <div class="radio-item">
-            <input type="radio" name="ticket-print-mode" id="ticket-print-mode-rad-classic" value="classic">
+            <input type="radio" name="ticket-print-mode" id="ticket-print-mode-rad-classic" value="classic" checked>
             <label for="ticket-print-mode-rad-classic">Imprimante classique</label>
         </div>
     </div>
