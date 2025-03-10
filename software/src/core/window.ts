@@ -10,14 +10,14 @@ const defaultWindowOptions: BrowserWindowConstructorOptions = {
         devTools: !environment.production,
         nodeIntegration: false,
         contextIsolation: true,
-        preload: join(environment.root, 'core/preload.js'),
+        preload: join(environment.rootDir, 'core/preload.js'),
     },
     center: true,
     show: false,
     autoHideMenuBar: true,
     titleBarStyle: 'hidden',
     frame: false,
-    icon: 'public/favicon.ico',
+    icon: join(environment.publicDir, 'favicon.ico'),
     minHeight: 750,
     minWidth: 950,
     resizable: false,
@@ -93,8 +93,8 @@ export class WindowManager {
             return { action: 'deny' };
         });
 
-        const url = (environment.production)
-            ? `file://${join(environment.root, 'browser/index.html')}`
+        const url = environment.production
+            ? `file://${join(environment.rootDir, 'browser/index.html')}`
             : 'http://localhost:4200/' + launchPage;
 
         await window.loadURL(url);
