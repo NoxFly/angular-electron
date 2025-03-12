@@ -1,5 +1,6 @@
 import { NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect } from '@angular/core';
+import { ElectronService } from 'src/app/core/services/electron.service';
 import { GlobalStateService } from 'src/app/core/services/globalState.service';
 import { AlertController } from 'src/app/shared/components/alert/alert.controller';
 
@@ -14,10 +15,25 @@ import { AlertController } from 'src/app/shared/components/alert/alert.controlle
 export class HomeComponent {
     protected title = 'Electron Angular';
 
+    protected secondScreenStateMessage = computed(() => {
+        return this.electron.hasSecondScreen()
+            ? 'Second écran disponible'
+            : 'Aucun second écran détecté';
+    });
+
     constructor(
         protected readonly globalState: GlobalStateService,
         protected readonly alertCtrl: AlertController,
+        protected readonly electron: ElectronService,
     ) {}
+
+    protected printPDF(): void {
+        this.electron.ipcRenderer.print();
+    }
+
+    protected openSecondScreen(): void {
+        this.electron.ipcRenderer.openSecondScreen();
+    }
 
     protected displayError(): void {
         this.alertCtrl.create({

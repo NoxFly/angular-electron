@@ -36,3 +36,12 @@
     user-select: none;
 }
 
+
+.second-screen-p {
+    margin: 20px 0;
+    color: var(--danger-color);
+
+    &.success {
+        color: var(--success-color);
+    }
+}

@@ -1,8 +1,11 @@
 <ng-container *ngIf="globalState.connected(); else guestView">
     <article class="page-content">
         <p>Hello world</p>
+        <p class="second-screen-p" [class]="{ success: electron.hasSecondScreen() }">{{ secondScreenStateMessage() }}</p>
 
         <button (click)="displayError()">Afficher popup erreur</button>
+        <button (click)="printPDF()">Imprimer pdf</button>
+        <button (click)="openSecondScreen()" [disabled]="!electron.hasSecondScreen()">Ouvrir second écran</button>
     </article>
 </ng-container>
 

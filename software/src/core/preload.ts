@@ -13,6 +13,8 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
     getTitlebarState: () => ipcRenderer.invoke('get-titlebar-state'),
     openSecondScreen: () => ipcRenderer.invoke('open-second-screen'),
 
+    onSecondScreenDetectionChanged: (cb: fn) => ipcRenderer.on('second-screen-detection-changed', (e, ...args) => cb(...args)),
+
     // app
     loadApp: () => ipcRenderer.invoke('load-app'),
     onNavigationRequested: (cb: fn) => ipcRenderer.on('navigate-to', (e, ...args) => cb(...args)),

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, signal } from "@angular/core";
 
 @Injectable({
     providedIn: 'root',
@@ -6,8 +6,14 @@ import { Injectable } from "@angular/core";
 export class ElectronService {
     private readonly bridge: any;
 
+    public hasSecondScreen = signal(false);
+
     constructor() {
         this.bridge = window as any;
+
+        this.ipcRenderer.onSecondScreenDetectionChanged((state: boolean) => {
+            this.hasSecondScreen.set(state);
+        });
     }
 
     public get ipcRenderer(): any {

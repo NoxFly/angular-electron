@@ -78,6 +78,15 @@ export class WindowManager {
                 closable: win?.isClosable(),
             };
         });
+
+        // add an event to capture when a screen is added or removed
+        screen.on('display-added', () => {
+            this.mainWindow?.webContents.send('second-screen-detection-changed', true);
+        });
+
+        screen.on('display-removed', () => {
+            this.mainWindow?.webContents.send('second-screen-detection-changed', false);
+        });
     }
 
     private async loadWindow(window: BrowserWindow, cb?: (() => void) | null, launchPage?: string): Promise<void> {
@@ -140,6 +149,9 @@ export class WindowManager {
 
         await this.loadWindow(win);
         this.mainWindow?.webContents.openDevTools();
+
+        // check if a second screen is connected
+        this.mainWindow.webContents.send('second-screen-detection-changed', screen.getAllDisplays().length > 1);
     }
 
     public async createSecondary(): Promise<void> {
