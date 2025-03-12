@@ -46,6 +46,7 @@ export type AlertConfig = UIConfig & {
     title?: string;
     message?: string;
     duration?: number;
+    details?: string;
     actions?: UIAction[];
 };
 

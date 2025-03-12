@@ -4,6 +4,13 @@
     <h4 *ngIf="title">{{ title() }}</h4>
     <p *ngIf="message">{{ message() }}</p>
 
+    <div class="details" *ngIf="hasDetails()">
+        <button class="btn-details clear btn-primary" [class]="{ opened: detailsOpened() }" (click)="toggleDetails()">
+            {{ detailsOpened() ? 'Masquer' : 'Afficher' }} les details
+        </button>
+        <div *ngIf="detailsOpened()" [innerHTML]="formattedDetails() | sanitize: 'html'"></div>
+    </div>
+
     <div class="actions" *ngIf="hasActions()">
         <button [class]="'btn-' + getButtonRoleClass(action)" *ngFor="let action of actions()" (click)="onActionClicked(action)">
             {{ action.text }}

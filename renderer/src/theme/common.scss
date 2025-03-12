@@ -4,6 +4,11 @@
 
     &::-webkit-scrollbar {
         width: 10px;
+        height: 10px;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background: transparent;
     }
 
     &::-webkit-scrollbar-track {
@@ -111,7 +116,7 @@ a[href], .link-like {
 }
 
 .page-content {
-    background: var(--light-color-tint);
+    // background: var(--light-color-tint);
     border-radius: var(--border-radius);
     height: 100%;
     width: 100%;
@@ -133,3 +138,19 @@ a[href], .link-like {
     --modal-background: transparent;
 }
 
+
+pre:not(.code-pre) {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100%;
+    white-space: pre-wrap;
+}
+
+code {
+    display: block;
+    font-size: .8em;
+    background: var(--light-color-shade);
+    overflow-x: auto;
+    max-height: 250px;
+    padding: 5px 10px;
+    border-radius: 4px;
+}

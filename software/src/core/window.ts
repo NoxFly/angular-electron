@@ -11,6 +11,7 @@ const defaultWindowOptions: BrowserWindowConstructorOptions = {
         nodeIntegration: false,
         contextIsolation: true,
         preload: join(environment.rootDir, 'core/preload.js'),
+        webSecurity: environment.production,
     },
     center: true,
     show: false,

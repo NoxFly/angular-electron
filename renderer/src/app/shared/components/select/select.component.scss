@@ -5,7 +5,7 @@
     --border-color: color-mix(in srgb, var(--light-color-shade), var(--medium-color-tint) 10%);
     --selected-border-color: var(--border-color);
     --arrow-color: var(--medium-color);
-    --selected-background-color: transparent;
+    --selected-background-color: var(--background-color);
 
     position: relative;
     display: inline-block;
@@ -42,7 +42,7 @@
         overflow: hidden;
         white-space: nowrap;
         font-size: .9em;
-    
+
         &::after {
             content: '';
             position: absolute;
@@ -56,7 +56,7 @@
             transform-origin: center;
         }
     }
-    
+
     .options {
         display: none;
         position: absolute;

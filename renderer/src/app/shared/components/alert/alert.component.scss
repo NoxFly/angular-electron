@@ -19,6 +19,10 @@
         }
     }
 
+    &.details-opened {
+        --alert-width: 700px;
+    }
+
     @starting-style {
         opacity: 0;
     }
@@ -39,12 +43,14 @@
 
     width: var(--alert-width, 400px);
     height: var(--alert-height, auto);
+    max-height: 95%;
+    max-width: 95%;
     background: var(--light-color-tint);
     border-radius: 10px;
     z-index: 3;
     box-shadow: var(--alert-box-shadow, 0 3px 10px rgba(0, 0, 0, 0.5));
     padding: 10px;
-    transition: transform .2s .05s ease;
+    transition: transform .2s .05s ease/* , width .2s ease-out, height .2s ease-out */;
 
     h4, p {
         width: 100%;
@@ -72,6 +78,40 @@
     }
 }
 
+.btn-details {
+    margin-top: 15px;
+
+    // TODO : to remove once we got app-icon component
+    // arrow (border-bottom and border-right)
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-80%) rotate(45deg);
+        width: 8px;
+        height: 8px;
+        border-right: 2px solid var(--btn-fg);
+        border-bottom: 2px solid var(--btn-fg);
+    }
+
+    &.opened::before {
+        transform: translateY(-20%) rotate(225deg);
+    }
+}
+
+.details div {
+    font-size: .8em;
+    padding: 5px 10px;
+    max-height: 40vh;
+    overflow-y: auto;
+    text-align: left;
+    color: var(--medium-color);
+
+    pre {
+        white-space: pre-wrap;
+    }
+}
 
 @keyframes alertContentDisappear {
     0% {

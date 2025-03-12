@@ -1,14 +1,18 @@
-<div class="content">
-    <ng-container *ngIf="globalState.connected(); else guestView">
-        Hello world
-    </ng-container>
+<ng-container *ngIf="globalState.connected(); else guestView">
+    <article class="page-content">
+        <p>Hello world</p>
 
-    <ng-template #guestView>
+        <button (click)="displayError()">Afficher popup erreur</button>
+    </article>
+</ng-container>
+
+<ng-template #guestView>
+    <div class="content">
         <div class="inner">
             <div class="left-side">
                 <figure class="app-logo"></figure>
                 <h1>Bienvenue sur {{ title }}</h1>
             </div>
         </div>
-    </ng-template>
-</div>
+    </div>
+</ng-template>

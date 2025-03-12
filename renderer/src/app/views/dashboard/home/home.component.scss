@@ -1,5 +1,9 @@
 @use '../../../../theme/mixins.scss' as *;
 
+.page-content {
+    @include flex($dir: column, $gap: 10px);
+}
+
 .content {
     @include flex;
 
