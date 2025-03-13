@@ -148,7 +148,7 @@ export class WindowManager {
         this.mainWindow = win;
 
         await this.loadWindow(win);
-        this.mainWindow?.webContents.openDevTools();
+        // this.mainWindow?.webContents.openDevTools();
 
         // check if a second screen is connected
         this.mainWindow.webContents.send('second-screen-detection-changed', screen.getAllDisplays().length > 1);

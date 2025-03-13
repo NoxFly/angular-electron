@@ -28,5 +28,10 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
 
     // printing
     print: () => ipcRenderer.invoke('print'),
+
+    sync: () => ipcRenderer.invoke('sync'),
+    onSyncInit: (cb: fn) => ipcRenderer.on('sync-init', (e, ...args) => cb(...args)),
+    onSyncProgress: (cb: fn) => ipcRenderer.on('sync-progress', (e, ...args) => cb(...args)),
+    onSyncComplete: (cb: fn) => ipcRenderer.on('sync-complete', (e, ...args) => cb(...args)),
 });
 

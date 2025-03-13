@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, signal } from '@angular/core';
 import { ElectronService } from 'src/app/core/services/electron.service';
 import { GlobalStateService } from 'src/app/core/services/globalState.service';
 import { AlertController } from 'src/app/shared/components/alert/alert.controller';
@@ -14,6 +14,7 @@ import { AlertController } from 'src/app/shared/components/alert/alert.controlle
 })
 export class HomeComponent {
     protected title = 'Electron Angular';
+    protected isSyncing = signal(false);
 
     protected secondScreenStateMessage = computed(() => {
         return this.electron.hasSecondScreen()
@@ -26,6 +27,29 @@ export class HomeComponent {
         protected readonly alertCtrl: AlertController,
         protected readonly electron: ElectronService,
     ) {}
+
+    protected sync(): void {
+        if(this.isSyncing()) {
+            return;
+        }
+
+        this.isSyncing.set(true);
+
+        this.electron.ipcRenderer.sync();
+
+        this.electron.ipcRenderer.onSyncInit((total: number) => {
+            console.log('Sync init', total);
+        });
+
+        this.electron.ipcRenderer.onSyncProgress((current: number, total: number) => {
+            console.log('Sync progress', current, total);
+        });
+
+        this.electron.ipcRenderer.onSyncComplete((data: string) => {
+            console.log('Sync complete', data);
+            this.isSyncing.set(false);
+        });
+    }
 
     protected printPDF(): void {
         this.electron.ipcRenderer.print();

@@ -2,11 +2,13 @@ import { ipcMain } from "electron/main";
 import { WindowManager } from "core/window";
 import { AuthenticationService } from "modules/authentication";
 import { PrintingService } from "modules/extensions/printing";
+import { SyncingService } from "modules/extensions/sync";
 
 export class App {
     private readonly windowManager = new WindowManager();
     private readonly printing = new PrintingService();
     private readonly auth = new AuthenticationService();
+    private readonly sync = new SyncingService();
 
     constructor() {
         this.setupBridge();
