@@ -16,6 +16,8 @@ export class SyncingService {
 
         return new Promise((resolve, reject) => {
             const req = http.request('http://localhost:3000', (res) => {
+                console.log(res.headers);
+                console.log('total length:', res.headers['content-length']);
                 const total = parseInt(res.headers['content-length'] || '0', 10);
                 let data = '';
                 let current = 0;
