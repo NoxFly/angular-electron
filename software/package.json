@@ -1,30 +1,37 @@
 {
-    "name": "angular-electron",
-    "version": "0.0.0",
-    "private": true,
-    "main": "../dist/index.js",
-    "scripts": {
-        "start": "electron .",
-        "dev": "npm run build && cross-env NODE_ENV=development npm run start",
-        "debug": "npm run build && cross-env NODE_ENV=debug npm run start",
-        "release": "npm run build && cross-env NODE_ENV=production npm run start",
-        "build": "tsc && tsc-alias"
-    },
-    "dependencies": {
-        "tslib": "^2.3.0"
-    },
-    "devDependencies": {
-        "@stylistic/eslint-plugin": "^3.0.1",
-        "@typescript-eslint/eslint-plugin": "^8.23.0",
-        "@typescript-eslint/parser": "^8.23.0",
-        "cross-env": "^7.0.3",
-        "electron": "^34.0.2",
-        "eslint": "^9.19.0",
-        "eslint-plugin-import": "^2.31.0",
-        "eslint-plugin-jsdoc": "^50.6.3",
-        "eslint-plugin-prefer-arrow": "^1.2.3",
-        "tsc-alias": "^1.8.10",
-        "typescript": "~5.5.2",
-        "typescript-eslint": "^8.23.0"
-    }
+  "name": "angular-electron",
+  "version": "0.0.0",
+  "private": true,
+  "main": "../dist/index.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "dev": "npm run build && cross-env NODE_ENV=development npm run start",
+    "debug": "npm run build && cross-env NODE_ENV=debug npm run start",
+    "release": "npm run build && cross-env NODE_ENV=production npm run start",
+    "build": "tsc && tsc-alias",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.7.0",
+    "@electron-forge/maker-squirrel": "^7.7.0",
+    "@stylistic/eslint-plugin": "^3.0.1",
+    "@typescript-eslint/eslint-plugin": "^8.23.0",
+    "@typescript-eslint/parser": "^8.23.0",
+    "cross-env": "^7.0.3",
+    "electron": "^34.0.2",
+    "eslint": "^9.19.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsdoc": "^50.6.3",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "tsc-alias": "^1.8.10",
+    "typescript": "~5.5.2",
+    "typescript-eslint": "^8.23.0"
+  },
+  "config": {
+    "forge": "forge.config.js"
+  }
 }
