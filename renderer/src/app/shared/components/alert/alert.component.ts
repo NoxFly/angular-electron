@@ -1,5 +1,5 @@
 import { DOCUMENT, NgFor, NgIf } from '@angular/common';
-import { ApplicationRef, Component, computed, effect, ElementRef, HostBinding, Inject, input, signal } from '@angular/core';
+import { ApplicationRef, ChangeDetectorRef, Component, computed, effect, ElementRef, HostBinding, Inject, input, signal } from '@angular/core';
 import { UIComponent } from 'src/app/shared/directives/UIComponent.directive';
 import { SanitizePipe } from 'src/app/shared/pipes/sanitize.pipe';
 import { UIAction } from 'src/app/shared/types/ui.types';
@@ -58,12 +58,9 @@ export class AlertComponent extends UIComponent {
         document: Document,
         appRef: ApplicationRef,
         ref: ElementRef<HTMLElement>,
+        cdr: ChangeDetectorRef,
     ) {
-        super(
-            document,
-            appRef,
-            ref,
-        );
+        super(document, appRef, ref, cdr);
 
         effect(() => this.areDetailsOpenedClass = this.detailsOpened());
     }

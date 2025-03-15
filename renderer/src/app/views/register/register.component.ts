@@ -31,11 +31,11 @@ export class RegisterComponent {
         private readonly modalCtrl: ModalController,
     ) {}
 
-    protected onConfigImported(e: { isSaas: boolean; config: any; }): void {
+    protected async onConfigImported(e: { isSaas: boolean; config: any; }): Promise<void> {
         this.config = e.config;
         this.configType.set(e.isSaas ? 'saas' : 'onpremise');
 
-        const modal = this.modalCtrl.create({
+        const modal = await this.modalCtrl.create({
             component: this.configType() === 'saas'
                 ? SaasRegistrationComponent
                 : OnpremiseRegistrationComponent,

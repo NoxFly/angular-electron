@@ -191,8 +191,7 @@ const jsonData = [
     { id: 3, name: 'test3' },
     { id: 4, name: 'test4' },
     { id: 5, name: 'test5' },
-    
-]
+];
 
 const httpServer = http.createServer(async (req, res) => {
     const data = JSON.stringify(jsonData);
@@ -202,7 +201,7 @@ const httpServer = http.createServer(async (req, res) => {
 
     for (let i = 0; i < cl; i += 100) {
         res.write(data.slice(i, i + 100));
-        await new Promise((resolve) => setTimeout(resolve, 200));
+        await new Promise((resolve) => setTimeout(resolve, 400));
     }
 
     res.end();

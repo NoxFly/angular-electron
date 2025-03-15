@@ -8,7 +8,7 @@ import { ToastComponent } from "./toast.component";
     providedIn: 'root'
 })
 export class ToastController extends UIController<ToastComponent, ToastConfig> {
-    public override create(config: ToastConfig): ToastComponent {
+    public override async create(config: ToastConfig): Promise<ToastComponent> {
         return this.instanciate(ToastComponent, config);
     }
 }

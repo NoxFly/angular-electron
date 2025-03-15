@@ -71,6 +71,11 @@
         box-shadow: 0 5px 10px rgba(0, 0, 0, .3);
 
         @include appear-slide-up($tx: -50%, $ty: -50%, $delay: .3s);
+
+        @starting-style {
+            width: 400px;
+            height: 350px;
+        }
     }
 
     @starting-style {

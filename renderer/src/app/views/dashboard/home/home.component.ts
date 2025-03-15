@@ -3,6 +3,8 @@ import { ChangeDetectionStrategy, Component, computed, effect, signal } from '@a
 import { ElectronService } from 'src/app/core/services/electron.service';
 import { GlobalStateService } from 'src/app/core/services/globalState.service';
 import { AlertController } from 'src/app/shared/components/alert/alert.controller';
+import { ModalController } from 'src/app/shared/components/modal/modal.controller';
+import { SyncLoaderComponent } from 'src/app/shared/components/sync-loader/sync-loader.component';
 
 @Component({
     selector: 'app-home',
@@ -25,29 +27,45 @@ export class HomeComponent {
     constructor(
         protected readonly globalState: GlobalStateService,
         protected readonly alertCtrl: AlertController,
+        protected readonly modalCtrl: ModalController,
         protected readonly electron: ElectronService,
     ) {}
 
-    protected sync(): void {
+    protected async sync(): Promise<void> {
         if(this.isSyncing()) {
             return;
         }
 
         this.isSyncing.set(true);
 
+        const modal = await this.modalCtrl.create({
+            component: SyncLoaderComponent,
+            backdropClose: false,
+            keyboardClose: false,
+            showBackdrop: true,
+            showDots: true,
+            id: 'sync-modal',
+        });
+
+        const component = modal.getComponentInstance<SyncLoaderComponent>()!;
+        
+        component.message.set('Début de la synchronisation...');
+
         this.electron.ipcRenderer.sync();
 
         this.electron.ipcRenderer.onSyncInit((total: number) => {
-            console.log('Sync init', total);
+            component.message.set('Initialisation de la synchronisation...');
+            component.progress.set(0);
         });
 
         this.electron.ipcRenderer.onSyncProgress((current: number, total: number) => {
-            console.log('Sync progress', current, total);
+            component.message.set('Synchronisation en cours... étape ' + current + '/' + total);
+            component.progress.set(current / total * 100);
         });
 
         this.electron.ipcRenderer.onSyncComplete((data: string) => {
-            console.log('Sync complete', data);
             this.isSyncing.set(false);
+            component.setState(true);
         });
     }
 

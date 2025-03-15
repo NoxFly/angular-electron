@@ -1,0 +1,11 @@
+@use '../../../../theme/mixins.scss' as *;
+@use '../../../../theme/animations.scss' as *;
+
+#sync-modal {
+    --modal-width: 600px;
+    --modal-height: 480px;
+}
+
+app-sync-loader {
+
+}
