@@ -1,12 +1,15 @@
-<h1>Synchronisation en cours</h1>
-<p>Veuillez patienter pendant que la caisse met à jour les informations avec le serveur.</p>
+<div>
+    <h1>Synchronisation en cours</h1>
+    <p>Veuillez patienter pendant que la caisse met à jour les informations avec le serveur.</p>
+</div>
 
-<p class="description" *ngIf="!!message()">{{ message() }}</p>
+<app-spinner color="primary" *ngIf="syncState() === undefined"></app-spinner>
 
-<app-spinner *ngIf="syncState() === undefined"></app-spinner>
-
-<div class="progress">
-    <div class="progress-bar" [style.width]="progress() + '%'"></div>
+<div>
+    <p class="description" *ngIf="!!message()">{{ message() }}</p>
+    <div class="progress">
+        <div class="progress-bar" [style.width]="progress() + '%'"></div>
+    </div>
 </div>
 
 <div class="sync-state-display" [class]="{

@@ -16,7 +16,11 @@ export class AppGuard implements CanActivate {
 
     public canActivate(): MaybeAsync<GuardResult> {
         const isElectronApp = this.electron.isElectronApp;
-        this.globalState.current.showTitlebar = isElectronApp;
+        
+        this.globalState.current.update(c => ({
+            ...c,
+            showTitlebar: isElectronApp,
+        }));
 
         if(!isElectronApp) {
             this.router.navigateByUrl('/not-desktop');

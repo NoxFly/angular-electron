@@ -46,9 +46,8 @@ export abstract class UIComponent {
             this.document.body.removeChild(this.ref.nativeElement);
             this.appRef.detachView(this.componentRef.hostView);
             this.didDismiss.emit(d);
-            console.log('dismissed');
         };
-        console.log('dismiss');
+
         this.disappearing = true;
         this.cdr.detectChanges();
         this.ref.nativeElement.addEventListener('animationend', onAnimationEnd, { once: true });

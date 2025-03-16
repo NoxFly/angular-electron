@@ -3,7 +3,7 @@ import http from 'node:http';
 
 export class SyncingService {
     constructor() {
-        ipcMain.handle('sync', () => this.sync());
+        ipcMain.handle('sync', this.sync.bind(this));
     }
 
     private async sync(): Promise<void> {
@@ -20,19 +20,24 @@ export class SyncingService {
                 let data = '';
                 let current = 0;
 
+                focusedWindow?.setClosable(false);
+
                 res.on('data', (chunk) => {
                     data += chunk;
                     current += chunk.length;
-                    focusedWindow?.webContents.send('sync-progress', current, total);
+                    const msg = ['Envoie des données', 'Réception des données', 'Traitement des données', undefined][Math.floor(Math.random() * 4)];
+                    focusedWindow?.webContents.send('sync-progress', current, total, msg);
                 });
 
                 res.on('end', () => {
-                    focusedWindow?.webContents.send('sync-complete', data);
+                    focusedWindow?.webContents.send('sync-complete', data, null);
+                    focusedWindow?.setClosable(true);
                     resolve();
                 });
 
                 res.on('error', (err) => {
-                    console.error(err);
+                    focusedWindow?.webContents.send('sync-complete', null, err);
+                    focusedWindow?.setClosable(true);
                     reject(err);
                 });
 

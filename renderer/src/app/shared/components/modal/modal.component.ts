@@ -45,8 +45,8 @@ export class ModalComponent extends UIComponent implements OnInit, OnDestroy {
         if(component?.instance) {
             this.componentInstance = component.instance;
 
-            for(const key in this.componentProps) {
-                component.setInput(key, this.componentProps[key]);
+            for(const key in this.componentProps()) {
+                component.setInput(key, this.componentProps()[key]);
             }
         }
     }

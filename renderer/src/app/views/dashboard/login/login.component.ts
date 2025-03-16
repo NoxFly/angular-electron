@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
     protected login(): void {
         this.globalState.connected.set(true);
-        this.electron.ipcRenderer.login();
+        this.electron.ipc.login();
         this.router.navigate(['/dashboard']);
     }
 

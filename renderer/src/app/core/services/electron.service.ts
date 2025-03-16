@@ -11,12 +11,12 @@ export class ElectronService {
     constructor() {
         this.bridge = window as any;
 
-        this.ipcRenderer.onSecondScreenDetectionChanged((state: boolean) => {
+        this.ipc.onSecondScreenDetectionChanged((state: boolean) => {
             this.hasSecondScreen.set(state);
         });
     }
 
-    public get ipcRenderer(): any {
+    public get ipc(): any {
         return this.bridge.ipcRenderer || {};
     }
 

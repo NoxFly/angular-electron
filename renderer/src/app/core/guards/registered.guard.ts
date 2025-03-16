@@ -14,9 +14,13 @@ export class RegisteredGuard implements CanActivate {
 
     public canActivate(): MaybeAsync<GuardResult> {
         const isKnown = this.globalState.known();
-        this.globalState.current.minimizable = isKnown;
-        this.globalState.current.maximizable = isKnown;
-        this.globalState.current.closable = true;
+
+        this.globalState.current.update(c => ({
+            ...c,
+            minimizable: isKnown,
+            maximizable: isKnown,
+            closable: true,
+        }));
 
         if(!isKnown) {
             this.router.navigateByUrl('/register');

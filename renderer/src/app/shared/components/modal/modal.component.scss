@@ -13,8 +13,8 @@
     // // content
     --modal-left: 50%;
     --modal-top: 50%;
-    --modal-width: 80%;
-    --modal-height: 80%;
+    // --modal-width: 80%;
+    // --modal-height: 80%;
 
     &.disappearing {
         animation: fadeOut .3s forwards;
@@ -63,19 +63,16 @@
 
     > .modal-content {
         @include absolute($top: var(--modal-top), $left: var(--modal-left));
-        width: min(var(--modal-width), 100%);
-        height: min(var(--modal-height), 100%);
+        width: var(--modal-width);
+        height: var(--modal-height);
+        max-width: 80%;
+        max-height: 80%;
         background: var(--light-color-tint);
         border-radius: 10px;
         z-index: 53;
         box-shadow: 0 5px 10px rgba(0, 0, 0, .3);
 
         @include appear-slide-up($tx: -50%, $ty: -50%, $delay: .3s);
-
-        @starting-style {
-            width: 400px;
-            height: 350px;
-        }
     }
 
     @starting-style {

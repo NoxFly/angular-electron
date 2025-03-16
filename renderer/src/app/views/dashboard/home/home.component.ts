@@ -31,7 +31,7 @@ export class HomeComponent {
         protected readonly electron: ElectronService,
     ) {}
 
-    protected async sync(): Promise<void> {
+    protected async sync(withSuccess: boolean): Promise<void> {
         if(this.isSyncing()) {
             return;
         }
@@ -45,36 +45,22 @@ export class HomeComponent {
             showBackdrop: true,
             showDots: true,
             id: 'sync-modal',
+            componentProps: {
+                resultSuccess: withSuccess,
+            }
         });
 
-        const component = modal.getComponentInstance<SyncLoaderComponent>()!;
-        
-        component.message.set('Début de la synchronisation...');
-
-        this.electron.ipcRenderer.sync();
-
-        this.electron.ipcRenderer.onSyncInit((total: number) => {
-            component.message.set('Initialisation de la synchronisation...');
-            component.progress.set(0);
-        });
-
-        this.electron.ipcRenderer.onSyncProgress((current: number, total: number) => {
-            component.message.set('Synchronisation en cours... étape ' + current + '/' + total);
-            component.progress.set(current / total * 100);
-        });
-
-        this.electron.ipcRenderer.onSyncComplete((data: string) => {
+        modal.willDismiss.subscribe(() => {
             this.isSyncing.set(false);
-            component.setState(true);
         });
     }
 
     protected printPDF(): void {
-        this.electron.ipcRenderer.print();
+        this.electron.ipc.print();
     }
 
     protected openSecondScreen(): void {
-        this.electron.ipcRenderer.openSecondScreen();
+        this.electron.ipc.openSecondScreen();
     }
 
     protected displayError(): void {

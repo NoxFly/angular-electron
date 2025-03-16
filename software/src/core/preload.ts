@@ -29,9 +29,21 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
     // printing
     print: () => ipcRenderer.invoke('print'),
 
-    sync: () => ipcRenderer.invoke('sync'),
-    onSyncInit: (cb: fn) => ipcRenderer.once('sync-init', (e, ...args) => cb(...args)),
-    onSyncProgress: (cb: fn) => ipcRenderer.on('sync-progress', (e, ...args) => cb(...args)),
-    onSyncComplete: (cb: fn) => ipcRenderer.once('sync-complete', (e, ...args) => cb(...args)),
+    sync: (initCb: fn, progressCb: fn, doneCb: fn) => {
+        function onProgress(event: Electron.IpcRendererEvent, ...args: any[]): void {
+            progressCb(...args);
+        }
+
+        ipcRenderer.once('sync-init', (e, ...args) => initCb(...args));
+
+        ipcRenderer.on('sync-progress', onProgress);
+
+        ipcRenderer.once('sync-complete', (e, ...args) => {
+            ipcRenderer.off('sync-progress', onProgress);
+            doneCb(...args);
+        });
+
+        ipcRenderer.invoke('sync');
+    },
 });
 

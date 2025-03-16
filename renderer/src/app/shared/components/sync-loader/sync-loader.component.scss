@@ -3,9 +3,103 @@
 
 #sync-modal {
     --modal-width: 600px;
-    --modal-height: 480px;
+    --modal-height: 300px;
+
+    .modal-content {
+        overflow: hidden;
+    }
 }
 
 app-sync-loader {
+    width: var(--modal-width);
+    height: var(--modal-height);
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-around;
+    padding: 25px;
+    overflow: hidden;
+    user-select: none;
 
+    --spinner-size: 30px;
+
+    h1 {
+        text-align: center;
+        font-size: 2.5em;
+    }
+
+    div {
+        width: 100%;
+    }
+
+    > div p {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .description {
+        margin-bottom: 10px;
+        opacity: .5;
+        font-size: .9em;
+    }
+
+    .progress {
+        height: 10px;
+        background: var(--light-color-shade);
+        width: 100%;
+        border-radius: 2em;
+        overflow: hidden;
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color-tint) 100%);
+            background-size: var(--modal-width) 100%;
+            height: 100%;
+            transition: width .2s ease-out;
+        }
+    }
+
+    .sync-state-display {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--light-color-tint);
+        transition: opacity .3s ease, transform .3s ease;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: center;
+
+        &.error {
+            --color: var(--danger-color-shade);
+            --bg-pos: 0 -135px;
+            --bg-size: 190%;
+        }
+
+        &.success {
+            --color: var(--success-color-shade);
+            --bg-pos: 0 0;
+            --bg-size: 190%;
+        }
+
+        figure {
+            height: 50%;
+            aspect-ratio: 1/1;
+            background: var(--color);
+            margin: 0 auto;
+            display: block;
+            background: var(--bg-pos)/var(--bg-size) no-repeat url('/images/status.png');
+        }
+
+        p {
+            color: var(--color);
+            text-align: center;
+        }
+
+        @starting-style {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+    }
 }

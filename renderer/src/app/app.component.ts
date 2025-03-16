@@ -34,7 +34,7 @@ export class AppComponent {
             return;
         }
 
-        this.electron.ipcRenderer.onNavigationRequested('navigate-to', (_: any, url: string) => {
+        this.electron.ipc.onNavigationRequested('navigate-to', (_: any, url: string) => {
             this.router.navigateByUrl(url);
         });
 
@@ -47,18 +47,21 @@ export class AppComponent {
             return;
         }
 
-        const e = await this.electron.ipcRenderer.loadApp();
+        const e = await this.electron.ipc.loadApp();
 
-        this.globalState.default.windowType = e.windowType;
-
-        if(e.windowType === 'secondary') {
-            this.globalState.default.maximizable = false;
-            this.globalState.default.minimizable = false;
-        }
+        
+        const isSecondary = e.windowType === 'secondary';
+        
+        this.globalState.default.update(d => ({
+            ...d,
+            windowType: e.windowType,
+            maximizable: !isSecondary,
+            minimizable: !isSecondary,
+        }));
 
         this.globalState.resetSettings();
 
-        const authState = await this.electron.ipcRenderer.getAuthState(); // { registered: boolean; loggedIn: boolean }
+        const authState = await this.electron.ipc.getAuthState(); // { registered: boolean; loggedIn: boolean }
 
         this.globalState.known.set(authState.registered);
         this.globalState.connected.set(authState.loggedIn);
