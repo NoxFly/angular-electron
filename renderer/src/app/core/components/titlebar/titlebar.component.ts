@@ -19,14 +19,14 @@ export class TitlebarComponent {
     ) {}
 
     public closeApp(): void {
-        this.electron.ipcRenderer.close();
+        this.electron.ipc.close();
     }
 
     public reduceApp(): void {
-        this.electron.ipcRenderer.reduce();
+        this.electron.ipc.reduce();
     }
 
     public toggleFullscreen(): void {
-        this.electron.ipcRenderer.toggleFullscreen();
+        this.electron.ipc.toggleFullscreen();
     }
 }

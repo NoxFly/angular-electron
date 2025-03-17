@@ -8,7 +8,7 @@ import { ModalComponent } from "./modal.component";
     providedIn: 'root'
 })
 export class ModalController extends UIController<ModalComponent, ModalConfig> {
-    public override create(config: ModalConfig): ModalComponent {
+    public override async create(config: ModalConfig): Promise<ModalComponent> {
         return this.instanciate(ModalComponent, config);
     }
 }

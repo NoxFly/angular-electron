@@ -63,13 +63,19 @@ export class WelcomeComponent implements AfterViewInit {
         }
 
         event.preventDefault();
-
-        this.globalState.current.showTitlebar = false;
+        
+        this.globalState.current.update(c => ({
+            ...c,
+            showTitlebar: false,
+        }));
         this.draggingOver.set(true);
     }
 
     protected onDragLeave(): void {
-        this.globalState.current.showTitlebar = true;
+        this.globalState.current.update(c => ({
+            ...c,
+            showTitlebar: true,
+        }));
         this.draggingOver.set(false);
     }
 

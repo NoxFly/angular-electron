@@ -31,11 +31,11 @@ export class RegisterComponent {
         private readonly modalCtrl: ModalController,
     ) {}
 
-    protected onConfigImported(e: { isSaas: boolean; config: any; }): void {
+    protected async onConfigImported(e: { isSaas: boolean; config: any; }): Promise<void> {
         this.config = e.config;
         this.configType.set(e.isSaas ? 'saas' : 'onpremise');
 
-        const modal = this.modalCtrl.create({
+        const modal = await this.modalCtrl.create({
             component: this.configType() === 'saas'
                 ? SaasRegistrationComponent
                 : OnpremiseRegistrationComponent,
@@ -66,7 +66,7 @@ export class RegisterComponent {
 
     private register(): void {
         this.globalState.known.set(true);
-        this.electron.ipcRenderer.register();
+        this.electron.ipc.register();
         this.router.navigate(['/dashboard/login']);
     }
 }

@@ -19,6 +19,8 @@ export class ModalComponent extends UIComponent implements OnInit, OnDestroy {
 
     public injectedComponent = viewChild('injectedComponent', { read: ViewContainerRef });
 
+    private componentInstance?: Type<(new () => any)>;
+
 
     public ngOnDestroy(): void {
         const c = this.injectedComponent();
@@ -31,13 +33,21 @@ export class ModalComponent extends UIComponent implements OnInit, OnDestroy {
         this.appRef.detachView(c.get(0)!);
     }
 
+    public getComponentInstance<T>(): T | undefined {
+        return this.componentInstance as T | undefined;
+    }
+
     public ngOnInit(): void {
         const component = this.injectedComponent()?.createComponent(this.component(), {
             environmentInjector: this.appRef.injector,
         });
 
         if(component?.instance) {
-            Object.assign(component.instance, this.componentProps);
+            this.componentInstance = component.instance;
+
+            for(const key in this.componentProps()) {
+                component.setInput(key, this.componentProps()[key]);
+            }
         }
     }
 }

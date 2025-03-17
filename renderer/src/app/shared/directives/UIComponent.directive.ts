@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { ApplicationRef, ComponentRef, createComponent, Directive, ElementRef, HostBinding, Inject, Injectable, input, output, Type } from '@angular/core';
+import { ApplicationRef, ChangeDetectorRef, ComponentRef, createComponent, Directive, ElementRef, HostBinding, Inject, Injectable, input, output, Type } from '@angular/core';
 import { UIAction, UIConfig, UIDismissData } from 'src/app/shared/types/ui.types';
 
 
@@ -20,7 +20,7 @@ export abstract class UIComponent {
 
     @HostBinding('class')
     protected get hostClasses(): string {
-        return `${this.classes}`;
+        return `${this.classes()}`;
     }
 
     @HostBinding('attr.id')
@@ -33,6 +33,7 @@ export abstract class UIComponent {
         protected readonly document: Document,
         protected readonly appRef: ApplicationRef,
         protected readonly ref: ElementRef<HTMLElement>,
+        protected readonly cdr: ChangeDetectorRef,
     ) {}
 
     public dismiss(e?: Partial<UIDismissData>): void {
@@ -48,6 +49,7 @@ export abstract class UIComponent {
         };
 
         this.disappearing = true;
+        this.cdr.detectChanges();
         this.ref.nativeElement.addEventListener('animationend', onAnimationEnd, { once: true });
     }
 
@@ -79,7 +81,7 @@ export abstract class UIController<T extends UIComponent, C extends UIConfig> {
         private readonly appRef: ApplicationRef,
     ) {}
 
-    protected instanciate(component: Type<T>, config: C): T {
+    protected async instanciate(component: Type<T>, config: C): Promise<T> {
         const componentRef: ComponentRef<T> = createComponent(component, {
             environmentInjector: this.appRef.injector,
         });
@@ -100,10 +102,12 @@ export abstract class UIController<T extends UIComponent, C extends UIConfig> {
 
         (componentRef.instance as UIComponent).componentRef = componentRef;
 
+        await (() => new Promise<void>((resolve) => setTimeout(resolve, 2)))();
+
         return componentRef.instance;
     }
 
-    public abstract create(config: C): T;
+    public abstract create(config: C): Promise<T>;
 
     /**
      * Dissmisses the top-most current UIComponent

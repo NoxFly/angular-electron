@@ -15,3 +15,7 @@ export function readJsonFileAsync<T = any>(file: File): Promise<T> {
 export function jsonParse<T = any>(data: string): T {
     return JSON.parse(data);
 }
+
+export function deepCopy<T>(data: T): T {
+    return JSON.parse(JSON.stringify(data));
+}

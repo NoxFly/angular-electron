@@ -107,8 +107,8 @@ export class SidebarComponent implements OnInit {
         ];
     }
 
-    private onDisconnect(item: NavItem): void {
-        const alert = this.alertCtrl.create({
+    private async onDisconnect(item: NavItem): Promise<void> {
+        const alert = await this.alertCtrl.create({
             title: 'Déconnexion',
             message: 'Souhaitez-vous vraiment vous déconnecter ?',
             actions: [

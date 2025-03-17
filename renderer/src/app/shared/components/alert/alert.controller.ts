@@ -8,7 +8,7 @@ import { AlertComponent } from "./alert.component";
     providedIn: 'root'
 })
 export class AlertController extends UIController<AlertComponent, AlertConfig> {
-    public override create(config: AlertConfig): AlertComponent {
+    public override async create(config: AlertConfig): Promise<AlertComponent> {
         return this.instanciate(AlertComponent, config);
     }
 }

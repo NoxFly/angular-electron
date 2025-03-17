@@ -22,7 +22,7 @@ export class LogoutComponent implements OnInit {
 
     public ngOnInit(): void {
         this.globalState.connected.set(false);
-        this.electron.ipcRenderer.logout();
+        this.electron.ipc.logout();
         this.router.navigate(['/']);
     }
 }

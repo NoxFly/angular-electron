@@ -1,8 +1,10 @@
 import { NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, signal } from '@angular/core';
 import { ElectronService } from 'src/app/core/services/electron.service';
 import { GlobalStateService } from 'src/app/core/services/globalState.service';
 import { AlertController } from 'src/app/shared/components/alert/alert.controller';
+import { ModalController } from 'src/app/shared/components/modal/modal.controller';
+import { SyncLoaderComponent } from 'src/app/shared/components/sync-loader/sync-loader.component';
 
 @Component({
     selector: 'app-home',
@@ -14,6 +16,7 @@ import { AlertController } from 'src/app/shared/components/alert/alert.controlle
 })
 export class HomeComponent {
     protected title = 'Electron Angular';
+    protected isSyncing = signal(false);
 
     protected secondScreenStateMessage = computed(() => {
         return this.electron.hasSecondScreen()
@@ -24,15 +27,40 @@ export class HomeComponent {
     constructor(
         protected readonly globalState: GlobalStateService,
         protected readonly alertCtrl: AlertController,
+        protected readonly modalCtrl: ModalController,
         protected readonly electron: ElectronService,
     ) {}
 
+    protected async sync(withSuccess: boolean): Promise<void> {
+        if(this.isSyncing()) {
+            return;
+        }
+
+        this.isSyncing.set(true);
+
+        const modal = await this.modalCtrl.create({
+            component: SyncLoaderComponent,
+            backdropClose: false,
+            keyboardClose: false,
+            showBackdrop: true,
+            showDots: true,
+            id: 'sync-modal',
+            componentProps: {
+                resultSuccess: withSuccess,
+            }
+        });
+
+        modal.willDismiss.subscribe(() => {
+            this.isSyncing.set(false);
+        });
+    }
+
     protected printPDF(): void {
-        this.electron.ipcRenderer.print();
+        this.electron.ipc.print();
     }
 
     protected openSecondScreen(): void {
-        this.electron.ipcRenderer.openSecondScreen();
+        this.electron.ipc.openSecondScreen();
     }
 
     protected displayError(): void {

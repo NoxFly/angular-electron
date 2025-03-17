@@ -21,8 +21,8 @@ export class CashSettingsComponent {
     public disconnectFromServer(): void {
         this.globalState.connected.set(false);
         this.globalState.known.set(false);
-        this.electron.ipcRenderer.logout();
-        this.electron.ipcRenderer.unregister();
+        this.electron.ipc.logout();
+        this.electron.ipc.unregister();
         this.router.navigateByUrl('/');
     }
 }

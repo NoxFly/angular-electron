@@ -6,6 +6,8 @@
         <button (click)="displayError()">Afficher popup erreur</button>
         <button (click)="printPDF()">Imprimer pdf</button>
         <button (click)="openSecondScreen()" [disabled]="!electron.hasSecondScreen()">Ouvrir second écran</button>
+        <button (click)="sync(true)" [disabled]="isSyncing()">Synchroniser (succès)</button>
+        <button (click)="sync(false)" [disabled]="isSyncing()">Synchroniser (erreur)</button>
     </article>
 </ng-container>
 
