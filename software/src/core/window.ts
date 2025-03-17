@@ -7,7 +7,7 @@ import { Maybe } from "core/types/misc";
 
 const defaultWindowOptions: BrowserWindowConstructorOptions = {
     webPreferences: {
-        devTools: !environment.production,
+        devTools: process.env.NODE_ENV !== 'production',
         nodeIntegration: false,
         contextIsolation: true,
         preload: join(environment.rootDir, 'core/preload.js'),
