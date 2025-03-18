@@ -1,12 +1,37 @@
 <ng-container *ngIf="globalState.connected(); else guestView">
-    <article class="page-content">
-        <p class="second-screen-p" [class]="{ success: electron.hasSecondScreen() }">{{ secondScreenStateMessage() }}</p>
+    <article id="home-container" class="page-content">
+        <section class="charts">
+            <div class="chart-container bar">
+                <h2>Bar Chart</h2>
+                <canvas id="barChart" #barChart></canvas>
+            </div>
+            <div class="chart-container donut">
+                <h2>Doughnut Chart</h2>
+                <canvas id="doughnutChart" #donutChart></canvas>
+            </div>
+            <div class="chart-container line">
+                <h2>Line Chart</h2>
+                <canvas id="lineChart" #lineChart></canvas>
+            </div>
+            <div class="chart-container polar">
+                <h2>Polar Chart</h2>
+                <canvas id="polarChart" #polarChart></canvas>
+            </div>
+            <div class="chart-container radar">
+                <h2>Radar Chart</h2>
+                <canvas id="radarChart" #radarChart></canvas>
+            </div>
+        </section>
 
-        <button (click)="openSecondScreen()" [disabled]="!electron.hasSecondScreen()">Ouvrir second écran</button>
-        <button (click)="displayError()">Afficher popup erreur</button>
-        <button (click)="printPDF()">Imprimer pdf</button>
-        <button (click)="sync(true)" [disabled]="isSyncing()">Synchroniser (succès)</button>
-        <button (click)="sync(false)" [disabled]="isSyncing()">Synchroniser (erreur)</button>
+        <section class="sidebar">
+            <p class="second-screen-p" [class]="{ success: electron.hasSecondScreen() }">{{ secondScreenStateMessage() }}</p>
+
+            <button (click)="openSecondScreen()" [disabled]="!electron.hasSecondScreen()">Ouvrir second écran</button>
+            <button (click)="displayError()">Afficher popup erreur</button>
+            <button (click)="printPDF()">Imprimer pdf</button>
+            <button (click)="sync(true)" [disabled]="isSyncing()">Synchroniser (succès)</button>
+            <button (click)="sync(false)" [disabled]="isSyncing()">Synchroniser (erreur)</button>
+        </section>
     </article>
 </ng-container>
 
