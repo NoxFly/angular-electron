@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { NumpadComponent } from "src/app/shared/components/numpad/numpad.component";
 
 @Component({
     selector: 'app-receipt-list',
@@ -6,7 +7,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     templateUrl: './receipt-list.component.html',
     styleUrl: './receipt-list.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [],
+    imports: [NumpadComponent],
 })
 export class ReceiptListComponent {
 }
