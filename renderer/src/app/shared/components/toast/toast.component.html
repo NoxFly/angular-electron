@@ -1,11 +1,11 @@
 <div class="toast-container">
     <div class="toast-content">
         <p class="message">{{ message() }}</p>
-        <div class="actions" *ngIf="hasActions">
+        <div class="actions" *ngIf="hasActions()">
             <button (click)="onActionClicked(action)" *ngFor="let action of actions()">
                 {{ action.text }}
             </button>
         </div>
     </div>
-    <div class="toast-duration-bar" *ngIf="hasDuration"></div>
+    <div class="toast-duration-bar" *ngIf="hasDuration()"></div>
 </div>

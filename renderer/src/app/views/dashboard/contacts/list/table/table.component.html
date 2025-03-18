@@ -1,0 +1,26 @@
+<table>
+    <thead>
+        <tr *ngFor="let headerGroup of table.getHeaderGroups(); trackBy: headerGroupTrackBy">
+            <ng-container *ngFor="let header of headerGroup.headers; trackBy: headerTrackBy">
+                <ng-container *ngIf="!header.isPlaceholder">
+                    <th>
+                        <ng-container *flexRender="header.column.columnDef.header; props: header.getContext(); let header">
+                            <div [innerHTML]="header"></div>
+                        </ng-container>
+                    </th>
+                </ng-container>
+            </ng-container>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let row of table.getRowModel().rows; trackBy: rowTrackBy">
+            <ng-container *ngFor="let cell of row.getVisibleCells(); trackBy: cellTrackBy">
+                <td>
+                    <ng-container *flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell">
+                        <div [innerHTML]="cell"></div>
+                    </ng-container>
+                </td>
+            </ng-container>
+        </tr>
+    </tbody>
+</table>

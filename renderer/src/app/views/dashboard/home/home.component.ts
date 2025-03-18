@@ -115,8 +115,6 @@ Statut : 400.`
             return;
         }
 
-        console.log(this.barChart());
-
         Chart.register(...registerables);
 
         this.barChartInstance = new Chart(this.barChart()!.nativeElement, {

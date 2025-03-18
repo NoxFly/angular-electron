@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { TableComponent } from "./table/table.component";
 
 @Component({
     selector: 'app-contact-list',
@@ -6,7 +7,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     templateUrl: './contact-list.component.html',
     styleUrl: './contact-list.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [],
+    imports: [TableComponent]
 })
 export class ContactListComponent {
 }

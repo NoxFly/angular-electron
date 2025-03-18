@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, HostBinding, input, OnInit } from '@angular/core';
+import { Component, HostBinding, input, computed, OnInit } from '@angular/core';
 import { UIComponent } from '../../directives/UIComponent.directive';
 import { ToastPosition, UIAction, UIColor } from '../../types/ui.types';
 
@@ -32,17 +32,12 @@ export class ToastComponent extends UIComponent implements OnInit {
     }
 
 
-    protected get hasActions(): boolean {
-        return this.actions().length > 0;
-    }
-
-    protected get hasDuration(): boolean {
-        return this.duration() !== undefined;
-    }
+    protected hasActions = computed(() => this.actions().length > 0);
+    protected hasDuration = computed(() => this.duration() !== undefined);
 
     public ngOnInit(): void {
-        if(this.hasDuration) {
-            this.ref.nativeElement.style.setProperty('--toast-duration', `${this.duration}ms`);
+        if(this.hasDuration()) {
+            this.ref.nativeElement.style.setProperty('--toast-duration', `${this.duration()}ms`);
             this.ref.nativeElement.classList.add('ephemeral');
 
             this.ref.nativeElement.addEventListener('animationend', () => {
