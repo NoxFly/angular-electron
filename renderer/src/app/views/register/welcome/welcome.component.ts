@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, output, signal, viewChild, viewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, output, signal, viewChild, viewChildren } from '@angular/core';
 import { GlobalStateService } from 'src/app/core/services/globalState.service';
 import { ToastController } from 'src/app/shared/components/toast/toast.controller';
 import { readJsonFileAsync } from 'src/app/shared/helpers/global.helper';
@@ -13,12 +13,13 @@ import { ToastConfig } from 'src/app/shared/types/ui.types';
     styleUrl: './welcome.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WelcomeComponent implements AfterViewInit {
+export class WelcomeComponent implements OnInit, AfterViewInit {
     public readonly configImported = output<{ isSaas: boolean; config: any; }>();
 
     protected steps = viewChildren<ElementRef<HTMLElement>>('step');
     protected slider = viewChild<ElementRef<HTMLElement>>('slider');
     protected configInput = viewChild<ElementRef<HTMLElement>>('configInput');
+    protected container = viewChild.required<ElementRef<HTMLElement>>('container');
 
     protected helpLinkSaas = "https://businesscentral.dynamics.com/?page=70344953";
     protected helpLinkDoc = "https://docs.capvision-cloud.fr/fr-FR/cherrycommerce/user-guide-bc-cash-registers.html";
@@ -63,7 +64,7 @@ export class WelcomeComponent implements AfterViewInit {
         }
 
         event.preventDefault();
-        
+
         this.globalState.current.update(c => ({
             ...c,
             showTitlebar: false,
@@ -145,5 +146,10 @@ export class WelcomeComponent implements AfterViewInit {
     public ngAfterViewInit(): void {
         this.viewLoaded.set(true);
         this.steps()[this.currentStep]?.nativeElement.classList.add('active');
+    }
+
+    public ngOnInit(): void {
+        this.container().nativeElement.addEventListener('dragover', this.onDragOver.bind(this), { capture: true });
+        this.container().nativeElement.addEventListener('dragleave', this.onDragLeave.bind(this), { capture: true });
     }
 }

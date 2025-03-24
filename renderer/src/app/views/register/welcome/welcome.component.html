@@ -1,11 +1,4 @@
-<article>
-
-    <div
-        class="drop-zone"
-        [class]="{ draggingOver: draggingOver() }"
-        (dragover)="onDragOver($event)"
-        (dragleave)="onDragLeave()"
-        (drop)="onDrop($event)"></div>
+<article dropzone="copy" [class]="{ draggingOver: draggingOver() }" (drop)="onDrop($event)" #container>
 
     <div class="drag-visible-zone">
         <div class="inner"></div>
