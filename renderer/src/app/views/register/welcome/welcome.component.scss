@@ -117,7 +117,7 @@ ol {
         }
 
         &::before {
-            content: 'Étape ' counter(item, decimal);
+            content: 'Step ' counter(item, decimal);
             counter-increment: item;
             font-weight: 700;
             display: block;

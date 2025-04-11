@@ -10,7 +10,7 @@ nav {
 }
 
 .nav-date {
-    margin-bottom: 20px;
+    margin: 8px auto 20px auto;
 
     span {
         font-weight: 700;
@@ -55,6 +55,10 @@ nav {
                 &:hover {
                     filter: brightness(1);
                     color: var(--primary-color);
+
+                    i {
+                        background: var(--primary-color);
+                    }
                 }
             }
 
@@ -65,10 +69,12 @@ nav {
             }
 
             i {
-                font-family: 'Cherry Commerce';
-                font-size: 3.4em;
+                @include mask($image: var(--icon), $background: var(--dark-color-contrast));
+
                 display: block;
-                font-style: normal;
+                width: 50%;
+                aspect-ratio: 1/1;
+                margin: 0 auto 5px auto;
             }
         }
     }

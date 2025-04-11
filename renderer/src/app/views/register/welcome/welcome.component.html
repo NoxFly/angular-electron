@@ -6,7 +6,7 @@
 
     <header>
         <figure class="app-logo"></figure>
-        <h1>Se connecter au serveur</h1>
+        <h1>Connect to a server</h1>
     </header>
 
     <div class="tutorial-content">
@@ -14,24 +14,24 @@
             <ol #slider>
                 <li #step>
                     <div>
-                        <p>Rendez-vous dans Business Central et recherchez la page <b>Caisses</b>.</p>
-                        <p>💡 Vous utilisez Business Central online ? <a [href]="helpLinkSaas" target="_blank">Cliquez ici</a></p>
+                        <p>You have to register to a server with a configuration file. <b>Json only is accepted.</b>.</p>
+                        <p>💡 This step is totally fake. Just put <a [href]="helpLinkSaas" target="_blank">an "id" key</a> into the json to make it valid.</p>
                     </div>
                 </li>
                 <li #step>
                     <div>
-                        <p>Ouvrez la fiche de la caisse que vous êtes en train d'installer.</p>
-                        <p>💡Besoin d'aide pour configurer une nouvelle caisse ? <a [href]="helpLinkDoc" target="_blank">Consultez notre documentation</a></p>
+                        <p>Vel facere labore, nisi deserunt in voluptatibus ex molestiae.</p>
+                        <p>💡Lorem ipsum dolor sit amet consectetur adipisicing ? <a [href]="helpLinkDoc" target="_blank">Visit our documentation</a></p>
                     </div>
                 </li>
                 <li #step>
                     <div>
-                        <p>Choisissez l'action <b>Installer cette caisse</b> et laissez-vous guider dans les étapes de l'assistant.</p>
+                        <p>Lorem ipsum dolor <b>sit amet consectetur</b> nisi deserunt in voluptatibus ex molestiae quibusdam.</p>
                     </div>
                 </li>
                 <li #step>
                     <div>
-                        <p>Déposez ici le fichier de configuration obtenu ou <span class="link-like" (click)="clickOnInput()">Cliquez ici pour le choisir</span></p>
+                        <p>Drag and drop a config file over this window or <span class="link-like" (click)="clickOnInput()">Click here to choose one</span></p>
                     </div>
                 </li>
             </ol>
@@ -41,8 +41,8 @@
             </div>
         </div>
         <div class="tutorial-actions" *ngIf="viewLoaded()">
-            <button type="button" id="btn-prev-step" [disabled]="currentStep === 0" (click)="previousStep()">Précédent</button>
-            <button type="button" id="btn-next-step" [disabled]="currentStep === steps().length - 1" (click)="nextStep()">Suivant</button>
+            <button type="button" id="btn-prev-step" [disabled]="currentStep === 0" (click)="previousStep()">Previous</button>
+            <button type="button" id="btn-next-step" [disabled]="currentStep === steps().length - 1" (click)="nextStep()">Next</button>
         </div>
     </div>
 

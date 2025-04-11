@@ -21,8 +21,8 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     protected configInput = viewChild<ElementRef<HTMLElement>>('configInput');
     protected container = viewChild.required<ElementRef<HTMLElement>>('container');
 
-    protected helpLinkSaas = "https://businesscentral.dynamics.com/?page=70344953";
-    protected helpLinkDoc = "https://docs.capvision-cloud.fr/fr-FR/cherrycommerce/user-guide-bc-cash-registers.html";
+    protected helpLinkSaas = "https://google.fr";
+    protected helpLinkDoc = "https://google.fr";
     protected currentStep: number = 0;
     protected draggingOver = signal(false);
     protected showPart = signal(0);
@@ -102,23 +102,13 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
         }
 
         const config = await readJsonFileAsync(file);
-        const isSaas = "tenantId" in config;
 
-        if(isSaas) {
-            if(!config['tenantId'] || !config['environment'] || !config['company'] || !config['cashRegisterCode']) {
-                this.onFileImportError(0);
-                throw new Error('Invalid file content');
-            }
-        }
-        // saas
-        else {
-            if(!config['tenant'] || !config['instance'] || !config['company'] || !config['server'] || !config['port'] || !config['cashRegisterCode']) {
-                this.onFileImportError(0);
-                throw new Error('Invalid file content');
-            }
+        if(!config['id']) {
+            this.onFileImportError(0);
+            throw new Error('Invalid file content');
         }
 
-        this.configImported.emit({ isSaas, config });
+        this.configImported.emit({ isSaas: false, config });
     }
 
     private onFileImportError(code: number): void {
@@ -126,7 +116,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
             switch(code) {
                 case 0:
                     return {
-                        message: 'Le contenu du fichier est invalide',
+                        message: 'Invalid file content',
                     };
             }
 

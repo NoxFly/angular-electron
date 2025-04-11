@@ -1,47 +1,42 @@
 <section>
 
-    <h2>Affichage</h2>
+    <h2>Display</h2>
 
-    <p>Ouverture de l'écran déporté</p>
+    <p>Second screen</p>
     <app-select>
-        <app-select-option value="never" default>Jamais</app-select-option>
-        <app-select-option value="always">Toujours</app-select-option>
+        <app-select-option value="always">Always</app-select-option>
+        <app-select-option value="never" default>Never</app-select-option>
     </app-select>
 
-    <button type="button" disabled="disabled">Forcer ouverture écran déporté</button>
-
-    <p>Méthode de comptage pour l'ouverture/clôture de caisse :</p>
-    <app-select>
-        <app-select-option value="numpad" default>Pavé numérique</app-select-option>
-    </app-select>
+    <button type="button" disabled="disabled">Force opening</button>
 
 </section>
 
 <section>
 
-    <h2>Documents PDF</h2>
+    <h2>PDF Documents</h2>
 
-    <p>Action à réaliser :</p>
+    <p>Action to realize :</p>
     <app-select multiple>
-        <app-select-option value="open" default>Ouvrir le document</app-select-option>
-        <app-select-option value="print">Imprimer le document</app-select-option>
+        <app-select-option value="open" default>Open</app-select-option>
+        <app-select-option value="print">Print</app-select-option>
     </app-select>
 
 </section>
 
 <section>
 
-    <h2>Impression des tickets</h2>
+    <h2>Receipt printing</h2>
 
     <div>
         <div class="radio-item">
             <input type="radio" name="ticket-print-mode" id="ticket-print-mode-rad-pos" value="pos">
-            <label for="ticket-print-mode-rad-pos">POS Bluetooth/Réseau</label>
+            <label for="ticket-print-mode-rad-pos">POS Bluetooth/Network</label>
         </div>
 
         <div class="radio-item">
             <input type="radio" name="ticket-print-mode" id="ticket-print-mode-rad-classic" value="classic" checked>
-            <label for="ticket-print-mode-rad-classic">Imprimante classique</label>
+            <label for="ticket-print-mode-rad-classic">Classic</label>
         </div>
     </div>
 

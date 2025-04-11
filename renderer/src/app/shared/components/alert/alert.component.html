@@ -6,7 +6,7 @@
 
     <div class="details" *ngIf="hasDetails()">
         <button class="btn-details clear btn-primary" [class]="{ opened: detailsOpened() }" (click)="toggleDetails()">
-            {{ detailsOpened() ? 'Masquer' : 'Afficher' }} les details
+            {{ detailsOpened() ? 'Hide' : 'Show' }} details
         </button>
         <div *ngIf="detailsOpened()" [innerHTML]="formattedDetails() | sanitize: 'html'"></div>
     </div>

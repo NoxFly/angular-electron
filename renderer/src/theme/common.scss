@@ -54,7 +54,7 @@ body {
     font-family: var(--default-font-family);
     font-size: var(--font-size);
     color: var(--text-color);
-    background: var(--dark-color-shade);
+    background: var(--light-color);
     overflow: hidden;
 }
 
@@ -129,7 +129,7 @@ a[href], .link-like {
 .app-logo {
     height: var(--logo-height, 300px);
     aspect-ratio: 0.895;
-    background: 0 center/contain no-repeat url('/logo-CherryCommerceV2.svg');
+    background: 0 center/contain no-repeat url('/app-logo.png');
 }
 
 #registration-modal {

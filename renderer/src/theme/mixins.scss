@@ -49,7 +49,7 @@
 	mask-size: contain;
 
 	@if $image != unset {
-		mask-image: $maskImage;
+		mask-image: $image;
 	}
 
 	@if $background != unset {

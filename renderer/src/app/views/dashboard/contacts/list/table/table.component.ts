@@ -19,11 +19,11 @@ export class TableComponent extends SubscriptionManager implements OnInit {
 
     protected defaultColumns: ColumnDef<Contact>[] = [
         {
-            header: 'Numéro',
+            header: 'Number',
             accessorKey: 'number',
         },
         {
-            header: 'Nom',
+            header: 'Name',
             cell: info => {
                 const contact = info.row.original as Contact;
                 
@@ -33,59 +33,59 @@ export class TableComponent extends SubscriptionManager implements OnInit {
             },
         },
         {
-            header: 'Code postal',
+            header: 'Zip code',
             accessorKey: 'postalCode',
         },
         {
-            header: 'Ville',
+            header: 'City',
             accessorKey: 'city',
         },
         {
-            header: 'Pays',
+            header: 'Country',
             accessorKey: 'country',
         },
         {
-            header: 'Groupe de prix',
+            header: 'Customer price group',
             accessorKey: 'customerPriceGroup',
         },
         {
-            header: 'Groupe de remise',
+            header: 'Customer discount group',
             accessorKey: 'customerDiscountGroup',
         },
         {
-            header: 'Conditions de paiement',
+            header: 'Customer payment terms',
             accessorKey: 'customerPaymentTerms',
         },
         {
-            header: 'Groupe de TVA',
+            header: 'Customer VAT group',
             accessorKey: 'customerVatGroup',
         },
         {
-            header: 'Conditions de livraison',
+            header: 'Customer delivery terms',
             accessorKey: 'customerDeliveryTerms',
         },
         {
-            header: 'Méthode de livraison',
+            header: 'Customer delivery method',
             accessorKey: 'customerDeliveryMethod',
         },
         {
-            header: 'Adresse de livraison',
+            header: 'Delivery address',
             accessorKey: 'customerDeliveryAddress',
         },
         {
-            header: 'Ville de livraison',
+            header: 'Delivery city',
             accessorKey: 'customerDeliveryCity',
         },
         {
-            header: 'Code postal de livraison',
+            header: 'Delivery zip code',
             accessorKey: 'customerDeliveryPostalCode',
         },
         {
-            header: 'Pays de livraison',
+            header: 'Delivery country',
             accessorKey: 'customerDeliveryCountry',
         },
         {
-            header: 'Contact de livraison',
+            header: 'Delivery contact',
             accessorKey: 'customerDeliveryContact',
         }
     ];

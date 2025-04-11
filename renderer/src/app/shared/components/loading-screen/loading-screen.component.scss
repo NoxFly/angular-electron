@@ -4,6 +4,7 @@ app-loading-screen {
     @include flex($dir: column);
 
     --loading-bg: var(--window-background-color);
+    --spinner-size: 30px;
 
     position: fixed;
     top: 0;
@@ -16,8 +17,11 @@ app-loading-screen {
     backdrop-filter: blur(10px);
     user-select: none;
 
+    .app-logo {
+        margin-top: calc(var(--spinner-size) * 3.2);
+    }
+
     app-spinner {
-        --spinner-size: 30px;
         margin: 50px 0;
     }
 

@@ -1,4 +1,4 @@
-import { ipcMain } from "electron/main";
+import { BrowserWindow, ipcMain } from "electron/main";
 
 export class AuthenticationService {
     private isRegistered: boolean = false;
@@ -26,6 +26,7 @@ export class AuthenticationService {
 
     private unregister(): void {
         this.isRegistered = false;
+        this.isLoggedIn = false;
     }
 
     private login(): void {

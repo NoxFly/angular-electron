@@ -25,7 +25,7 @@ export class SyncingService {
                 res.on('data', (chunk) => {
                     data += chunk;
                     current += chunk.length;
-                    const msg = ['Envoie des données', 'Réception des données', 'Traitement des données', undefined][Math.floor(Math.random() * 4)];
+                    const msg = ['Sending data', 'Getting data', 'Treating data', undefined][Math.floor(Math.random() * 4)];
                     focusedWindow?.webContents.send('sync-progress', current, total, msg);
                 });
 

@@ -26,11 +26,11 @@
         <section class="sidebar">
             <p class="second-screen-p" [class]="{ success: electron.hasSecondScreen() }">{{ secondScreenStateMessage() }}</p>
 
-            <button (click)="openSecondScreen()" [disabled]="!electron.hasSecondScreen()">Ouvrir second écran</button>
-            <button (click)="displayError()">Afficher popup erreur</button>
-            <button (click)="printPDF()">Imprimer pdf</button>
-            <button (click)="sync(true)" [disabled]="isSyncing()">Synchroniser (succès)</button>
-            <button (click)="sync(false)" [disabled]="isSyncing()">Synchroniser (erreur)</button>
+            <button (click)="openSecondScreen()" [disabled]="!electron.hasSecondScreen()">Open second screen</button>
+            <button (click)="displayError()">Display error popup</button>
+            <button (click)="printPDF()">Print PDF</button>
+            <button (click)="sync(true)" [disabled]="isSyncing()">Synchronize (success)</button>
+            <button (click)="sync(false)" [disabled]="isSyncing()">Synchronize (error)</button>
         </section>
     </article>
 </ng-container>
@@ -40,7 +40,7 @@
         <div class="inner">
             <div class="left-side">
                 <figure class="app-logo"></figure>
-                <h1>Bienvenue sur {{ title }}</h1>
+                <h1>Welcome to {{ title }}</h1>
             </div>
         </div>
     </div>

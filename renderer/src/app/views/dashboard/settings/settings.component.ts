@@ -21,5 +21,4 @@ export class SettingsComponent {
     protected prefComponent = PreferencesSettingsComponent;
 
     constructor() {}
-
 }

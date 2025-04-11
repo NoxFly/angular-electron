@@ -43,12 +43,12 @@ export class SyncLoaderComponent extends UIComponent implements OnInit {
         }
 
         return this.syncState()
-            ? 'Synchronisation réussie'
-            : 'Synchronisation échouée';
+            ? 'Synchronisation succeeded'
+            : 'Synchronisation failed';
     });
 
     private onInitialized(total: number): void {
-        this.message.set('Initialisation de la synchronisation...');
+        this.message.set('Initialization of the synchronization...');
         this.progress.set(0);
     }
 
@@ -69,7 +69,7 @@ export class SyncLoaderComponent extends UIComponent implements OnInit {
         }));
 
         this.syncState.set(this.resultSuccess() /* error === null */);
-        this.message.set('Synchronisation finie');
+        this.message.set('Synchronisation finished');
 
         await (new Promise((resolve) => setTimeout(resolve, 1000)));
         this.modalCtrl.dismiss({  role: 'destructive', data: 'toto' });
@@ -77,7 +77,7 @@ export class SyncLoaderComponent extends UIComponent implements OnInit {
 
     public ngOnInit(): void {
         this.progress.set(0);
-        this.message.set('Début de la synchronisation...');
+        this.message.set('Beginning of the synchronization...');
 
         this.globalState.current.update(c => ({
             ...c,

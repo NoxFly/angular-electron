@@ -1,19 +1,19 @@
 <article>
-    <h2>Authentifiez-vous</h2>
+    <h2>Authentication</h2>
     <form [formGroup]="form" novalidate (ngSubmit)="confirmRegistration()">
         <div>
-            <label for="ipt-op-username">Nom d'utilisateur</label>
+            <label for="ipt-op-username">username</label>
             <input type="text" name="op-username" id="ipt-op-username" formControlName="username" #username/>
         </div>
 
         <div>
-            <label for="ipt-op-password">Mot de passe</label>
+            <label for="ipt-op-password">password</label>
             <input type="password" name="op-password" id="ipt-op-password" formControlName="password"/>
         </div>
 
         <div class="actions">
-            <button type="button" class="btn-cancel" (click)="cancelRegistration()">Annuler</button>
-            <button type="submit" class="btn-confirm btn-primary">Poursuivre</button>
+            <button type="button" class="btn-cancel" (click)="cancelRegistration()">Cancel</button>
+            <button type="submit" class="btn-confirm btn-primary">Confirm</button>
         </div>
     </form>
 </article>

@@ -44,20 +44,20 @@ export class SidebarComponent implements OnInit {
         this.sidebarItems = [
             [
                 {
-                    title: 'Accueil',
-                    icon: 'a',
+                    title: 'Home',
+                    icon: 'home.png',
                     path: '/dashboard',
                 },
                 {
-                    title: 'Se connecter',
-                    icon: 'j',
+                    title: 'Login',
+                    icon: 'key.png',
                     path: '/dashboard/login',
-                    caption: 'Se connecter',
+                    caption: 'Login',
                     visible: () => !this.globalState.connected(),
                 },
                 {
-                    title: 'Changer d\'utilisateur',
-                    icon: 'j',
+                    title: 'Change user',
+                    icon: 'key.png',
                     path: '/dashboard/logout',
                     caption: 'John Doe',
                     visible: () => this.globalState.connected(),
@@ -66,26 +66,26 @@ export class SidebarComponent implements OnInit {
             ],
             [
                 {
-                    title: 'Tickets',
-                    icon: 'h',
+                    title: 'Receipts',
+                    icon: 'receipt.png',
                     path: '/dashboard/receipts',
                     disabled: () => !this.globalState.connected(),
                 },
                 {
-                    title: 'Articles',
-                    icon: 'd',
-                    path: '/dashboard/articles',
+                    title: 'Items',
+                    icon: 'items.png',
+                    path: '/dashboard/items',
                     disabled: () => !this.globalState.connected(),
                 },
                 {
                     title: 'Contacts',
-                    icon: 'f',
+                    icon: 'people.png',
                     path: '/dashboard/contacts',
                     disabled: () => !this.globalState.connected(),
                 },
                 {
-                    title: 'Devis',
-                    icon: 'g',
+                    title: 'Estimates',
+                    icon: 'estimation.png',
                     path: '/dashboard/quotes',
                     disabled: () => !this.globalState.connected(),
                     visible: () => this.globalState.connected(),
@@ -93,14 +93,14 @@ export class SidebarComponent implements OnInit {
             ],
             [
                 {
-                    title: 'Caisse',
-                    icon: 'l',
+                    title: 'Cash Register',
+                    icon: 'cash-register.png',
                     path: '/dashboard/cash',
                     disabled: () => !this.globalState.connected(),
                 },
                 {
-                    title: 'Paramètres',
-                    icon: 'i',
+                    title: 'Settings',
+                    icon: 'settings.png',
                     path: '/dashboard/settings',
                 },
             ],
@@ -109,15 +109,15 @@ export class SidebarComponent implements OnInit {
 
     private async onDisconnect(item: NavItem): Promise<void> {
         const alert = await this.alertCtrl.create({
-            title: 'Déconnexion',
-            message: 'Souhaitez-vous vraiment vous déconnecter ?',
+            title: 'Disconnect',
+            message: 'Do you really want to disconnect ?',
             actions: [
                 {
-                    text: 'Annuler',
+                    text: 'Cancel',
                     role: 'cancel',
                 },
                 {
-                    text: 'Déconnexion',
+                    text: 'Disconnect',
                     role: 'destructive',
                     handler: () => {
                         this.router.navigateByUrl(item.path);

@@ -1,7 +1,7 @@
 export enum Civility {
-    Society = 'Société',
-    Mr = 'Monsieur',
-    Mrs = 'Madame',
+    Society = 'Society',
+    Mr = 'Mister',
+    Mrs = 'Madam',
 }
 
 export type Contact = {
