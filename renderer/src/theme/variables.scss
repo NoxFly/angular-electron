@@ -1,12 +1,12 @@
 :root {
-    --primary-color: hsl(172, 100%, 36%);
-    --primary-color-tint: hsl(172, 46%, 68%);
-    --primary-color-tint-2: hsl(172, 46%, 61%);
-    --primary-color-shade: hsl(173, 81%, 34%);
+    --primary-color: hsl(178, 65%, 31%);
+    --primary-color-tint: hsl(178, 64%, 39%);
+    --primary-color-tint-2: hsl(178, 45%, 42%);
+    --primary-color-shade: hsl(178, 65%, 24%);
     --primary-color-contrast: hsl(0, 0%, 100%);
 
-    --secondary-color: hsl(185, 20%, 22%);
-    --secondary-color-tint: hsl(185, 20%, 30%);
+    --secondary-color: hsl(178, 68%, 22%);
+    --secondary-color-tint: hsl(176, 93%, 27%);
     --secondary-color-shade: hsl(185, 20%, 15%);
     --secondary-color-contrast: hsl(0, 0%, 100%);
 
@@ -25,10 +25,10 @@
     --warning-color-shade: hsl(31, 63%, 44%);
     --warning-color-contrast: hsl(0, 0%, 100%);
 
-    --light-color: hsl(0, 0%, 97%);
+    --light-color: hsl(300, 8%, 97%);
     --light-color-tint: hsl(0, 0%, 100%);
     --light-color-tint-2: hsl(0, 0%, 92%);
-    --light-color-shade: hsl(0, 0%, 95%);
+    --light-color-shade: hsl(60, 3%, 94%);
     --light-color-contrast: hsl(0, 0%, 20%);
 
     --dark-color: hsl(0, 0%, 8%);
@@ -43,8 +43,8 @@
 
     --window-background-color: var(--dark-color-shade);
 
-    --background-color: var(--light-color-tint);
-    --background-color-tint: var(--light-color);
+    --background-color: var(--light-color);
+    --background-color-tint: var(--light-color-tint);
     --background-color-shade: var(--light-color-shade);
 
     --text-color: var(--light-color-contrast);

@@ -3,10 +3,13 @@
 nav {
     @include flex($dir: column, $hor: stretch, $ver: space-between);
 
-    width: 80px;
+    width: 100%;
     height: 100%;
-    border-radius: 10px;
+    // border-radius: 10px;
     user-select: none;
+    margin: 0 auto;
+    padding-top: 10px;
+    background: var(--secondary-color);
 }
 
 .nav-date {
@@ -30,51 +33,63 @@ nav {
 
     ul {
         margin: 0;
-        padding: 0;
+        padding: 0 10px;
         list-style-type: none;
         color: var(--dark-color-contrast);
 
         li {
             display: block;
-            filter: brightness(.7);
+            opacity: .7;
             text-align: center;
-            margin: 15px 0;
+            margin: 15px auto;
             transition-duration: .1s;
+            position: relative;
 
             &.disabled {
-                filter: brightness(.4);
+                opacity: .3;
             }
 
             &.active {
-                filter: brightness(1);
+                opacity: 1;
+
+                figure {
+                    border-radius: 11px;
+                    background: var(--secondary-color-tint);
+                }
             }
 
             &:not(.disabled) {
                 cursor: pointer;
 
                 &:hover {
-                    filter: brightness(1);
+                    opacity: 1;
                     color: var(--primary-color);
-
-                    i {
-                        background: var(--primary-color);
-                    }
                 }
             }
 
             span {
                 font-size: .7em;
                 font-weight: 300;
-                display: block;
+                // display: block;
+                text-align: center;
+                white-space: nowrap;
+                display: none;
+            }
+
+            figure {
+                transition-duration: .1s;
+                width: 50px;
+                aspect-ratio: 1/1;
+                margin: 0 auto 5px auto;
+                padding: 12px;
             }
 
             i {
-                @include mask($image: var(--icon), $background: var(--dark-color-contrast));
+                @include mask($image: var(--icon), $background: var(--secondary-color-contrast));
 
                 display: block;
-                width: 50%;
+                width: 100%;
                 aspect-ratio: 1/1;
-                margin: 0 auto 5px auto;
             }
         }
     }

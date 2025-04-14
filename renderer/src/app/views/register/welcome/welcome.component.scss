@@ -135,7 +135,7 @@ ol {
     @include flex($dir: column, $hor: stretch, $ver: flex-start);
 
     --tutorial-frame-width: 800px;
-    --tutorial-frame-background: var(--light-color-shade);
+    --tutorial-frame-background: var(--light-color-tint);
 
     width: var(--tutorial-frame-width);
     padding: 50px;
@@ -162,6 +162,7 @@ ol {
     padding: 10px 15px;
     position: relative;
     z-index: 2;
+    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.05);
 }
 
 .tutorial-dots {

@@ -5,6 +5,9 @@ import 'core/environment';
 let application: App;
 
 app.whenReady().then(async () => {
+    app.commandLine.appendSwitch('disable-features', 'CalculateNativeWinOcclusion');
+    app.commandLine.appendSwitch('force-color-profile', 'srgb');
+
     app.once('activate', () => {
         if(BrowserWindow.getAllWindows().length === 0) {
             application.window.createMain();

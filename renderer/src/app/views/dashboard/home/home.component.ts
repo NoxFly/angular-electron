@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, computed, ElementRef, signal, viewChild } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { ElectronService } from 'src/app/core/services/electron.service';
@@ -13,7 +12,7 @@ import { SyncLoaderComponent } from 'src/app/shared/components/sync-loader/sync-
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgIf],
+    imports: [],
 })
 export class HomeComponent implements AfterViewInit {
     protected title = 'Electron Angular';
@@ -25,28 +24,18 @@ export class HomeComponent implements AfterViewInit {
             : 'No second screen detected';
     });
 
-    protected barChart = viewChild<ElementRef<HTMLCanvasElement>>('barChart');
-    protected barChartInstance!: Chart;
-
     protected lineChart = viewChild<ElementRef<HTMLCanvasElement>>('lineChart');
     protected lineChartInstance!: Chart;
 
     protected donutChart = viewChild<ElementRef<HTMLCanvasElement>>('donutChart');
     protected donutChartInstance!: Chart;
 
-    protected polarChart = viewChild<ElementRef<HTMLCanvasElement>>('polarChart');
-    protected polarChartInstance!: Chart;
-
-    protected radarChart = viewChild<ElementRef<HTMLCanvasElement>>('radarChart');
-    protected radarChartInstance!: Chart;
-
-
     constructor(
         protected readonly globalState: GlobalStateService,
         protected readonly alertCtrl: AlertController,
         protected readonly modalCtrl: ModalController,
         protected readonly electron: ElectronService,
-    ) { }
+    ) {}
 
     protected async sync(withSuccess: boolean): Promise<void> {
         if(this.isSyncing()) {
@@ -103,56 +92,24 @@ export class HomeComponent implements AfterViewInit {
 
         Chart.register(...registerables);
 
-        this.barChartInstance = new Chart(this.barChart()!.nativeElement, {
-            type: 'bar',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        display: false,
-                    },
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+        const ctx = this.lineChart()!.nativeElement.getContext('2d')!;
+        const gradient = ctx.createLinearGradient(0, 25, 0, 300);
+        gradient.addColorStop(0, 'rgba(188, 225, 227, 255)');
+        gradient.addColorStop(1, 'rgba(188, 225, 227, 0)');
 
         this.lineChartInstance = new Chart(this.lineChart()!.nativeElement, {
             type: 'line',
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
                 datasets: [{
-                    label: 'My First dataset',
-                    backgroundColor: 'rgba(75,192,192,0.4)',
-                    borderColor: 'rgba(75,192,192,1)',
-                    data: [65, 59, 80, 81, 56, 55, 40]
-                }]
+                    label: 'Sales Report',
+                    backgroundColor: gradient,
+                    pointRadius: 0,
+                    borderColor: '#137069',
+                    data: [25, 38, 35, 64, 56, 70, 70],
+                    tension: .5,
+                    fill: true,
+                }],
             },
             options: {
                 plugins: {
@@ -180,69 +137,23 @@ export class HomeComponent implements AfterViewInit {
                     label: '# of Votes',
                     data: [300, 50, 100],
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)'
+                        '#097d76',
+                        '#13968e',
+                        '#2bb1a8'
                     ],
-                    hoverBackgroundColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)'
-                    ]
                 }]
             },
             options: {
-                responsive: true
-            }
-        });
-
-        this.polarChartInstance = new Chart(this.polarChart()!.nativeElement, {
-            type: 'polarArea',
-            data: {
-                labels: ['Red', 'Green', 'Yellow', 'Grey', 'Blue'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [11, 16, 7, 3, 14],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(201, 203, 207, 0.2)',
-                        'rgba(54, 162, 235, 0.2)'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true
-            }
-        });
-
-        this.radarChartInstance = new Chart(this.radarChart()!.nativeElement, {
-            type: 'radar',
-            data: {
-                labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
-                datasets: [{
-                    label: 'My First dataset',
-                    backgroundColor: 'rgba(179,181,198,0.2)',
-                    borderColor: 'rgba(179,181,198,1)',
-                    pointBackgroundColor: 'rgba(179,181,198,1)',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgba(179,181,198,1)',
-                    data: [65, 59, 90, 81, 56, 55, 40]
-                }, {
-                    label: 'My Second dataset',
-                    backgroundColor: 'rgba(255,99,132,0.2)',
-                    borderColor: 'rgba(255,99,132,1)',
-                    pointBackgroundColor: 'rgba(255,99,132,1)',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgba(255,99,132,1)',
-                    data: [28, 48, 40, 19, 96, 27, 100]
-                }]
-            },
-            options: {
-                responsive: true
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom', // Move legend to the bottom
+                        labels: {
+                            usePointStyle: true, // Use dots instead of rectangles
+                            pointStyle: 'circle', // Set the shape of the legend to dots
+                        },
+                    },
+                },
             }
         });
     }

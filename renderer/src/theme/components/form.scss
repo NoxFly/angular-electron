@@ -5,7 +5,7 @@ input:not(:where([type="checkbox"], [type="radio"])) {
     padding: 6px 10px;
     border: 1px solid transparent;
     border-bottom-color: rgba(127, 127, 127, 0.2);
-    background: var(--light-color-shade);
+    background: var(--light-color-tint);
     color: var(--text-color);
     border-radius: 3px 3px 0 0;
     transition: border-color 0.3s ease;

@@ -18,6 +18,7 @@ const defaultWindowOptions: BrowserWindowConstructorOptions = {
     show: false,
     autoHideMenuBar: true,
     titleBarStyle: 'hidden',
+    transparent: false,
     frame: false,
     icon: join(environment.publicDir, 'favicon.ico'),
     minHeight: 750,

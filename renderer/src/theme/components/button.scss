@@ -1,6 +1,6 @@
 button {
     background: var(--btn-bg, var(--light-color-shade));
-    border: 2px solid transparent;
+    border: 1px solid transparent;
     padding: 5px 25px;
     display: inline-block;
     border-radius: 5px;
@@ -51,7 +51,7 @@ button {
             --btn-fg: var(--danger-color-contrast);
 
             &:hover {
-                --btn-bg: var(--danger-color);
+                --btn-bg: var(--danger-color-shade);
             }
         }
 
@@ -76,6 +76,17 @@ button {
         &.clear {
             background: transparent;
             --btn-fg: var(--btn-bg);
+        }
+    }
+
+    &.stroke {
+        background: transparent;
+        border-color: var(--btn-bg);
+        color: var(--btn-bg);
+        
+        &:hover {
+            color: var(--btn-fg);
+            background: var(--btn-bg);
         }
     }
 
