@@ -85,7 +85,7 @@ nav {
             }
 
             i {
-                @include mask($image: url('/images/tabicons.png'), $background: var(--secondary-color-contrast));
+                @include mask($image: url('public/images/tabicons.png'), $background: var(--secondary-color-contrast));
 
                 --icon-size: 55px;
                 --icon-slot: 0;

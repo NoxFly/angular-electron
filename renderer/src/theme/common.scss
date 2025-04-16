@@ -129,7 +129,7 @@ a[href], .link-like {
 .app-logo {
     height: var(--logo-height, 300px);
     aspect-ratio: 0.895;
-    background: 0 center/contain no-repeat url('/app-logo.png');
+    background: 0 center/contain no-repeat url('public/app-logo.png');
 }
 
 #registration-modal {
