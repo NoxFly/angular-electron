@@ -140,6 +140,10 @@ h3 {
             margin: 20px auto;
             width: 100%;
             background: linear-gradient(45deg, var(--primary-color-tint), var(--secondary-color));
+            
+            &:hover {
+                filter: brightness(1.1);
+            }
         }
     }
 }
