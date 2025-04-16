@@ -5,7 +5,7 @@ const isDebug = env === 'debug';
 const isDevelopment = env === 'development';
 const isProduction = env === 'production';
 
-const rootDir = resolve(__dirname, isProduction ? '.' : '..');
+const rootDir = resolve(__dirname, '..');
 let rendererDir = '';
 
 switch(env) {
@@ -22,7 +22,6 @@ switch(env) {
         break;
 
     default:
-        // defaulting to production
         rendererDir = resolve(rootDir, 'browser');
         break;
 }

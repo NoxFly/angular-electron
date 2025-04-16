@@ -8,9 +8,13 @@
     "dev": "npm run build && cross-env NODE_ENV=development npm run start",
     "debug": "npm run build && cross-env NODE_ENV=debug npm run start",
     "release": "npm run build && cross-env NODE_ENV=production npm run start",
-    "build": "tsc && tsc-alias",
     "make": "electron-forge make",
-    "package": "electron-forge package"
+    "package": "electron-forge package",
+    "prerelease": "npm run copy:renderer",
+    "premake": "npm run copy:renderer",
+    "prepackage": "npm run copy:renderer",
+    "copy:renderer": "cd ../renderer/build && cp -r ./browser ../../software/build",
+    "build": "tsc && tsc-alias"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.8.0",
