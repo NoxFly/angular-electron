@@ -1,31 +1,42 @@
 {
-    "name": "@angular-electron/main",
-    "version": "0.0.0",
-    "private": true,
-    "main": "./build/index.js",
-    "scripts": {
-        "start": "electron .",
-        "dev": "npm run build && cross-env NODE_ENV=development npm run start",
-        "debug": "npm run build && cross-env NODE_ENV=debug npm run start",
-        "release": "npm run build && cross-env NODE_ENV=production npm run start",
-        "build": "tsc && tsc-alias"
-    },
-    "devDependencies": {
-        "@stylistic/eslint-plugin": "^3.0.1",
-        "@types/wait-on": "^5.3.4",
-        "@typescript-eslint/eslint-plugin": "^8.23.0",
-        "@typescript-eslint/parser": "^8.23.0",
-        "cross-env": "^7.0.3",
-        "electron": "^34.0.2",
-        "eslint": "^9.19.0",
-        "eslint-plugin-import": "^2.31.0",
-        "eslint-plugin-jsdoc": "^50.6.3",
-        "eslint-plugin-prefer-arrow": "^1.2.3",
-        "tsc-alias": "^1.8.10",
-        "typescript": "~5.5.2",
-        "typescript-eslint": "^8.23.0"
-    },
-    "dependencies": {
-        "tslib": "^2.8.1"
-    }
+  "name": "angular-electron-app",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./build/index.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "npm run build && cross-env NODE_ENV=development npm run start",
+    "debug": "npm run build && cross-env NODE_ENV=debug npm run start",
+    "release": "npm run build && cross-env NODE_ENV=production npm run start",
+    "build": "tsc && tsc-alias",
+    "make": "electron-forge make",
+    "package": "electron-forge package"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.8.0",
+    "@electron-forge/maker-deb": "^7.8.0",
+    "@electron-forge/maker-rpm": "^7.8.0",
+    "@electron-forge/maker-squirrel": "^7.8.0",
+    "@electron-forge/maker-zip": "^7.8.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.8.0",
+    "@electron-forge/plugin-fuses": "^7.8.0",
+    "@electron/fuses": "^1.8.0",
+    "@stylistic/eslint-plugin": "^3.0.1",
+    "@types/wait-on": "^5.3.4",
+    "@typescript-eslint/eslint-plugin": "^8.23.0",
+    "@typescript-eslint/parser": "^8.23.0",
+    "cross-env": "^7.0.3",
+    "electron": "^34.0.2",
+    "eslint": "^9.19.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsdoc": "^50.6.3",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "tsc-alias": "^1.8.10",
+    "typescript": "~5.5.2",
+    "typescript-eslint": "^8.23.0"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.1",
+    "tslib": "^2.8.1"
+  }
 }

@@ -115,7 +115,11 @@ export class WindowManager {
                 url = `file://${join(environment.rendererDir, 'index.html')}`;
                 break;
             case 'production':
-                url = `file://${join(environment.rootDir, 'browser/index.html')}`;
+                url = `file://${join(environment.rootDir, 'index.html')}`;
+                break;
+            default:
+                // defaulting to production
+                url = `file://${join(environment.rendererDir, 'index.html')}`;
                 break;
         }
 
