@@ -78,18 +78,34 @@ nav {
 
             figure {
                 transition-duration: .1s;
-                width: 50px;
+                width: 60px;
                 aspect-ratio: 1/1;
                 margin: 0 auto 5px auto;
-                padding: 12px;
+                padding: 0px;
             }
 
             i {
-                @include mask($image: var(--icon), $background: var(--secondary-color-contrast));
+                @include mask($image: url('/images/tabicons.png'), $background: var(--secondary-color-contrast));
+
+                --icon-size: 55px;
+                --icon-slot: 0;
+                --icon-x: calc(var(--icon-slot) * var(--icon-size) * -1 + 4px);
 
                 display: block;
                 width: 100%;
                 aspect-ratio: 1/1;
+                mask-size: auto var(--icon-size);
+                mask-position: var(--icon-x) center;
+
+                &[data-icon="home"] { --icon-slot: 0; }
+                &[data-icon="receipt"] { --icon-slot: 1; }
+                &[data-icon="estimation"] { --icon-slot: 2; }
+                &[data-icon="item"] { --icon-slot: 3; }
+                &[data-icon="cash-register"] { --icon-slot: 7; }
+                &[data-icon="login"] { --icon-slot: 4; }
+                // &[data-icon="user"] { --icon-slot: 5; }
+                &[data-icon="people"] { --icon-slot: 6; }
+                &[data-icon="settings"] { --icon-slot: 8; }
             }
         }
     }

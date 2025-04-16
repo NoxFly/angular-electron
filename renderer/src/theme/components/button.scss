@@ -83,10 +83,27 @@ button {
         background: transparent;
         border-color: var(--btn-bg);
         color: var(--btn-bg);
-        
+
         &:hover {
             color: var(--btn-fg);
             background: var(--btn-bg);
+        }
+    }
+
+    &.large {
+        width: 300px;
+        padding: 20px;
+        font-size: 1.2em;
+    }
+
+    &.clear {
+        --btn-fg: var(--btn-bg);
+        background: transparent;
+        border-color: transparent;
+        padding: 7px 10px;
+
+        &:hover {
+            background: color-mix(in srgb, var(--btn-fg), #0000 95%);
         }
     }
 

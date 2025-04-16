@@ -1,5 +1,5 @@
 {
-    "name": "angular-electron",
+    "name": "@angular-electron/renderer",
     "version": "0.0.0",
     "private": true,
     "scripts": {

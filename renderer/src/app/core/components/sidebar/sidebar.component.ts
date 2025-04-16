@@ -45,7 +45,7 @@ export class SidebarComponent implements OnInit {
             [
                 {
                     title: 'Home',
-                    icon: 'home.png',
+                    icon: 'home',
                     path: '/dashboard',
                     visible: () => this.globalState.connected(),
                 },
@@ -53,25 +53,25 @@ export class SidebarComponent implements OnInit {
             [
                 {
                     title: 'Cash Register',
-                    icon: 'cash-register.png',
+                    icon: 'cash-register',
                     path: '/dashboard/cash',
                     visible: () => this.globalState.connected(),
                 },
                 {
                     title: 'Receipts',
-                    icon: 'receipt.png',
+                    icon: 'receipt',
                     path: '/dashboard/receipts',
                     visible: () => this.globalState.connected(),
                 },
                 {
                     title: 'Estimates',
-                    icon: 'estimation.png',
+                    icon: 'estimation',
                     path: '/dashboard/quotes',
                     visible: () => this.globalState.connected(),
                 },
                 {
                     title: 'Items',
-                    icon: 'items.png',
+                    icon: 'item',
                     path: '/dashboard/items',
                     visible: () => this.globalState.connected(),
                 },
@@ -79,20 +79,20 @@ export class SidebarComponent implements OnInit {
             [
                 {
                     title: 'Contacts',
-                    icon: 'people.png',
+                    icon: 'people',
                     path: '/dashboard/contacts',
                     visible: () => this.globalState.connected(),
                 },
                 {
                     title: 'Login',
-                    icon: 'key.png',
+                    icon: 'login',
                     path: '/dashboard/login',
                     caption: 'Login',
                     visible: () => !this.globalState.connected(),
                 },
                 /* {
                     title: 'Change user',
-                    icon: 'key.png',
+                    icon: 'key',
                     path: '/dashboard/logout',
                     caption: 'John Doe',
                     visible: () => this.globalState.connected(),
@@ -100,7 +100,7 @@ export class SidebarComponent implements OnInit {
                 }, */
                 {
                     title: 'Settings',
-                    icon: 'settings.png',
+                    icon: 'settings',
                     path: '/dashboard/settings',
                 },
             ],

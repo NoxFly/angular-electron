@@ -1,8 +1,8 @@
 {
-    "name": "angular-electron",
+    "name": "@angular-electron/main",
     "version": "0.0.0",
     "private": true,
-    "main": "../dist/index.js",
+    "main": "./build/index.js",
     "scripts": {
         "start": "electron .",
         "dev": "npm run build && cross-env NODE_ENV=development npm run start",
@@ -12,6 +12,7 @@
     },
     "devDependencies": {
         "@stylistic/eslint-plugin": "^3.0.1",
+        "@types/wait-on": "^5.3.4",
         "@typescript-eslint/eslint-plugin": "^8.23.0",
         "@typescript-eslint/parser": "^8.23.0",
         "cross-env": "^7.0.3",

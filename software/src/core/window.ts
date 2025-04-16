@@ -7,7 +7,7 @@ import { Maybe } from "core/types/misc";
 
 const defaultWindowOptions: BrowserWindowConstructorOptions = {
     webPreferences: {
-        devTools: process.env.NODE_ENV !== 'production',
+        devTools: !environment.production,
         nodeIntegration: false,
         contextIsolation: true,
         sandbox: true,
@@ -105,13 +105,23 @@ export class WindowManager {
             return { action: 'deny' };
         });
 
-        const url = environment.production
-            ? `file://${join(environment.rootDir, 'browser/index.html')}`
-            : 'http://localhost:4200/' + launchPage;
+        let url: string;
+
+        switch(environment.env) {
+            case 'development':
+                url = `http://localhost:4200/${launchPage}`;
+                break;
+            case 'debug':
+                url = `file://${join(environment.rendererDir, 'index.html')}`;
+                break;
+            case 'production':
+                url = `file://${join(environment.rootDir, 'browser/index.html')}`;
+                break;
+        }
 
         await window.loadURL(url);
 
-        if(environment.production && launchPage) {
+        if(!environment.development && launchPage) {
             window.webContents.send('navigate-to', launchPage);
         }
     }

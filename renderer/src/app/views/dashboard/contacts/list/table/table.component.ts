@@ -26,7 +26,7 @@ export class TableComponent extends SubscriptionManager implements OnInit {
             header: 'Name',
             cell: info => {
                 const contact = info.row.original as Contact;
-                
+
                 return contact.civility === Civility.Society
                     ? contact.companyName
                     : `${contact.lastName} ${contact.firstName}`;
@@ -113,7 +113,7 @@ export class TableComponent extends SubscriptionManager implements OnInit {
     }
 
     public loadContacts(): Observable<void> {
-        return of(1000).pipe(
+        return of(100).pipe(
             tap(n => {
                 const contacts: Contact[] = Array(n).fill(null).map((_, i) => ({
                     number: "CT" + faker.number.int(),

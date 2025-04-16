@@ -20,11 +20,11 @@ section {
     height: 100%;
 
     &.known {
-        // padding: calc(var(--titlebar-height) + 5px) 10px 10px 10px;
     }
 
     &:not(.known) {
         main {
+            background: var(--background-color-tint);
             padding-top: var(--titlebar-height);
         }
     }
@@ -33,7 +33,7 @@ section {
 main {
     // border-radius: var(--border-radius);
     background: var(--background-color);
-    transition: border-radius 0.3s ease-in-out;
+    transition: border-radius 0.3s ease-in-out, background-color 0.2s ease;
     position: relative;
     margin: 0;
     padding: var(--titlebar-height) 10px 10px 10px;

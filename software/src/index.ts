@@ -1,6 +1,6 @@
+import 'core/environment';
 import { app, BrowserWindow } from 'electron/main';
 import { App } from 'modules/app';
-import 'core/environment';
 
 let application: App;
 

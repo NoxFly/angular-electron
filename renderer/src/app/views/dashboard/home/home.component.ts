@@ -93,8 +93,9 @@ export class HomeComponent implements AfterViewInit {
         Chart.register(...registerables);
 
         const ctx = this.lineChart()!.nativeElement.getContext('2d')!;
-        const gradient = ctx.createLinearGradient(0, 25, 0, 300);
+        const gradient = ctx.createLinearGradient(0, 25, 0, 360);
         gradient.addColorStop(0, 'rgba(188, 225, 227, 255)');
+        gradient.addColorStop(0.35, 'rgba(188, 225, 227, 0.8)');
         gradient.addColorStop(1, 'rgba(188, 225, 227, 0)');
 
         this.lineChartInstance = new Chart(this.lineChart()!.nativeElement, {
@@ -112,18 +113,20 @@ export class HomeComponent implements AfterViewInit {
                 }],
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         display: false,
                     },
                 },
-                responsive: true,
                 scales: {
                     x: {
                         display: true
                     },
                     y: {
-                        display: true
+                        display: true,
+                        suggestedMax: 100,
                     }
                 }
             }

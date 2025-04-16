@@ -8,7 +8,7 @@
         "moduleResolution": "node",
         "target": "ES6",
         "module": "CommonJS",
-        "outDir": "../dist",
+        "outDir": "./build",
         "forceConsistentCasingInFileNames": true,
         "strict": true,
         "noImplicitOverride": true,

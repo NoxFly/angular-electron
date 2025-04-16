@@ -3,9 +3,6 @@
 .numpad-container {
     margin: 50px auto;
     width: 300px;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
 
     .display {
         height: 60px;
@@ -14,12 +11,11 @@
             width: 100%;
             padding: 25px 20px;
             font-size: 2em;
+            border-bottom-color: transparent;
             border-radius: 10px;
             font-weight: 800;
             font-family: consolas, monospace;
             text-align: right;
-            background: transparent;
-            border: 1px solid var(--light-color-shade);
         }
     }
 
@@ -31,7 +27,7 @@
         gap: 5px;
 
         button {
-            --current-color: var(--dark-color);
+            --current-color: var(--medium-color-tint);
             --accent-color: var(--primary-color);
 
             min-width: auto;
@@ -39,9 +35,9 @@
             margin: 0;
             font-weight: 700;
             font-size: 1.5em;
-            background: var(--light-color-shade);
+            background: none;
             color: var(--current-color);
-            border: none;//1px solid color-mix(in srgb, var(--light-color-shade), #000 10%);
+            border: 1px solid color-mix(in srgb, var(--light-color-shade), #000 10%);
             border-radius: 10px;
             position: relative;
 

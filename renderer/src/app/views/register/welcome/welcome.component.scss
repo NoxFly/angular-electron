@@ -135,7 +135,7 @@ ol {
     @include flex($dir: column, $hor: stretch, $ver: flex-start);
 
     --tutorial-frame-width: 800px;
-    --tutorial-frame-background: var(--light-color-tint);
+    --tutorial-frame-background: var(--light-color);
 
     width: var(--tutorial-frame-width);
     padding: 50px;

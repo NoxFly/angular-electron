@@ -18,7 +18,7 @@
                     (click)="item.disabled?.() !== true && item.handler?.(item)">
 
                     <figure>
-                        <i class="icon" [style]="{ '--icon': 'url(images/' + item.icon + ')' }"></i>
+                        <i class="icon" [attr.data-icon]="item.icon"></i>
                     </figure>
                     <span *ngIf="item.caption">{{ item.caption }}</span>
 

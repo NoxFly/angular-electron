@@ -4,38 +4,41 @@
     </header>
 
     <div class="inner">
-        <div>
-            <section class="blocks-overview">
-                <div class="block">
-                    <h2>Total Sales</h2>
-                    <p class="value">$2,450.00</p>
-                </div>
-                <div class="block">
-                    <h2>Total Orders</h2>
-                    <p class="value">215</p>
-                </div>
-            </section>
+        <div class="dashboard-grid">
+            <div class="block">
+                <h3>Total Sales</h3>
+                <p class="value">$2,450.00</p>
+            </div>
+            <div class="block">
+                <h3>Total Orders</h3>
+                <p class="value">215</p>
+            </div>
 
-            <section class="charts">
-                <div class="chart-container line">
-                    <h2>Line Chart</h2>
+            <div class="block chart-container line">
+                <h3>Line Chart</h3>
+                <div class="chart-wrapper">
                     <canvas id="lineChart" #lineChart></canvas>
                 </div>
-                <div class="chart-container donut">
-                    <h2>Doughnut Chart</h2>
+            </div>
+            <div class="block chart-container donut">
+                <h3>Doughnut Chart</h3>
+                <div class="chart-wrapper ratio-1-1">
                     <canvas id="doughnutChart" #donutChart></canvas>
                 </div>
-            </section>
+            </div>
         </div>
 
         <section class="sidebar">
             <p class="second-screen-p" [class]="{ success: electron.hasSecondScreen() }">{{ secondScreenStateMessage() }}</p>
 
-            <button (click)="openSecondScreen()" [disabled]="!electron.hasSecondScreen()">Open second screen</button>
-            <button (click)="displayError()">Display error popup</button>
-            <button (click)="printPDF()">Print PDF</button>
-            <button (click)="sync(true)" [disabled]="isSyncing()">Synchronize (success)</button>
-            <button (click)="sync(false)" [disabled]="isSyncing()">Synchronize (error)</button>
+            <button class="clear" (click)="openSecondScreen()" [disabled]="!electron.hasSecondScreen()">Open second screen</button>
+            <button class="clear" (click)="displayError()">Display error popup</button>
+            <button class="clear" (click)="printPDF()">Print PDF</button>
+            <button class="clear" (click)="sync(true)" [disabled]="isSyncing()">Synchronize (success)</button>
+            <button class="clear" (click)="sync(false)" [disabled]="isSyncing()">Synchronize (error)</button>
+
+            <button class="btn-primary large" id="btn-toggle-cash-register">Ouvrir la caisse</button>
+            <button class="btn-danger clear" id="btn-logout">Se déconnecter</button>
         </section>
     </div>
 </article>

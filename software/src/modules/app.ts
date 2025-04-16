@@ -1,5 +1,5 @@
-import { ipcMain, screen } from "electron/main";
 import { WindowManager } from "core/window";
+import { ipcMain, screen } from "electron/main";
 import { AuthenticationService } from "modules/authentication";
 import { PrintingService } from "modules/extensions/printing";
 import { SyncingService } from "modules/extensions/sync";
