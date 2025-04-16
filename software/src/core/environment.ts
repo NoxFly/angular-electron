@@ -22,7 +22,9 @@ switch(env) {
         break;
 
     default:
-        throw new Error(`Unknown environment: ${env}`);
+        // defaulting to production
+        rendererDir = resolve(rootDir, 'browser');
+        break;
 }
 
 const publicDir = (env === 'development')
