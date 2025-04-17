@@ -1,6 +1,24 @@
 import 'core/environment';
 import { app, BrowserWindow } from 'electron/main';
 import { App } from 'modules/app';
+import squirrel from 'electron-squirrel-startup';
+import * as setupEvents from './installers/setup-events';
+
+
+// Installer events
+
+if(squirrel) {
+    app.quit();
+}
+
+
+if(setupEvents.handleSquirrelEvent()) {
+    process.exit();
+}
+
+
+
+// Application
 
 let application: App;
 

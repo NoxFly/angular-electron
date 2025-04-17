@@ -4,6 +4,8 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 module.exports = {
   packagerConfig: {
     asar: true,
+    name: 'AngularElectron',
+    icon: 'build/browser/app-logo'
   },
   rebuildConfig: {},
   makers: [
@@ -11,7 +13,7 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         authors: 'NoxFly & getisolated',
-        description: 'Angular Electron App'
+        description: 'Angular Electron App',
       },
     },
     {
