@@ -1,0 +1,12 @@
+<!--
+    @copyright Dorian Thivolle
+    @license MIT
+    @see https://github.com/NoxFly
+-->
+
+<div class="selected" (click)="toggleOptions()" #selected>
+    <span>{{ getSelected().text }}</span>
+</div>
+<div class="options" #options>
+    <ng-content select="ui-select-option"></ng-content>
+</div>

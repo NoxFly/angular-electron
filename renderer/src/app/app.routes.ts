@@ -1,7 +1,4 @@
 import { Routes } from '@angular/router';
-import { AppGuard } from './core/guards/app.guard';
-import { RegisteredGuard } from './core/guards/registered.guard';
-import { UnregisteredGuard } from './core/guards/unregistered.guard';
 
 export const routes: Routes = [
     {
@@ -9,25 +6,17 @@ export const routes: Routes = [
         loadComponent: () => import('./views/not-desktop/not-desktop.component').then(c => c.NotDesktopComponent),
     },
     {
-        path: 'dashboard',
-        canActivate: [AppGuard, RegisteredGuard],
-        runGuardsAndResolvers: 'always',
-        loadChildren: () => import('./views/dashboard/dashboard.routes').then(r => r.routes),
-    },
-    {
-        path: 'register',
-        canActivate: [AppGuard, UnregisteredGuard],
-        runGuardsAndResolvers: 'always',
-        loadComponent: () => import('./views/register/register.component').then(c => c.RegisterComponent),
-    },
-    {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'home',
         pathMatch: 'full',
     },
     {
+        path: 'home',
+        loadComponent: () => import('./views/home/home.component').then(c => c.HomeComponent),
+    },
+    {
         path: '**',
-        redirectTo: 'dashboard',
+        redirectTo: 'home',
         pathMatch: 'full',
     }
 ];

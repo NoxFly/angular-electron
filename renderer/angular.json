@@ -5,33 +5,6 @@
     "projects": {
         "angular-electron": {
             "projectType": "application",
-            "schematics": {
-                "@schematics/angular:component": {
-                    "style": "scss",
-                    "skipTests": true
-                },
-                "@schematics/angular:class": {
-                    "skipTests": true
-                },
-                "@schematics/angular:directive": {
-                    "skipTests": true
-                },
-                "@schematics/angular:guard": {
-                    "skipTests": true
-                },
-                "@schematics/angular:interceptor": {
-                    "skipTests": true
-                },
-                "@schematics/angular:pipe": {
-                    "skipTests": true
-                },
-                "@schematics/angular:resolver": {
-                    "skipTests": true
-                },
-                "@schematics/angular:service": {
-                    "skipTests": true
-                }
-            },
             "root": "src",
             "sourceRoot": "src",
             "prefix": "app",
@@ -42,9 +15,7 @@
                         "outputPath": "../dist",
                         "index": "src/index.html",
                         "browser": "src/main.ts",
-                        "polyfills": [
-                            "zone.js"
-                        ],
+                        "polyfills": [],
                         "tsConfig": "./tsconfig.json",
                         "inlineStyleLanguage": "scss",
                         "assets": [
@@ -64,13 +35,13 @@
                             "budgets": [
                                 {
                                     "type": "initial",
-                                    "maximumWarning": "500kB",
+                                    "maximumWarning": "500MB",
                                     "maximumError": "1MB"
                                 },
                                 {
                                     "type": "anyComponentStyle",
-                                    "maximumWarning": "2kB",
-                                    "maximumError": "4kB"
+                                    "maximumWarning": "2MB",
+                                    "maximumError": "4MB"
                                 }
                             ],
                             "fileReplacements": [
@@ -107,6 +78,36 @@
                     "builder": "@angular-devkit/build-angular:extract-i18n"
                 }
             }
+        }
+    },
+    "cli": {
+      "analytics": false
+    },
+    "schematics": {
+        "@schematics/angular:component": {
+            "style": "scss",
+            "skipTests": true
+        },
+        "@schematics/angular:class": {
+            "skipTests": true
+        },
+        "@schematics/angular:directive": {
+            "skipTests": true
+        },
+        "@schematics/angular:guard": {
+            "skipTests": true
+        },
+        "@schematics/angular:interceptor": {
+            "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+            "skipTests": true
+        },
+        "@schematics/angular:resolver": {
+            "skipTests": true
+        },
+        "@schematics/angular:service": {
+            "skipTests": true
         }
     }
 }

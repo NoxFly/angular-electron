@@ -1,14 +1,13 @@
-import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { GlobalStateService } from 'src/app/core/services/globalState.service';
 import { ElectronService } from 'src/app/core/services/electron.service';
+import { GlobalStateService } from 'src/app/core/services/globalState.service';
 
 @Component({
     selector: 'app-titlebar',
     standalone: true,
     templateUrl: './titlebar.component.html',
     styleUrl: './titlebar.component.scss',
-    imports: [NgIf],
+    imports: [],
 })
 export class TitlebarComponent {
     protected applicationName: string = 'Electron Angular';

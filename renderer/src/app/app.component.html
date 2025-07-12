@@ -1,11 +1,13 @@
 <app-titlebar [class]="{ dark: globalState.known() }"></app-titlebar>
 
 <section [class]="{ known: globalState.known() }">
-    <app-sidebar *ngIf="globalState.known()" @slideInOut></app-sidebar>
-
-    <main class="main" *ngIf="isReady">
-        <router-outlet/>
-    </main>
+    @if(isReady()) {
+        <main class="main">
+            <router-outlet/>
+        </main>
+    }
 </section>
 
-<app-loading-screen *ngIf="!isReady" @fadeInOut></app-loading-screen>
+@if(!isReady()) {
+    <app-loading-screen @fadeInOut></app-loading-screen>
+}

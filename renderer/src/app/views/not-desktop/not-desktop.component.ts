@@ -9,8 +9,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     imports: [],
 })
 export class NotDesktopComponent {
-    constructor() {
-
-    }
 
 }

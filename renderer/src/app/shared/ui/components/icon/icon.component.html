@@ -1,0 +1,13 @@
+<!--
+    @copyright Dorian Thivolle
+    @license MIT
+    @see https://github.com/NoxFly
+-->
+
+@if(isSVG()) {
+    <span class="icon icon-svg" [innerHTML]="content() | sanitize: 'html'"></span>
+}
+
+@if(isImage()) {
+    <span class="icon icon-image" [style.--icon-url]="'url(' + src() + ')'"></span>
+}

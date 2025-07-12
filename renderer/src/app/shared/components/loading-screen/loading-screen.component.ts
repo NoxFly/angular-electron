@@ -1,6 +1,5 @@
-import { NgIf } from '@angular/common';
 import { Component, input, ViewEncapsulation } from '@angular/core';
-import { SpinnerComponent } from 'src/app/shared/components/spinner/spinner.component';
+import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 
 @Component({
     selector: 'app-loading-screen',
@@ -8,7 +7,7 @@ import { SpinnerComponent } from 'src/app/shared/components/spinner/spinner.comp
     templateUrl: './loading-screen.component.html',
     styleUrl: './loading-screen.component.scss',
     encapsulation: ViewEncapsulation.None,
-    imports: [SpinnerComponent, NgIf],
+    imports: [SpinnerComponent],
 
 })
 export class LoadingScreenComponent {

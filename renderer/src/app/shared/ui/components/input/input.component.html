@@ -1,0 +1,42 @@
+<!--
+    @copyright Dorian Thivolle
+    @license MIT
+    @see https://github.com/NoxFly
+-->
+
+@if(label()) {
+    <label [for]="id" [class]="'placement-'+labelPlacement()">{{ label() }}</label>
+}
+
+<div>
+    @if(icon()) {
+        <ui-icon
+            class="input-icon"
+            [src]="icon()!"
+            [attr.aria-hidden]="true"/>
+    }
+
+    <input
+        [id]="id"
+        [type]="type()"
+        [disabled]="disabled()"
+        [placeholder]="placeholder()"
+        [pattern]="pattern()"
+        [autocomplete]="autocomplete()"
+        [value]="value()"
+        (input)="handleInput($event)"
+        (focus)="handleFocus()"
+        (blur)="handleBlur()"
+        #input/>
+
+    @if(type() === 'radio' || type() === 'checkbox') {
+        <span></span>
+    }
+
+    @if(type() === 'password' && !disabled() && togglePassword()) {
+        <ui-icon
+            class="password-icon"
+            src="assets/svg/eye-fill.svg"
+            (click)="togglePasswordVisibility()"/>
+    }
+</div>

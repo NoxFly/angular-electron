@@ -18,32 +18,5 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
     // app
     loadApp: () => ipcRenderer.invoke('load-app'),
     onNavigationRequested: (cb: fn) => ipcRenderer.on('navigate-to', (e, ...args) => cb(...args)),
-
-    // auth
-    getAuthState: () => ipcRenderer.invoke("get-auth-state"),
-    register: () => ipcRenderer.invoke("register"),
-    unregister: () => ipcRenderer.invoke("unregister"),
-    login: () => ipcRenderer.invoke("login"),
-    logout: () => ipcRenderer.invoke("logout"),
-
-    // printing
-    print: () => ipcRenderer.invoke('print'),
-
-    sync: (initCb: fn, progressCb: fn, doneCb: fn) => {
-        function onProgress(event: Electron.IpcRendererEvent, ...args: any[]): void {
-            progressCb(...args);
-        }
-
-        ipcRenderer.once('sync-init', (e, ...args) => initCb(...args));
-
-        ipcRenderer.on('sync-progress', onProgress);
-
-        ipcRenderer.once('sync-complete', (e, ...args) => {
-            ipcRenderer.off('sync-progress', onProgress);
-            doneCb(...args);
-        });
-
-        ipcRenderer.invoke('sync');
-    },
 });
 

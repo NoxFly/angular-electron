@@ -1,0 +1,82 @@
+/**
+ * @copyright Dorian Thivolle
+ * @license MIT
+ * @see https://github.com/NoxFly
+ */
+
+@use 'src/theme/mixins.scss' as *;
+
+
+:host ::ng-deep {
+    margin: 10px;
+    display: inline-block;
+
+    button {
+        background: var(--bg-color);
+        color: var(--fg-color);
+        width: var(--button-width, fit-content);
+
+        a {
+            color: var(--fg-color);
+            text-decoration: none;
+            display: inline-block;
+        }
+    }
+
+    button[disabled] {
+        opacity: 0.5;
+        cursor: default;
+        pointer-events: none;
+        filter: grayscale(100%);
+    }
+
+    &[data-color="default"] {
+        --bg-color: var(--background-color-tint);
+        --fg-color: var(--text-color);
+    }
+
+    &[data-color="success"] {
+        --bg-color: color-mix(in srgb, var(--color-success-shade), #fff 85%);
+        --fg-color: var(--color-success-shade);
+    }
+
+    &[data-color="warning"] {
+        --bg-color: var(--color-warning-shade);
+        --fg-color: var(--color-warning-contrast);
+    }
+
+    &[data-color="error"] {
+        --bg-color: color-mix(in srgb, var(--color-danger), #fff 10%);
+        --fg-color: var(--color-danger-contrast);
+    }
+
+    &[data-color="medium"] {
+        --bg-color: var(--color-medium);
+        --fg-color: var(--color-medium-contrast);
+    }
+
+    &[data-color="dark"] {
+        --bg-color: var(--color-dark-shade);
+        --fg-color: var(--color-dark-contrast);
+    }
+
+    &[data-color="light"] {
+        --bg-color: var(--color-light-tint);
+        --fg-color: var(--color-light-contrast);
+    }
+
+    &[data-color="primary"] {
+        --bg-color: var(--color-primary);
+        --fg-color: var(--color-primary-contrast);
+    }
+
+    &[data-color="secondary"] {
+        --bg-color: var(--color-secondary-tint);
+        --fg-color: var(--color-secondary-contrast);
+    }
+
+    &[data-color="tertiary"] {
+        --bg-color: var(--color-tertiary-tint);
+        --fg-color: var(--color-tertiary-contrast);
+    }
+}

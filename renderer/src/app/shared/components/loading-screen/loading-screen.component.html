@@ -1,3 +1,8 @@
-<figure class="app-logo zoom-effect" *ngIf="!message()"></figure>
-<p class="message" *ngIf="message()">{{ message() }}</p>
-<app-spinner color="primary"></app-spinner>
+@if(!message()) {
+    <figure class="app-logo zoom-effect"></figure>
+}
+@else {
+    <p class="message">{{ message() }}</p>
+}
+
+<ui-spinner color="primary"></ui-spinner>
