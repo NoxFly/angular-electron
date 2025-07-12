@@ -1,53 +1,57 @@
 :root {
-    --primary-color: hsl(172, 100%, 36%);
-    --primary-color-tint: hsl(172, 46%, 68%);
-    --primary-color-tint-2: hsl(172, 46%, 61%);
-    --primary-color-shade: hsl(173, 81%, 34%);
-    --primary-color-contrast: hsl(0, 0%, 100%);
+    --color-primary: hsl(172, 100%, 36%);
+    --color-primary-tint: color-mix(in hsl, var(--color-primary), hsl(0, 100%, 100%) 20%);
+    --color-primary-shade: color-mix(in hsl, var(--color-primary), hsl(0, 0, 0) 20%);
+    --color-primary-contrast: hsl(0, 0%, 100%);
 
-    --secondary-color: hsl(185, 20%, 22%);
-    --secondary-color-tint: hsl(185, 20%, 30%);
-    --secondary-color-shade: hsl(185, 20%, 15%);
-    --secondary-color-contrast: hsl(0, 0%, 100%);
+    --color-secondary: hsl(185, 20%, 22%);
+    --color-secondary-tint: color-mix(in hsl, var(--color-secondary), hsl(0, 100%, 100%) 20%);
+    --color-secondary-shade: color-mix(in hsl, var(--color-primary), hsl(0, 0, 0) 20%);
+    --color-secondary-contrast: hsl(0, 0%, 100%);
 
-    --success-color: hsl(117, 60%, 48%);
-    --success-color-tint: hsl(117, 65%, 53%);
-    --success-color-shade: hsl(117, 100%, 35%);
-    --success-color-contrast: hsl(0, 0%, 100%);
+    --color-tertiary: hsl(185, 94%, 20%);
+    --color-tertiary-tint: color-mix(in hsl, var(--color-tertiary), hsl(0, 100%, 100%) 20%);
+    --color-tertiary-shade: color-mix(in hsl, var(--color-tertiary), hsl(0, 0, 0) 20%);
+    --color-tertiary-contrast: hsl(0, 0%, 100%);
 
-    --danger-color: hsl(0, 90%, 50%);
-    --danger-color-tint: hsl(0, 100%, 60%);
-    --danger-color-shade: hsl(0, 73%, 42%);
-    --danger-color-contrast: hsl(0, 0%, 100%);
+    --color-success: hsl(117, 60%, 48%);
+    --color-success-tint: hsl(117, 65%, 53%);
+    --color-success-shade: hsl(117, 100%, 35%);
+    --color-success-contrast: hsl(0, 0%, 100%);
 
-    --warning-color: hsl(31, 69%, 54%);
-    --warning-color-tint: hsl(31, 100%, 63%);
-    --warning-color-shade: hsl(31, 63%, 44%);
-    --warning-color-contrast: hsl(0, 0%, 100%);
+    --color-danger: hsl(0, 90%, 50%);
+    --color-danger-tint: hsl(0, 100%, 60%);
+    --color-danger-shade: hsl(0, 73%, 42%);
+    --color-danger-contrast: hsl(0, 0%, 100%);
 
-    --light-color: hsl(0, 0%, 97%);
-    --light-color-tint: hsl(0, 0%, 100%);
-    --light-color-tint-2: hsl(0, 0%, 92%);
-    --light-color-shade: hsl(0, 0%, 95%);
-    --light-color-contrast: hsl(0, 0%, 20%);
+    --color-warning: hsl(31, 69%, 54%);
+    --color-warning-tint: hsl(31, 100%, 63%);
+    --color-warning-shade: hsl(31, 63%, 44%);
+    --color-warning-contrast: hsl(0, 0%, 100%);
 
-    --dark-color: hsl(0, 0%, 8%);
-    --dark-color-tint: hsl(0, 0%, 14%);
-    --dark-color-shade: hsl(0, 0%, 0%);
-    --dark-color-contrast: hsl(0, 0%, 90%);
+    --color-light: hsl(0, 0%, 97%);
+    --color-light-tint: hsl(0, 0%, 100%);
+    --color-light-tint-2: hsl(0, 0%, 92%);
+    --color-light-shade: hsl(0, 0%, 95%);
+    --color-light-contrast: hsl(0, 0%, 20%);
 
-    --medium-color: hsl(0, 0%, 36%);
-    --medium-color-tint: hsl(0, 0%, 59%);
-    --medium-color-shade: hsl(0, 0%, 25%);
-    --medium-color-contrast: hsl(0, 0%, 90%);
+    --color-dark: hsl(0, 0%, 8%);
+    --color-dark-tint: hsl(0, 0%, 14%);
+    --color-dark-shade: hsl(0, 0%, 0%);
+    --color-dark-contrast: hsl(0, 0%, 90%);
 
-    --window-background-color: var(--dark-color-shade);
+    --color-medium: hsl(0, 0%, 36%);
+    --color-medium-tint: hsl(0, 0%, 59%);
+    --color-medium-shade: hsl(0, 0%, 25%);
+    --color-medium-contrast: hsl(0, 0%, 90%);
 
-    --background-color: var(--light-color-tint);
-    --background-color-tint: var(--light-color);
-    --background-color-shade: var(--light-color-shade);
+    --window-background-color: var(--color-dark-shade);
 
-    --text-color: var(--light-color-contrast);
+    --background-color: var(--color-light-tint);
+    --background-color-tint: var(--color-light);
+    --background-color-shade: var(--color-light-shade);
+
+    --text-color: var(--color-light-contrast);
     --text-color-tint: hsl(0, 0%, 19.37%);
 
     --titlebar-height: 25px;

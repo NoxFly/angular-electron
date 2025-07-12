@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ButtonComponent } from 'src/app/shared/ui/components/button/button.component';
 
 @Component({
     selector: 'app-home',
@@ -6,7 +7,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [],
+    imports: [ButtonComponent],
 })
 export class HomeComponent {
     constructor() {
