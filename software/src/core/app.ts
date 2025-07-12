@@ -1,10 +1,12 @@
 import { ipcMain, screen } from "electron/main";
 import { WindowManager } from "core/window";
+import { Injectable } from "core/engine/appInjector";
 
+@Injectable("singleton")
 export class App {
-    private readonly windowManager = new WindowManager();
-
-    constructor() {
+    constructor(
+        private readonly windowManager: WindowManager,
+    ) {
         this.setupBridge();
     }
 

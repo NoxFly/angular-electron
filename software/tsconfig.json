@@ -23,6 +23,7 @@
         "noPropertyAccessFromIndexSignature": false,
         "noUncheckedIndexedAccess": true,
         "skipLibCheck": true,
+        "types": ["reflect-metadata"],
     },
     "tsc-alias": {
         "resolveFullPaths": true,

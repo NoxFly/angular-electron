@@ -1,8 +1,9 @@
+import { Injectable } from "core/engine/appInjector";
+import { environment } from "core/environment";
+import { Maybe } from "core/types/misc";
 import { shell } from "electron/common";
 import { app, BrowserWindow, BrowserWindowConstructorOptions, ipcMain, screen } from "electron/main";
 import { join } from 'node:path';
-import { environment } from "core/environment";
-import { Maybe } from "core/types/misc";
 
 
 const defaultWindowOptions: BrowserWindowConstructorOptions = {
@@ -25,7 +26,7 @@ const defaultWindowOptions: BrowserWindowConstructorOptions = {
     resizable: false,
 };
 
-
+@Injectable("singleton")
 export class WindowManager {
     private mainWindow: Maybe<BrowserWindow> = null;
     private secondaryWindow: Maybe<BrowserWindow> = null;
