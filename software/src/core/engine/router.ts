@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Guard } from 'core/engine/guards';
-import { Constructor, RootInjector } from 'core/engine/appInjector';
+import { Constructor, Injectable, RootInjector } from 'core/engine/appInjector';
 import { ResponseException, NotFoundException, UnauthorizedException } from 'core/engine/exceptions';
 import { HttpMethod, Request, Response } from 'core/engine/request';
 
@@ -75,6 +75,7 @@ function getRouteMetadata(target: Constructor): RouteMetadata[] {
 
 // main Router class
 
+@Injectable('singleton')
 export class Router {
     private readonly routes = new Map<string, RouteDefinition>();
 

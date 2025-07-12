@@ -4,9 +4,36 @@ import { Router } from "core/engine/router";
 import { ipcMain } from "electron";
 import { app, BrowserWindow } from "electron/main";
 import { App } from "core/app";
+import { environment } from "core/environment";
+import { UserController } from "modules/user/user.controller";
 
 export function bootstrapApplication(): void {
+    if(!environment.production)
+        logSetup();
+
+
     app.whenReady().then(init);
+}
+
+function logSetup(): void {
+    // Enregistrer les contrôleurs
+    const router: Router = RootInjector.resolve(Router);
+    router.registerController(UserController);
+
+    // Affichage du plan de routage
+    console.debug('\n===== ROUTING MAP =====');
+
+    for(const [route, info] of router.getRoutes()) {
+        const guardInfo: string = info.guard
+            ? ` (guard: ${info.guard.name})`
+            : '';
+
+        const now = new Date().toISOString().replace('T', ' ').replace('Z', '');
+
+        console.debug(`[Main] ${process.pid} - ${now} LOG [RouterExplorer] Mapped {${info.method} ${route}} => ${info.controller.name}.${info.handler} | [guard: ${guardInfo}]`);
+    }
+
+    console.debug('========================\n');
 }
 
 async function init(): Promise<void> {
