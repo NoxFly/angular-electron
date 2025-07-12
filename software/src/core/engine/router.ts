@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { Guard } from 'core/engine/guards';
 import { Constructor, Injectable, RootInjector } from 'core/engine/appInjector';
-import { ResponseException, NotFoundException, UnauthorizedException } from 'core/engine/exceptions';
+import { ResponseException, NotFoundException, UnauthorizedException, MethodNotAllowedException, BadRequestException } from 'core/engine/exceptions';
 import { HttpMethod, Request, Response } from 'core/engine/request';
 
 // types & interfaces
@@ -39,6 +39,7 @@ export const routes: RouteMetadata[] = [];
 export function Controller(name: string): ClassDecorator {
     return (target) => {
         Reflect.defineMetadata(CONTROLLER_METADATA_KEY, { path: name }, target);
+        Injectable('scope')(target);
     };
 }
 
@@ -86,7 +87,7 @@ export class Router {
             throw new Error(`Missing @Controller decorator on ${controllerClass.name}`);
 
         const routeDefs = getRouteMetadata(controllerClass);
-        
+
         for(const def of routeDefs) {
             const fullPath = `${controllerMeta.path}/${def.path}`.replace(/\/+/g, '/');
             this.routes.set(fullPath, {
@@ -110,13 +111,15 @@ export class Router {
 
         const controllerInstance = await this.resolveController(request, routeDef);
 
+        const action = controllerInstance[routeDef.handler] as ControllerAction;
+
+        this.verifyRequestBody(request, action);
+
         const response: Response = {
             status: 200,
             body: null,
             error: undefined,
         };
-
-        const action = controllerInstance[routeDef.handler] as ControllerAction;
 
         try {
             response.body = action.call(controllerInstance, request, response);
@@ -140,12 +143,19 @@ export class Router {
     }
 
     private findRoute(request: Request): RouteDefinition {
-        const routeDef = Array
+        const matchedRoutes = Array
             .from(this.routes.values())
-            .find(r => this.matchRoute(request.path, r.path) && r.method === request.method);
-        
-        if(!routeDef)
+            .filter(r => this.matchRoute(request.path, r.path));
+
+        if(matchedRoutes.length === 0) {
             throw new NotFoundException(`No route matches ${request.method} ${request.path}`);
+        }
+
+        const routeDef = matchedRoutes.find(r => r.method === request.method);
+
+        if(!routeDef) {
+            throw new MethodNotAllowedException(`Method Not Allowed for ${request.method} ${request.path}`);
+        }
 
         return routeDef;
     }
@@ -161,13 +171,12 @@ export class Router {
     }
 
     private async resolveController(request: Request, routeDef: RouteDefinition): Promise<any> {
-        const scope = RootInjector.createScope();
-        const controllerInstance = scope.resolve(routeDef.controller);
+        const controllerInstance = request.context.resolve(routeDef.controller);
 
         Object.assign(request.params, this.extractParams(request.path, routeDef.path));
 
         if(routeDef.guard) {
-            const guard = scope.resolve(routeDef.guard);
+            const guard = request.context.resolve(routeDef.guard);
             const allowed = await guard.canActivate(request);
 
             if(!allowed)
@@ -175,6 +184,12 @@ export class Router {
         }
 
         return controllerInstance;
+    }
+
+    private verifyRequestBody(request: Request, action: ControllerAction): void {
+        const requiredParams = Reflect.getMetadata('design:paramtypes', action) || [];
+        // peut être à faire plus tard. problème du TS, c'est qu'en JS pas de typage.
+        // donc il faudrait passer par des décorateurs mais pas sûr que ce soit bien.
     }
 
     private extractParams(actual: string, template: string): Record<string, string> {
