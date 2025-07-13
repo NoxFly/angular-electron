@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 import { Injectable } from 'engine/app';
 import { MethodNotAllowedException, NotFoundException, ResponseException, UnauthorizedException } from 'engine/exceptions';
-import { Guard } from 'engine/guards';
-import { Request, Response } from 'engine/request';
-import { CONTROLLER_METADATA_KEY, getControllerMetadata, getRouteMetadata, ROUTE_METADATA_KEY, RouteMetadata, Type } from 'engine/metadata';
-import { RadixTree } from 'engine/radix-tree';
+import { getGuardForController, getGuardForControllerAction, Guard } from 'engine/guards';
 import { Logger } from 'engine/logger';
+import { CONTROLLER_METADATA_KEY, ControllerMetadata, getControllerMetadata, getRouteMetadata, ROUTE_METADATA_KEY, RouteMetadata, Type } from 'engine/metadata';
+import { RadixTree } from 'engine/radix-tree';
+import { Request, Response } from 'engine/request';
 
 // types & interfaces
 
@@ -16,14 +16,19 @@ export interface RouteDefinition {
     path: string;
     controller: Type<any>;
     handler: string;
-    guard?: Type<Guard>;
+    guards: Type<Guard>[];
 }
 
 export type ControllerAction = (request: Request, response: Response) => any;
 
-export function Controller(name: string): ClassDecorator {
+export function Controller(path: string): ClassDecorator {
     return (target) => {
-        Reflect.defineMetadata(CONTROLLER_METADATA_KEY, { path: name }, target);
+        const data: ControllerMetadata = {
+            path,
+            guards: getGuardForController(target.name)
+        };
+
+        Reflect.defineMetadata(CONTROLLER_METADATA_KEY, data, target);
         Injectable('scope')(target);
     };
 }
@@ -37,6 +42,7 @@ function createRouteDecorator(verb: HttpMethod): (path: string) => MethodDecorat
                 method: verb,
                 path: path.trim().replace(/^\/|\/$/g, ''),
                 handler: propertyKey as string,
+                guards: getGuardForControllerAction((target.constructor as any).__controllerName, propertyKey as string),
             };
 
             existingRoutes.push(metadata);
@@ -58,27 +64,47 @@ export class Router {
 
     public registerController(controllerClass: Type<unknown>): Router {
         const controllerMeta = getControllerMetadata(controllerClass);
+
+        const controllerGuards = getGuardForController(controllerClass.name);
         
         if(!controllerMeta)
             throw new Error(`Missing @Controller decorator on ${controllerClass.name}`);
 
-        const routeDefs = getRouteMetadata(controllerClass);
+        const routeMetadata = getRouteMetadata(controllerClass);
 
-        for(const def of routeDefs) {
+        for(const def of routeMetadata) {
             const fullPath = `${controllerMeta.path}/${def.path}`.replace(/\/+/g, '/');
-            
-            this.routes.insert(fullPath + '/' + def.method, {
+
+            const routeGuards = getGuardForControllerAction(controllerClass.name, def.handler);
+
+            const guards = new Set([...controllerGuards, ...routeGuards]);
+
+            const routeDef: RouteDefinition = {
                 method: def.method,
                 path: fullPath,
                 controller: controllerClass,
                 handler: def.handler,
-                guard: def.guard,
-            });
+                guards: [...guards],
+            };
+            
+            this.routes.insert(fullPath + '/' + def.method, routeDef);
 
-            Logger.log(`Mapped {${def.method} /${fullPath}}${def.guard ? '<' + def.guard.name + '>' : ''} route`);
+            const hasActionGuards = routeDef.guards.length > 0;
+
+            const actionGuardsInfo = hasActionGuards
+                ? '<' + routeDef.guards.map(g => g.name).join('|') + '>'
+                : '';
+
+            Logger.log(`Mapped {${routeDef.method} /${fullPath}}${actionGuardsInfo} route`);
         }
 
-        Logger.log(`Mapped ${controllerClass.name} controller's routes`);
+        const hasCtrlGuards = controllerMeta.guards.length > 0;
+        
+        const controllerGuardsInfo = hasCtrlGuards
+            ? '<' + controllerMeta.guards.map(g => g.name).join('|') + '>'
+            : '';
+
+        Logger.log(`Mapped ${controllerClass.name}${controllerGuardsInfo} controller's routes`);
 
         return this;
     }
@@ -161,12 +187,14 @@ export class Router {
 
         Object.assign(request.params, this.extractParams(request.path, routeDef.path));
 
-        if(routeDef.guard) {
-            const guard = request.context.resolve(routeDef.guard);
-            const allowed = await guard.canActivate(request);
+        if(routeDef.guards.length > 0) {
+            for(const guardType of routeDef.guards) {
+                const guard = request.context.resolve(guardType);
+                const allowed = await guard.canActivate(request);
 
-            if(!allowed)
-                throw new UnauthorizedException(`Unauthorized for ${request.method} ${request.path}`);
+                if(!allowed)
+                    throw new UnauthorizedException(`Unauthorized for ${request.method} ${request.path}`);
+            }
         }
 
         return controllerInstance;

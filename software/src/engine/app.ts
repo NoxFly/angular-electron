@@ -9,7 +9,7 @@ export interface App {
     onReady(): Promise<void>;
 }
 
-export function Injectable(lifetime: Lifetime): ClassDecorator {
+export function Injectable(lifetime: Lifetime = 'scope'): ClassDecorator {
     return (target) => {
         if(typeof target !== 'function' || !target.prototype) {
             throw new Error(`@Injectable can only be used on classes, not on ${typeof target}`);
@@ -21,7 +21,6 @@ export function Injectable(lifetime: Lifetime): ClassDecorator {
 }
 
 // ---
-
 
 
 export function Module(metadata: ModuleMetadata): ClassDecorator {
@@ -70,3 +69,4 @@ export function Module(metadata: ModuleMetadata): ClassDecorator {
         Injectable('singleton')(target);
     };
 }
+

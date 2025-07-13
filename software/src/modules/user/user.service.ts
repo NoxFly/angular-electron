@@ -1,6 +1,6 @@
 import { Injectable } from "engine/app";
 
-@Injectable('scope')
+@Injectable()
 export class UserService {
     
 }

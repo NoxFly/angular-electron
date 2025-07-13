@@ -1,3 +1,5 @@
+import { AuthGuard } from "core/guards/auth.guard";
+import { Authorize } from "engine/guards";
 import { Request, Response } from "engine/request";
 import { Controller, Get, Post } from "engine/router";
 import { UserService } from "modules/user/user.service";
@@ -10,6 +12,7 @@ export class UserController {
     ) {}
     
     @Get("me")
+    @Authorize(AuthGuard)
     public async getMyProfile(request: Request, response: Response): Promise<any> {
         const userProfile = {
             id: 1,

@@ -20,7 +20,7 @@ function formatObject(prefix: string, arg: object): string {
                 
     const prefixedJson = json
         .split('\n')
-        .map((line, idx) => idx === 0 ? `${Logger.colors.green}${line}` : `${prefix} ${Logger.colors.white}${line}`)
+        .map((line, idx) => idx === 0 ? `${Logger.colors.darkGrey}${line}` : `${prefix} ${Logger.colors.grey}${line}`)
         .join('\n') + Logger.colors.initial;
 
     return prefixedJson;
@@ -42,11 +42,32 @@ function formattedArgs(prefix: string, args: any[], color: string): any[] {
 
 function getCallee(): string {
     const stack = new Error().stack?.split('\n') ?? [];
-    const caller = stack[3]?.trim().split(/\s|\./)[1] ?? "";
-    return caller.replace('Object', 'App');
+    const caller = stack[3]?.trim().match(/at (.+?)(?:\..+)? .+$/)?.[1]?.replace('Object', '') || "App";
+    return caller;
 }
 
+export type LogLevel = 'log' | 'info' | 'warn' | 'error' | 'debug';
+
+const logLevelRank: Record<LogLevel, number> = {
+    debug: 0,
+    log: 1,
+    info: 2,
+    warn: 3,
+    error: 4,
+};
+
+function canLog(level: LogLevel): boolean {
+    return logLevelRank[level] >= logLevelRank[logLevel];
+}
+
+let logLevel: LogLevel = 'debug';
+
 export namespace Logger {
+    
+    export function setLogLevel(level: LogLevel): void {
+        logLevel = level;
+    }
+
     export const colors = {
         black: '\x1b[0;30m',
         grey: '\x1b[0;37m',
@@ -69,30 +90,45 @@ export namespace Logger {
     };
 
     export function log(...args: any[]): void {
+        if(!canLog('log'))
+            return;
+
         const callee = getCallee();
         const prefix = getLogPrefix(callee, "log", colors.green);
         console.log(prefix, ...formattedArgs(prefix, args, colors.green));
     }
 
     export function info(...args: any[]): void {
+        if(!canLog('info'))
+            return;
+
         const callee = getCallee();
         const prefix = getLogPrefix(callee, "info", colors.blue);
         console.info(prefix, ...formattedArgs(prefix, args, colors.blue));
     }
 
     export function warn(...args: any[]): void {
+        if(!canLog('warn'))
+            return;
+
         const callee = getCallee();
         const prefix = getLogPrefix(callee, "warn", colors.brown);
         console.warn(prefix, ...formattedArgs(prefix, args, colors.brown));
     }
 
     export function error(...args: any[]): void {
+        if(!canLog('error'))
+            return;
+
         const callee = getCallee();
         const prefix = getLogPrefix(callee, "error", colors.red);
         console.error(prefix, ...formattedArgs(prefix, args, colors.red));
     }
 
     export function debug(...args: any[]): void {
+        if(!canLog('debug'))
+            return;
+
         const callee = getCallee();
         const prefix = getLogPrefix(callee, "debug", colors.purple);
         console.debug(prefix, ...formattedArgs(prefix, args, colors.purple));

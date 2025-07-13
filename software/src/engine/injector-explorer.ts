@@ -11,6 +11,7 @@ export class InjectorExplorer {
      * constructeur de la classe.
      */
     public static register(target: Type<unknown>, lifetime: Lifetime): typeof RootInjector {
+        Logger.debug(`Registering ${target.name} as ${lifetime}`);
         if(RootInjector.bindings.has(target)) // already registered
             return RootInjector;
 
@@ -31,7 +32,7 @@ export class InjectorExplorer {
         const controllerMeta = getControllerMetadata(target);
         
         if(controllerMeta) {
-            const router = RootInjector.singletons.get(Router) as Router;
+            const router = RootInjector.resolve(Router);
             router?.registerController(target);
             return RootInjector;
         }
@@ -39,9 +40,6 @@ export class InjectorExplorer {
         const routeMeta = getRouteMetadata(target);
         
         if(routeMeta) {
-            // for(const route of routeMeta) {
-            //     Logger.log(`Mapped {${route.method} /${route.path}} ${route.guard ? '<' + route.guard.name + '>' : ''} route`);
-            // }
             return RootInjector;
         }
 

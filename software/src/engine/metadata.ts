@@ -26,11 +26,12 @@ export interface RouteMetadata {
     method: HttpMethod;
     path: string;
     handler: string;
-    guard?: Type<Guard>;
+    guards: Type<Guard>[];
 }
 
 export interface ControllerMetadata {
     path: string;
+    guards: Type<Guard>[];
 }
 
 
