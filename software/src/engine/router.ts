@@ -1,40 +1,25 @@
 import 'reflect-metadata';
-import { Guard } from 'core/engine/guards';
-import { Constructor, Injectable, RootInjector } from 'core/engine/appInjector';
-import { ResponseException, NotFoundException, UnauthorizedException, MethodNotAllowedException, BadRequestException } from 'core/engine/exceptions';
-import { HttpMethod, Request, Response } from 'core/engine/request';
+import { Injectable } from 'engine/app';
+import { MethodNotAllowedException, NotFoundException, ResponseException, UnauthorizedException } from 'engine/exceptions';
+import { Guard } from 'engine/guards';
+import { Request, Response } from 'engine/request';
+import { CONTROLLER_METADATA_KEY, getControllerMetadata, getRouteMetadata, ROUTE_METADATA_KEY, RouteMetadata, Type } from 'engine/metadata';
+import { RadixTree } from 'engine/radix-tree';
+import { Logger } from 'engine/logger';
 
 // types & interfaces
 
-
-export interface RouteMetadata {
-    method: HttpMethod;
-    path: string;
-    handler: string;
-    guard?: Constructor;
-}
-
-export interface ControllerMetadata {
-    path: string;
-}
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export interface RouteDefinition {
     method: string;
     path: string;
-    controller: Constructor<any>;
+    controller: Type<any>;
     handler: string;
-    guard?: Constructor<Guard>;
+    guard?: Type<Guard>;
 }
 
 export type ControllerAction = (request: Request, response: Response) => any;
-
-const CONTROLLER_METADATA_KEY = Symbol('controller_metadata');
-const ROUTE_METADATA_KEY = Symbol('route_metadata');
-
-export const controllers: any[] = [];
-export const routes: RouteMetadata[] = [];
-
-// decorators
 
 export function Controller(name: string): ClassDecorator {
     return (target) => {
@@ -47,11 +32,15 @@ function createRouteDecorator(verb: HttpMethod): (path: string) => MethodDecorat
     return (path: string): MethodDecorator => {
         return (target, propertyKey) => {
             const existingRoutes: RouteMetadata[] = Reflect.getMetadata(ROUTE_METADATA_KEY, target.constructor) || [];
-            existingRoutes.push({
+
+            const metadata: RouteMetadata = {
                 method: verb,
                 path: path.trim().replace(/^\/|\/$/g, ''),
                 handler: propertyKey as string,
-            });
+            };
+
+            existingRoutes.push(metadata);
+
             Reflect.defineMetadata(ROUTE_METADATA_KEY, existingRoutes, target.constructor);
         };
     };
@@ -63,24 +52,11 @@ export const Put = createRouteDecorator('PUT');
 export const Patch = createRouteDecorator('PATCH');
 export const Delete = createRouteDecorator('DELETE');
 
-// -- utilities
-
-function getControllerMetadata(target: Constructor): ControllerMetadata | undefined {
-    return Reflect.getMetadata(CONTROLLER_METADATA_KEY, target);
-}
-
-function getRouteMetadata(target: Constructor): RouteMetadata[] {
-    return Reflect.getMetadata(ROUTE_METADATA_KEY, target) || [];
-}
-
-
-// main Router class
-
 @Injectable('singleton')
 export class Router {
-    private readonly routes = new Map<string, RouteDefinition>();
+    private readonly routes = new RadixTree<RouteDefinition>();
 
-    public registerController(controllerClass: Constructor): Router {
+    public registerController(controllerClass: Type<unknown>): Router {
         const controllerMeta = getControllerMetadata(controllerClass);
         
         if(!controllerMeta)
@@ -90,31 +66,28 @@ export class Router {
 
         for(const def of routeDefs) {
             const fullPath = `${controllerMeta.path}/${def.path}`.replace(/\/+/g, '/');
-            this.routes.set(fullPath, {
+            
+            this.routes.insert(fullPath + '/' + def.method, {
                 method: def.method,
                 path: fullPath,
                 controller: controllerClass,
                 handler: def.handler,
                 guard: def.guard,
             });
+
+            Logger.log(`Mapped {${def.method} /${fullPath}}${def.guard ? '<' + def.guard.name + '>' : ''} route`);
         }
+
+        Logger.log(`Mapped ${controllerClass.name} controller's routes`);
 
         return this;
     }
 
-    public getRoutes(): Map<string, RouteDefinition> {
-        return this.routes;
-    }
-
     public async handle(request: Request): Promise<Response> {
-        const routeDef = this.findRoute(request);
+        Logger.log(`Received request: {${request.method} /${request.path}}`);
 
-        const controllerInstance = await this.resolveController(request, routeDef);
-
-        const action = controllerInstance[routeDef.handler] as ControllerAction;
-
-        this.verifyRequestBody(request, action);
-
+        const t0 = performance.now();
+        
         const response: Response = {
             status: 200,
             body: null,
@@ -122,6 +95,15 @@ export class Router {
         };
 
         try {
+            const routeDef = this.findRoute(request);
+            const controllerInstance = await this.resolveController(request, routeDef);
+
+            const action = controllerInstance[routeDef.handler] as ControllerAction;
+
+            this.verifyRequestBody(request, action);
+
+            
+
             response.body = action.call(controllerInstance, request, response);
         }
         catch(error: unknown) {
@@ -138,36 +120,33 @@ export class Router {
                 response.error = 'Unknown error occurred';
             }
         }
+        finally {
+            const t1 = performance.now();
 
-        return response;
+            Logger.log(`Request {${request.method} /${request.path}} processed in ${Math.round(t1 - t0)}ms`);
+
+            if(response.error !== undefined) {
+                Logger.error(response.error);
+            }
+
+            return response;
+        }
     }
 
     private findRoute(request: Request): RouteDefinition {
-        const matchedRoutes = Array
-            .from(this.routes.values())
-            .filter(r => this.matchRoute(request.path, r.path));
+        const matchedRoutes = this.routes.search(request.path);
 
-        if(matchedRoutes.length === 0) {
+        if(matchedRoutes?.node === undefined || matchedRoutes.node.children.length === 0) {
             throw new NotFoundException(`No route matches ${request.method} ${request.path}`);
         }
 
-        const routeDef = matchedRoutes.find(r => r.method === request.method);
+        const routeDef = matchedRoutes.node.findExactChild(request.method);
 
-        if(!routeDef) {
+        if(routeDef?.value === undefined) {
             throw new MethodNotAllowedException(`Method Not Allowed for ${request.method} ${request.path}`);
         }
 
-        return routeDef;
-    }
-
-    private matchRoute(actual: string, template: string): boolean {
-        const aParts = actual.split('/');
-        const tParts = template.split('/');
-        
-        if(aParts.length !== tParts.length)
-            return false;
-        
-        return tParts.every((part, i) => part.startsWith(':') || part === aParts[i]);
+        return routeDef.value;
     }
 
     private async resolveController(request: Request, routeDef: RouteDefinition): Promise<any> {

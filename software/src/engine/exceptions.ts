@@ -3,7 +3,9 @@ export abstract class ResponseException extends Error {
 
     constructor(message: string) {
         super(message);
-        this.name = this.constructor.name.replace(/(exception|error)$/i, '');
+        
+        this.name = this.constructor.name
+            .replace(/([A-Z])/g, ' $1');
     }
 }
 

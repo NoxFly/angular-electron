@@ -1,5 +1,11 @@
 import 'reflect-metadata';
-import { bootstrapApplication } from 'core/engine/bootstrap';
 import 'core/environment';
+import { bootstrapApplication } from 'engine/bootstrap';
+import { Application } from 'modules/app.service';
+import { AppModule } from 'modules/app.module';
 
-bootstrapApplication();
+async function main(): Promise<void> {
+    await bootstrapApplication(Application, AppModule);
+}
+
+main();

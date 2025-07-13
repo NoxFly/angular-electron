@@ -1,11 +1,16 @@
-import { Request, Response } from "core/engine/request";
-import { Controller, Get } from "core/engine/router";
+import { Request, Response } from "engine/request";
+import { Controller, Get, Post } from "engine/router";
+import { UserService } from "modules/user/user.service";
 
 @Controller("user")
 export class UserController {
+
+    constructor(
+        private readonly userService: UserService
+    ) {}
     
-    @Get("/profile")
-    public async getProfile(request: Request, response: Response): Promise<any> {
+    @Get("me")
+    public async getMyProfile(request: Request, response: Response): Promise<any> {
         // Simulate fetching user profile data
         const userProfile = {
             id: 1,
@@ -14,6 +19,16 @@ export class UserController {
         };
 
         return userProfile;
+    }
+
+    @Post("profile")
+    public async setProfile(request: Request, response: Response): Promise<void> {
+        
+    }
+
+    @Get("profile/:id")
+    public async getProfile(request: Request, response: Response): Promise<void> {
+        
     }
 
 }

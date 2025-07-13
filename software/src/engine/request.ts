@@ -1,8 +1,8 @@
-import { App } from 'core/app';
-import { RootInjector } from 'core/engine/appInjector';
+import { App } from 'engine/app';
+import { RootInjector } from 'engine/app-injector';
+import { HttpMethod } from 'engine/router';
 import 'reflect-metadata';
 
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 //
 
@@ -18,7 +18,9 @@ export class Request {
         public readonly method: HttpMethod,
         public readonly path: string,
         public readonly body: any,
-    ) {}
+    ) {
+        this.path = path.replace(/^\/|\/$/g, '');
+    }
 }
 
 export interface Response {

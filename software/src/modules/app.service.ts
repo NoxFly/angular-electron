@@ -1,13 +1,16 @@
 import { ipcMain, screen } from "electron/main";
 import { WindowManager } from "core/window";
-import { Injectable } from "core/engine/appInjector";
+import { Injectable, App } from "engine/app";
 
 @Injectable("singleton")
-export class App {
+export class Application implements App {
     constructor(
         private readonly windowManager: WindowManager,
-    ) {
+    ) {}
+
+    public async onReady(): Promise<void> {
         this.setupBridge();
+        this.window.createMain();
     }
 
     public async dispose(): Promise<void> {
@@ -20,6 +23,8 @@ export class App {
 
     private setupBridge(): void {
         ipcMain.handle("load-app", async (e, ...args) => await this.loadApp(e, args));
+
+        this.windowManager.setupBridge();
     }
 
     private async loadApp(e: Electron.IpcMainInvokeEvent, args: any[]): Promise<any> {

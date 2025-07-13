@@ -1,5 +1,6 @@
 // import { dirname } from 'node:path';
 
+import { Logger } from "engine/logger";
 import { resolve } from "node:path";
 
 const production = process.env.NODE_ENV !== 'development';
@@ -13,4 +14,4 @@ export const environment = {
 };
 
 
-console.info(`[INFO] Running in ${environment.production ? "production" : "development"} mode`);
+Logger.info(`Running in ${environment.production ? "production" : "development"} mode`);

@@ -1,38 +1,19 @@
-// core/container.ts
-import { InternalServerException } from 'core/engine/exceptions';
+import { InternalServerException } from 'engine/exceptions';
+import { Type } from 'engine/metadata';
 import 'reflect-metadata';
-
-export type Constructor<T = any> = new (...args: any[]) => T;
 
 export type Lifetime = 'singleton' | 'scope' | 'transient';
 
-// ---
-
 interface Binding {
     lifetime: Lifetime;
-    implementation: Constructor;
-    instance?: any;
+    implementation: Type<unknown>;
+    instance?: InstanceType<Type<unknown>>;
 }
-
-// --- decorators
-
-export function Injectable(lifetime: Lifetime): ClassDecorator {
-    return (target) => {
-        if(typeof target !== 'function' || !target.prototype) {
-            throw new Error(`@Injectable can only be used on classes, not on ${typeof target}`);
-        }
-
-        // RootInjector.register(target as unknown as Constructor<any>, lifetime);
-        Reflect.defineMetadata('injectable', true, target);
-    };
-}
-
-// ---
 
 class AppInjector {
-    public bindings = new Map<Constructor, Binding>();
-    public singletons = new Map<Constructor, any>();
-    public scoped = new Map<Constructor, any>();
+    public bindings = new Map<Type<unknown>, Binding>();
+    public singletons = new Map<Type<unknown>, InstanceType<Type<unknown>>>();
+    public scoped = new Map<Type<unknown>, InstanceType<Type<unknown>>>();
 
     constructor(
         public readonly name: string | null = null,
@@ -51,25 +32,10 @@ class AppInjector {
     }
 
     /**
-     * Enregistre la classe comme étant injectable.
-     * Lorsqu'une classe sera instanciée, si elle a des dépendances, et que celles-ci
-     * figurent dans la liste grâce à cette méthode, elles seront injectées dans le
-     * constructeur de la classe.
-     */
-    public register(target: Constructor, lifetime: Lifetime): AppInjector {
-        this.bindings.set(target, {
-            implementation: target,
-            lifetime
-        });
-
-        return this;
-    }
-
-    /**
      * Appelé lorsqu'on souhaite résoudre une dépendance,
      * c'est-à-dire récupérer l'instance d'une classe donnée.
      */
-    public resolve<T extends Constructor<any>>(target: T): InstanceType<T> {
+    public resolve<T extends Type<unknown>>(target: T): InstanceType<T> {
         const binding = this.bindings.get(target);
 
         if(!binding)
@@ -93,6 +59,7 @@ class AppInjector {
             case 'singleton': {
                 if(binding.instance === undefined && this.name === 'root') {
                     binding.instance = this.instantiate(binding.implementation);
+                    this.singletons.set(target, binding.instance);
                 }
 
                 return binding.instance as InstanceType<T>;
@@ -103,22 +70,11 @@ class AppInjector {
     /**
      * 
      */
-    private instantiate<T>(target: Constructor<T>): T {
+    private instantiate<T extends Type<unknown>>(target: T): InstanceType<T> {
         const paramTypes = Reflect.getMetadata('design:paramtypes', target) || [];
         const params = paramTypes.map((p: any) => this.resolve(p));
-        return new target(...params);
-    }
-}
-
-class InjectorExplorer {
-    public static explore(injector: AppInjector): void {
-        // search all @Injector in the project and register them to the passed injector
-        const injectableClasses: string[] = [];
-
-        
+        return new target(...params) as InstanceType<T>;
     }
 }
 
 export const RootInjector = new AppInjector('root');
-
-InjectorExplorer.explore(RootInjector);

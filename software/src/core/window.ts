@@ -1,4 +1,4 @@
-import { Injectable } from "core/engine/appInjector";
+import { Injectable } from "engine/app";
 import { environment } from "core/environment";
 import { Maybe } from "core/types/misc";
 import { shell } from "electron/common";
@@ -31,11 +31,7 @@ export class WindowManager {
     private mainWindow: Maybe<BrowserWindow> = null;
     private secondaryWindow: Maybe<BrowserWindow> = null;
 
-    constructor() {
-        this.setupBridge();
-    }
-
-    private setupBridge(): void {
+    public setupBridge(): void {
         ipcMain.handle("close-app", () => {
             const win = BrowserWindow.getFocusedWindow();
 
