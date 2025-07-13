@@ -84,7 +84,7 @@ export class Router {
     }
 
     public async handle(request: Request): Promise<Response> {
-        Logger.log(`Received request: {${request.method} /${request.path}}`);
+        Logger.log(`> Received request: {${request.method} /${request.path}}`);
 
         const t0 = performance.now();
         
@@ -104,7 +104,7 @@ export class Router {
 
             
 
-            response.body = action.call(controllerInstance, request, response);
+            response.body = await action.call(controllerInstance, request, response);
         }
         catch(error: unknown) {
             if(error instanceof ResponseException) {
@@ -123,7 +123,14 @@ export class Router {
         finally {
             const t1 = performance.now();
 
-            Logger.log(`Request {${request.method} /${request.path}} processed in ${Math.round(t1 - t0)}ms`);
+            const message = `< ${response.status} ${request.method} /${request.path} ${Logger.colors.yellow}${Math.round(t1 - t0)}ms${Logger.colors.initial}`;
+
+            if(response.status < 400)
+                Logger.log(message);
+            else if(response.status < 500)
+                Logger.warn(message);
+            else
+                Logger.error(message);
 
             if(response.error !== undefined) {
                 Logger.error(response.error);

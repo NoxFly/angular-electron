@@ -41,10 +41,12 @@ async function init(root: Type<App>, rootModule: Type<any>): Promise<App> {
 
     console.log('');
 
-    const request = new Request(application, { data: {}, ports: [] }, {} as any, "POST", "def/abc", {});
     const router = RootInjector.resolve(Router);
-    const response = await router.handle(request);
-    console.log("Initial request response:", response);
+
+    for(let i=0; i < 3; i++) {
+        const request = new Request(application, { data: {}, ports: [] }, {} as any, "GET", "user/profile/" + i, {});
+        await router.handle(request);
+    }
 
 
     return application;

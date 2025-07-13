@@ -95,13 +95,27 @@ export class RadixTree<T> {
                     ...params,
                     [paramName]: segment ?? "",
                 };
-                
+
+                if(rest.length === 0) {
+                    return {
+                        node: child,
+                        params: childParams
+                    };
+                }
+
                 const result = this.searchRecursive(child, rest, childParams);
                 
                 if(result)
                     return result;
             }
             else if(segment === child.segment) {
+                if(rest.length === 0) {
+                    return {
+                        node: child,
+                        params
+                    };
+                }
+
                 const result = this.searchRecursive(child, rest, params);
 
                 if(result)
@@ -113,9 +127,11 @@ export class RadixTree<T> {
     }
 
     private normalize(path: string): string[] {
-        return path
+        const segments = path
             .replace(/^\/+|\/+$/g, "")
             .split("/")
             .filter(Boolean);
-    }
+
+        return ['', ...segments];
+    } 
 }

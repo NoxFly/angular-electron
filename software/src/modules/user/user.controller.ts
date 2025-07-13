@@ -11,7 +11,6 @@ export class UserController {
     
     @Get("me")
     public async getMyProfile(request: Request, response: Response): Promise<any> {
-        // Simulate fetching user profile data
         const userProfile = {
             id: 1,
             name: "John Doe",
