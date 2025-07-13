@@ -1,3 +1,4 @@
+import { MessagePortMain } from 'electron/main';
 import { contextBridge, ipcRenderer } from 'electron/renderer';
 
 // .invoke -> front sends to back
@@ -16,6 +17,8 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
     onSecondScreenDetectionChanged: (cb: fn) => ipcRenderer.on('second-screen-detection-changed', (e, ...args) => cb(...args)),
 
     // app
+    requestPort: () => ipcRenderer.send('gimme-my-port'),
+    hereIsMyPort: (cb: fn) => ipcRenderer.on('port', (e, ...args) => cb(...args)),
     loadApp: () => ipcRenderer.invoke('load-app'),
     onNavigationRequested: (cb: fn) => ipcRenderer.on('navigate-to', (e, ...args) => cb(...args)),
 });

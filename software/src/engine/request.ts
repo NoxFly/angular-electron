@@ -14,7 +14,6 @@ export class Request {
     constructor(
         public readonly app: App,
         public readonly event: Electron.MessageEvent,
-        public readonly port: Electron.MessagePortMain,
         public readonly method: HttpMethod,
         public readonly path: string,
         public readonly body: any,

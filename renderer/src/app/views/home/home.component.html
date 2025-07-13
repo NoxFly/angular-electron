@@ -1,8 +1,8 @@
 <h1>Home Page</h1>
 <p>Welcome Home, world</p>
 
-<ui-button type="button" color="primary">Send GET to /user/me</ui-button>
-<ui-button type="button" color="primary">Send GET to /user/:id</ui-button>
-<ui-button type="button" color="secondary">Send POST to /test/test2/test3</ui-button>
-<ui-button type="button" color="tertiary">Send PATCH to /test/test2/test3</ui-button>
-<ui-button type="button" color="error">Send DELETE to /test/test2/test3</ui-button>
+<ui-button type="button" color="primary" (click)="onButtonClick('GET', 'user/me')">Send GET to /user/me</ui-button>
+<ui-button type="button" color="primary" (click)="onButtonClick('GET', 'user/123')">Send GET to /user/:id</ui-button>
+<ui-button type="button" color="secondary" (click)="onButtonClick('POST', 'test/test2/test3')">Send POST to /test/test2/test3</ui-button>
+<ui-button type="button" color="tertiary" (click)="onButtonClick('PATCH', 'test/test2/test3')">Send PATCH to /test/test2/test3</ui-button>
+<ui-button type="button" color="error" (click)="onButtonClick('DELETE', 'test/test2/test3')">Send DELETE to /test/test2/test3</ui-button>

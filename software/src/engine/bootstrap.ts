@@ -1,12 +1,14 @@
-import { RootInjector } from "engine/app-injector";
 import { ipcMain } from "electron";
-import { app, BrowserWindow } from "electron/main";
+import { app, BrowserWindow, MessageChannelMain } from "electron/main";
 import { App } from "engine/app";
+import { RootInjector } from "engine/app-injector";
 import { getInjectableMetadata, getModuleMetadata, Type } from "engine/metadata";
 import { Request, Response } from "engine/request";
 import { Router } from "engine/router";
-import { Logger } from "engine/logger";
 
+/**
+ * 
+ */
 export async function bootstrapApplication(root: Type<App>, rootModule: Type<any>): Promise<App> {
     if(!getModuleMetadata(rootModule)) {
         throw new Error(`Root module must be decorated with @Module`);
@@ -19,62 +21,95 @@ export async function bootstrapApplication(root: Type<App>, rootModule: Type<any
     await app.whenReady();
 
     RootInjector.resolve(Router);
-    const application = await init(root, rootModule);
+
+    const noxEngine = new Nox(root, rootModule);
+
+    const application = await noxEngine.init();
 
     return application;
 }
 
-async function init(root: Type<App>, rootModule: Type<any>): Promise<App> {
-    const application = RootInjector.resolve(root);
 
-    ipcMain.on('port', (event) => {
-        const [port] = event.ports;
-        const router = RootInjector.resolve(Router);
+class Nox {
+    private messagePort: Electron.MessageChannelMain | undefined;
 
-        port?.on('message', event => onClientMessage(application, router, event, port));
-    });
+    constructor(
+        public readonly root: Type<App>,
+        public readonly rootModule: Type<any>
+    ) {}
 
-    app.once('activate', onAppActivated.bind(null, application));
-    app.once('window-all-closed', onAllWindowsClosed.bind(null, application));
+    /**
+     * 
+     */
+    public async init(): Promise<App> {
+        const application = RootInjector.resolve(this.root);
 
-    await application.onReady();
+        ipcMain.on('gimme-my-port', (event) => {
+            if(!this.messagePort) {
+                this.messagePort = new MessageChannelMain();
 
-    console.log('');
+                this.messagePort.port1.on('message', event => this.onClientMessage(application, event));
+                this.messagePort.port1.start();
+            }
 
-    return application;
-}
+            event.sender.postMessage('port', null, [this.messagePort.port2]);
+        });
 
-// Electron specific message handling.
-// Replaces HTTP calls by using Electron's IPC mechanism.
-async function onClientMessage(application: App, router: Router, event: Electron.MessageEvent, port: Electron.MessagePortMain): Promise<void> {
-    const { path, method, body } = event.data;
+        app.once('activate', this.onAppActivated.bind(this, application));
+        app.once('window-all-closed', this.onAllWindowsClosed.bind(this, application));
 
-    const request = new Request(application, event, port, method, path, body);
-    
-    try {
-        const response = await router.handle(request);
-        port.postMessage(response);
+        await application.onReady();
+
+        console.log(''); // create a new line in the console to separate setup logs from the future logs
+
+        return application;
     }
-    catch(err: any) {
-        const response: Response = {
-            status: 500,
-            body: null,
-            error: err.message || 'Internal Server Error',
-        };
 
-        port.postMessage(response);
+    /**
+     * Electron specific message handling.
+     * Replaces HTTP calls by using Electron's IPC mechanism.
+     */
+    private async onClientMessage(application: App, event: Electron.MessageEvent): Promise<void> {
+        try {
+            const { path, method, body } = event.data;
+            
+            const request = new Request(application, event, method, path, body);
+            const router = RootInjector.resolve(Router);
+
+            const response = await router.handle(request);
+            
+            this.messagePort?.port1.postMessage(response);
+        }
+        catch(err: any) {
+            const response: Response = {
+                status: 500,
+                body: null,
+                error: err.message || 'Internal Server Error',
+            };
+
+            this.messagePort?.port1.postMessage(response);
+        }
     }
-}
 
-function onAppActivated(application: App): void {
-    if(BrowserWindow.getAllWindows().length === 0) {
-        application.onReady();
+    /**
+     * 
+     */
+    private onAppActivated(application: App): void {
+        if(BrowserWindow.getAllWindows().length === 0) {
+            application.onReady();
+        }
     }
-}
 
-async function onAllWindowsClosed(application: App): Promise<void> {
-    if(process.platform !== 'darwin') {
+    /**
+     * 
+     */
+    private async onAllWindowsClosed(application: App): Promise<void> {
+        this.messagePort?.port1.close();
         await application.dispose();
-        app.quit();
+
+        if(process.platform !== 'darwin') {
+            app.quit();
+        }
     }
 }
+

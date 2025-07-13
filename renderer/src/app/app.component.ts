@@ -46,5 +46,7 @@ export class AppComponent {
 
         this.isReady.set(true);
         this.router.navigateByUrl('/home');
+
+        this.electron.ipc.requestPort();
     }
 }
