@@ -1,10 +1,10 @@
 import { Module } from "@noxfly/noxus";
+import { AuthModule } from "modules/auth/auth.module";
 import { UserModule } from "modules/user/user.module";
 
 @Module({
-    imports: [UserModule],
+    imports: [UserModule, AuthModule],
     controllers: [],
     providers: [],
-    exports: [],
 })
 export class AppModule {}

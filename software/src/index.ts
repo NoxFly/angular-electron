@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import 'core/environment';
 import { bootstrapApplication } from '@noxfly/noxus';
 import { AppModule } from 'modules/app.module';
