@@ -1,4 +1,4 @@
-import { Module } from "engine/app";
+import { Module } from "@noxfly/noxus";
 import { UserModule } from "modules/user/user.module";
 
 @Module({

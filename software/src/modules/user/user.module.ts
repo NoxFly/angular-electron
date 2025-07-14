@@ -1,4 +1,4 @@
-import { Module } from "engine/app";
+import { Module } from "@noxfly/noxus";
 import { UserController } from "modules/user/user.controller";
 import { UserService } from "modules/user/user.service";
 

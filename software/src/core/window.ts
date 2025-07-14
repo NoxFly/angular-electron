@@ -1,4 +1,4 @@
-import { Injectable } from "engine/app";
+import { Injectable } from "@noxfly/noxus";
 import { environment } from "core/environment";
 import { Maybe } from "core/types/misc";
 import { shell } from "electron/common";

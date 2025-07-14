@@ -1,4 +1,4 @@
-import { Injectable } from "engine/app";
+import { Injectable } from "@noxfly/noxus";
 
 @Injectable()
 export class AuthService {

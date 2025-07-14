@@ -1,25 +1,11 @@
 import { Injectable, signal } from "@angular/core";
 import { randomId } from "src/app/shared/helpers/utils";
-
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-
-export interface Request {
-    path: string;
-    method: HttpMethod;
-    body?: any;
-}
-
-export interface Response<T> {
-    requestId: string;
-    status: number;
-    body?: T;
-    error?: string;
-}
+import { IRequest, IResponse } from "@noxfly/noxus";
 
 interface PendingRequestHandlers<T> {
-    resolve: (value: Response<T>) => void;
-    reject: (reason?: Response<T>) => void;
-    request: Request;
+    resolve: (value: IResponse<T>) => void;
+    reject: (reason?: IResponse<T>) => void;
+    request: IRequest;
 }
 
 @Injectable({
@@ -63,7 +49,7 @@ export class ElectronService {
     }
 
     private onMessage(event: MessageEvent): void {
-        const response: Response<unknown> = event.data;
+        const response: IResponse<unknown> = event.data;
 
         if(!response || !response.requestId) {
             console.error('Received invalid response:', response);
@@ -79,7 +65,7 @@ export class ElectronService {
         
         this.pendingRequests.delete(response.requestId);
 
-        let fn: (response: Response<unknown>) => void = pending.resolve;
+        let fn: (response: IResponse<unknown>) => void = pending.resolve;
 
         console.groupCollapsed(`${response.status} ${pending.request.method} /${pending.request.path}`);
         
@@ -96,7 +82,7 @@ export class ElectronService {
         fn(response);
     }
 
-    public request<T>(request: Request): Promise<T> {
+    public request<T>(request: Omit<IRequest, 'requestId'>): Promise<T> {
         if(!this.isElectronApp)
             return Promise.reject(new Error("Not running in Electron environment"));
         
@@ -105,13 +91,13 @@ export class ElectronService {
                 return reject(new Error("MessagePort is not available"));
             }
         
-            const req = {
+            const req: IRequest = {
                 requestId: randomId(),
                 ...request,
             };
         
             this.pendingRequests.set(req.requestId, {
-                resolve: (response: Response<T>) => {
+                resolve: (response: IResponse<T>) => {
                     if(response.error) {
                         reject(response);
                     }
@@ -119,10 +105,10 @@ export class ElectronService {
                         resolve(response.body as T);
                     }
                 },
-                reject: (response?: Response<T>) => {
+                reject: (response?: IResponse<T>) => {
                     reject(response);
                 },
-                request,
+                request: req,
             });
         
             this.port.postMessage(req);

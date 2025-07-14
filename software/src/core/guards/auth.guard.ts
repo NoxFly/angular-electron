@@ -1,11 +1,8 @@
-import { Injectable } from "engine/app";
-import { Guard } from "engine/guards";
-import { MaybeAsync } from "engine/misc";
-import { Request } from "engine/request";
 import { AuthService } from "modules/auth/auth.service";
+import { IGuard, Injectable, MaybeAsync, Request } from "@noxfly/noxus";
 
 @Injectable()
-export class AuthGuard implements Guard {
+export class AuthGuard implements IGuard {
     constructor(
         private readonly authService: AuthService
     ) {}

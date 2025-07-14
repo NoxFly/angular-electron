@@ -1,9 +1,9 @@
 import { ipcMain, screen } from "electron/main";
 import { WindowManager } from "core/window";
-import { Injectable, App } from "engine/app";
+import { Injectable, IApp } from "@noxfly/noxus";
 
 @Injectable("singleton")
-export class Application implements App {
+export class Application implements IApp {
     constructor(
         private readonly windowManager: WindowManager,
     ) {}

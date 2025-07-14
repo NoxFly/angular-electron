@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ElectronService, HttpMethod } from 'src/app/core/services/electron.service';
+import { HttpMethod } from '@noxfly/noxus';
+import { ElectronService } from 'src/app/core/services/electron.service';
 import { ButtonComponent } from 'src/app/shared/ui/components/button/button.component';
 
 @Component({
