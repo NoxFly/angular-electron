@@ -19,6 +19,7 @@ export interface Response<T> {
 interface PendingRequestHandlers<T> {
     resolve: (value: Response<T>) => void;
     reject: (reason?: Response<T>) => void;
+    request: Request;
 }
 
 @Injectable({
@@ -38,12 +39,19 @@ export class ElectronService {
             this.hasSecondScreen.set(state);
         });
 
-        this.ipc.hereIsMyPort((port: MessagePort, a: any, b: any) => {
-            console.log(port, a, b);
-            this.port = port;
-            this.port.onmessage = this.onMessage.bind(this);
-            this.port.start();
-        });
+        window.addEventListener('message', (event: MessageEvent) => {
+            if(event.data?.type === 'init-port' && event.ports.length > 0) {
+                const port = event.ports[0]!;
+
+                this.port = port;
+
+                if(this.port) {
+                    this.port.onmessage = this.onMessage.bind(this);
+                }
+            }
+        }, { once: true });
+
+        this.ipc.hereIsMyPort();
     }
 
     public get ipc(): any {
@@ -62,20 +70,30 @@ export class ElectronService {
             return;
         }
 
-        const handlers = this.pendingRequests.get(response.requestId);
+        const pending = this.pendingRequests.get(response.requestId);
         
-        if(!handlers) {
+        if(!pending) {
             console.error(`No handler found for request ID: ${response.requestId}`);
             return;
         }
         
         this.pendingRequests.delete(response.requestId);
+
+        let fn: (response: Response<unknown>) => void = pending.resolve;
+
+        console.groupCollapsed(`${response.status} ${pending.request.method} /${pending.request.path}`);
         
         if(response.error) {
-            return handlers.reject(response);
+            console.error('error message:', response.error);
+            fn = pending.reject;
         }
         
-        handlers.resolve(response);
+        console.info('response:', response.body);
+        console.info('request:', pending.request);
+
+        console.groupEnd();
+
+        fn(response);
     }
 
     public request<T>(request: Request): Promise<T> {
@@ -103,7 +121,8 @@ export class ElectronService {
                 },
                 reject: (response?: Response<T>) => {
                     reject(response);
-                }
+                },
+                request,
             });
         
             this.port.postMessage(req);

@@ -19,12 +19,10 @@ export class HomeComponent {
 
     protected async onButtonClick(method: HttpMethod, path: string): Promise<void> {
         // Send a message to the main process via the port
-        const response = await this.electron.request({
+        await this.electron.request({
             path,
             method,
             body: {}
         });
-
-        console.log(response);
     }
 }

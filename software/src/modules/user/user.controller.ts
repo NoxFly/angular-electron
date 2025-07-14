@@ -24,13 +24,19 @@ export class UserController {
     }
 
     @Post("profile")
-    public async setProfile(request: Request, response: Response): Promise<void> {
+    public async setProfile(request: Request, response: Response): Promise<any> {
         
     }
 
     @Get("profile/:id")
-    public async getProfile(request: Request, response: Response): Promise<void> {
-        
+    public async getProfile(request: Request, response: Response): Promise<any> {
+        const userProfile = {
+            id: 1,
+            name: "John Doe",
+            email: "john.doe@email.com"
+        };
+
+        return userProfile;
     }
 
 }

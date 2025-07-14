@@ -44,16 +44,7 @@ class Nox {
     public async init(): Promise<App> {
         const application = RootInjector.resolve(this.root);
 
-        ipcMain.on('gimme-my-port', (event) => {
-            if(!this.messagePort) {
-                this.messagePort = new MessageChannelMain();
-
-                this.messagePort.port1.on('message', event => this.onClientMessage(application, event));
-                this.messagePort.port1.start();
-            }
-
-            event.sender.postMessage('port', null, [this.messagePort.port2]);
-        });
+        ipcMain.on('gimme-my-port', this.giveTheClientAPort.bind(this, application));
 
         app.once('activate', this.onAppActivated.bind(this, application));
         app.once('window-all-closed', this.onAllWindowsClosed.bind(this, application));
@@ -66,14 +57,33 @@ class Nox {
     }
 
     /**
+     * 
+     */
+    private giveTheClientAPort(application: App, event: Electron.IpcMainInvokeEvent): void {
+        if(this.messagePort) {
+            this.messagePort.port1.close();
+            this.messagePort.port2.close();
+            this.messagePort = undefined;
+        }
+
+        this.messagePort = new MessageChannelMain();
+
+        this.messagePort.port1.on('message', event => this.onClientMessage(application, event));
+        this.messagePort.port1.start();
+
+        event.sender.postMessage('port', null, [this.messagePort.port2]);
+    }
+
+    /**
      * Electron specific message handling.
      * Replaces HTTP calls by using Electron's IPC mechanism.
      */
     private async onClientMessage(application: App, event: Electron.MessageEvent): Promise<void> {
+        const { requestId, path, method, body } = event.data;
+
         try {
-            const { path, method, body } = event.data;
             
-            const request = new Request(application, event, method, path, body);
+            const request = new Request(application, event, requestId, method, path, body);
             const router = RootInjector.resolve(Router);
 
             const response = await router.handle(request);
@@ -82,6 +92,7 @@ class Nox {
         }
         catch(err: any) {
             const response: Response = {
+                requestId,
                 status: 500,
                 body: null,
                 error: err.message || 'Internal Server Error',

@@ -53,6 +53,7 @@ module.exports = tseslint.config(
             ],
             "@angular-eslint/no-empty-lifecycle-method": "off",
             "@typescript-eslint/no-empty-object-type": "off",
+            "@angular-eslint/prefer-inject": "off",
 
             "@typescript-eslint/no-require-imports": "off",
 

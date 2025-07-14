@@ -14,6 +14,7 @@ export class Request {
     constructor(
         public readonly app: App,
         public readonly event: Electron.MessageEvent,
+        public readonly id: string,
         public readonly method: HttpMethod,
         public readonly path: string,
         public readonly body: any,
@@ -23,6 +24,7 @@ export class Request {
 }
 
 export interface Response {
+    requestId: string;
     status: number;
     body?: any;
     error?: string;

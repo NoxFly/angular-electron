@@ -1,4 +1,3 @@
-import { MessagePortMain } from 'electron/main';
 import { contextBridge, ipcRenderer } from 'electron/renderer';
 
 // .invoke -> front sends to back
@@ -18,7 +17,7 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
 
     // app
     requestPort: () => ipcRenderer.send('gimme-my-port'),
-    hereIsMyPort: (cb: fn) => ipcRenderer.on('port', (e, ...args) => cb(...args)),
+    hereIsMyPort: () => ipcRenderer.once('port', (e) => { e.ports[0]?.start(); console.log(e.ports[0]?.postMessage); window.postMessage({ type: 'init-port' }, '*', [e.ports[0]!]); }),
     loadApp: () => ipcRenderer.invoke('load-app'),
     onNavigationRequested: (cb: fn) => ipcRenderer.on('navigate-to', (e, ...args) => cb(...args)),
 });

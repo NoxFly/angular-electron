@@ -115,6 +115,7 @@ export class Router {
         const t0 = performance.now();
         
         const response: Response = {
+            requestId: request.id,
             status: 200,
             body: null,
             error: undefined,
@@ -127,8 +128,6 @@ export class Router {
             const action = controllerInstance[routeDef.handler] as ControllerAction;
 
             this.verifyRequestBody(request, action);
-
-            
 
             response.body = await action.call(controllerInstance, request, response);
         }
