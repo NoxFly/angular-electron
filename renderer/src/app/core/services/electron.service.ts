@@ -14,6 +14,7 @@ interface PendingRequestHandlers<T> {
 export class ElectronService {
     private readonly bridge: any;
     private port: MessagePort | undefined;
+    private senderId: number | undefined;
     private readonly pendingRequests = new Map<string, PendingRequestHandlers<any>>();
 
     public hasSecondScreen = signal(false);
@@ -30,6 +31,7 @@ export class ElectronService {
                 const port = event.ports[0]!;
 
                 this.port = port;
+                this.senderId = event.data.senderId;
 
                 if(this.port) {
                     this.port.onmessage = this.onMessage.bind(this);
@@ -82,17 +84,18 @@ export class ElectronService {
         fn(response);
     }
 
-    public request<T>(request: Omit<IRequest, 'requestId'>): Promise<T> {
+    public request<T>(request: Omit<IRequest, 'requestId' | 'senderId'>): Promise<T> {
         if(!this.isElectronApp)
             return Promise.reject(new Error("Not running in Electron environment"));
         
         return new Promise<T>((resolve, reject) => {
-            if(!this.port) {
+            if(!this.port || !this.senderId) {
                 return reject(new Error("MessagePort is not available"));
             }
         
             const req: IRequest = {
                 requestId: randomId(),
+                senderId: this.senderId,
                 ...request,
             };
         

@@ -42,8 +42,6 @@ export class AppComponent {
             return;
         }
 
-        console.log('AppComponent initialized');
-
         this.isReady.set(true);
         this.router.navigateByUrl('/home');
 

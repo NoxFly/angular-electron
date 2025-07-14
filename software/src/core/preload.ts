@@ -17,9 +17,9 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
 
     // app
     requestPort: () => ipcRenderer.send('gimme-my-port'),
-    hereIsMyPort: () => ipcRenderer.once('port', (e) => {
+    hereIsMyPort: () => ipcRenderer.once('port', (e, message) => {
         e.ports[0]?.start();
-        window.postMessage({ type: 'init-port' }, '*', [e.ports[0]!]);
+        window.postMessage({ type: 'init-port', senderId: message.senderId }, '*', [e.ports[0]!]);
     }),
     loadApp: () => ipcRenderer.invoke('load-app'),
     onNavigationRequested: (cb: fn) => ipcRenderer.on('navigate-to', (e, ...args) => cb(...args)),

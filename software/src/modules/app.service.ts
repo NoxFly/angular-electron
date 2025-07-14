@@ -13,6 +13,10 @@ export class Application implements IApp {
         this.window.createMain();
     }
 
+    public async onActivated(): Promise<void> {
+
+    }
+
     public async dispose(): Promise<void> {
 
     }

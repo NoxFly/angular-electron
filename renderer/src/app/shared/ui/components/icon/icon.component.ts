@@ -42,7 +42,6 @@ export class IconComponent extends SubscriptionManager implements OnInit {
         }
 
         try {
-            // console.log('  > loading icon from file:', this.src());
             this.watch$ = IconBank.load(this.src()).pipe(
                 map((content) => {
                     this.content.set(content);
@@ -113,7 +112,6 @@ class IconBank {
                 const content = svgDoc.documentElement.outerHTML;
 
                 IconBank.set(path, content);
-                // console.log('storing icon in bank:', path);
 
                 IconBank.loadingIcons.delete(path);
 
