@@ -13,12 +13,9 @@ import { ButtonComponent } from 'src/app/shared/ui/components/button/button.comp
 export class HomeComponent {
     constructor(
         private readonly electron: ElectronService,
-    ) {
-        console.log('HomeComponent initialized');
-    }
+    ) {}
 
     protected async onButtonClick(method: HttpMethod, path: string): Promise<void> {
-        // Send a message to the main process via the port
         await this.electron.request({
             path,
             method,
