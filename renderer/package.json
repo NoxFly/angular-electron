@@ -23,7 +23,7 @@
         "@angular-devkit/build-angular": "^20.1.0",
         "@angular/cli": "^20.1.0",
         "@angular/compiler-cli": "^20.1.0",
-        "@noxfly/noxus": "file:../../nox",
+        "@noxfly/noxus": "file:../../noxus",
         "@stylistic/eslint-plugin": "^5.1.0",
         "@types/uuid": "^10.0.0",
         "@typescript-eslint/eslint-plugin": "^8.36.0",
