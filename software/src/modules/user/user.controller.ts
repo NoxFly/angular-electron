@@ -1,8 +1,11 @@
 import { AuthGuard } from "core/guards/auth.guard";
 import { UserService } from "modules/user/user.service";
-import { Authorize, Controller, Get, Post, Request, IResponse } from "@noxfly/noxus";
+import { Authorize, Controller, Get, Post, Request, IResponse, UseMiddlewares } from "@noxfly/noxus";
+import { ControllerMiddleware } from "core/middlewares/controller.middleware";
+import { ActionMiddleware } from "core/middlewares/action.middleware";
 
 @Controller("user")
+@UseMiddlewares([ControllerMiddleware])
 export class UserController {
 
     constructor(
@@ -11,7 +14,9 @@ export class UserController {
     
     @Get("me")
     @Authorize(AuthGuard)
+    @UseMiddlewares([ActionMiddleware])
     public async getMyProfile(request: Request, response: IResponse): Promise<any> {
+        console.log("Fetching current user's profile");
         return this.userService.findOneById("1");
     }
 

@@ -8,7 +8,7 @@ export class AuthService {
     ) {}
 
     public isAuthenticated(): Promise<boolean> {
-        return Promise.resolve(false);
+        return Promise.resolve(true);
     }
 
     public async login(username: string, password: string): Promise<void> {
